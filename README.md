@@ -2,9 +2,6 @@
 [2025 kakao X goorm 시즌톤] 마이데이즈 iOS 레포지토리
 
 
-# Git Commit Convention & Git Flow
-
-이 문서는 프로젝트에서 사용하는 Git Commit Convention과 Git Flow를 정리한 가이드입니다.
 
 ---
 
