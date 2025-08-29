@@ -19,10 +19,12 @@
 - **chore**: 빌드, 패키지 매니저, 설정 변경 등  
 
 ### 예시
+```bash
 feat: 무한 스크롤 페이징 기능 추가
 fix: 게시물 로딩 중 중복 호출되는 버그 수정
 docs: README에 Git Flow 전략 추가
 refactor: WriteViewModel 코드 최적화
+```
 
 ---
 ## 🌳 Git Flow
