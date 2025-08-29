@@ -34,7 +34,7 @@ struct TabBarView: View {
             // 콘텐츠 영역
             TabView(selection: $selectedTab) {
                 Group {
-                    Color.black
+                    HomeView()
                         .tag(TabItem.home)
                     
                     Color.blue

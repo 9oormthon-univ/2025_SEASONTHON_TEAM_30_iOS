@@ -8,19 +8,23 @@
 import SwiftUI
 
 extension View {
-    func dropshadow1(color: Color = Color(hex: "000000", alpha: 0.4), radius: CGFloat = 4, x: CGFloat = 0, y: CGFloat = 2) -> some View {
+    func dropshadow1(color: Color = Color(hex: "000000", alpha: 0.04), radius: CGFloat = 4, x: CGFloat = 0, y: CGFloat = 2) -> some View {
         self.shadow(color: color, radius: radius, x: x, y: y)
     }
     
-    func dropshadow2(color: Color = Color(hex: "000000", alpha: 0.4), radius: CGFloat = 4, x: CGFloat = 2, y: CGFloat = -2) -> some View {
+    func dropshadow2(color: Color = Color(hex: "000000", alpha: 0.04), radius: CGFloat = 4, x: CGFloat = 2, y: CGFloat = -2) -> some View {
         self.shadow(color: color, radius: radius, x: x, y: y)
     }
     
-    func dropshadow3(color: Color = Color(hex: "000000", alpha: 0.4), radius: CGFloat = 20, x: CGFloat = 4, y: CGFloat = 4) -> some View {
+    func dropshadow3(color: Color = Color(hex: "000000", alpha: 0.04), radius: CGFloat = 20, x: CGFloat = 4, y: CGFloat = 4) -> some View {
         self.shadow(color: color, radius: radius, x: x, y: y)
     }
-    
-    //TODO: inner은 나중에 수정
+}
+
+extension Shape {
+    func innerShadow(color: Color) -> some View {
+        self.fill(.white.shadow(.inner(color: color, radius: 20, x: 0, y: -3)))
+    }
 }
 
 #Preview {
@@ -42,6 +46,10 @@ extension View {
                 .frame(width: 300, height: 50)
                 .dropshadow3()
             
+            Rectangle()
+                .innerShadow(color: .pink)
+                .frame(width: 300, height: 50)
+               
         }
     }
 }
