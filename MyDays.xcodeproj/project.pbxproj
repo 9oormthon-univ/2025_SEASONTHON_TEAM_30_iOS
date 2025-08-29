@@ -10,9 +10,22 @@
 		10844F262E61481F00BF1225 /* MyDays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyDays.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		108452E12E6152F500BF1225 /* Exceptions for "MyDays" folder in "MyDays" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Configs/Info.plist,
+			);
+			target = 10844F252E61481F00BF1225 /* MyDays */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		10844F282E61481F00BF1225 /* MyDays */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				108452E12E6152F500BF1225 /* Exceptions for "MyDays" folder in "MyDays" target */,
+			);
 			path = MyDays;
 			sourceTree = "<group>";
 		};
@@ -263,6 +276,7 @@
 				DEVELOPMENT_TEAM = 5B5K92WF8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyDays/Configs/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -295,6 +309,7 @@
 				DEVELOPMENT_TEAM = 5B5K92WF8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyDays/Configs/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
