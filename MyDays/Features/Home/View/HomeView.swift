@@ -23,7 +23,10 @@ struct HomeView: View {
             LazyVStack(spacing: 0) {
                 ForEach(vm.posts) { post in
                     VStack(spacing: 0) {
-                        HomePostView(post: post)
+                        HomePostView(post: post, onLike: {
+                            //TODO: - 좋아요 눌렀을떄 처리
+                            print("onLike")
+                        })
                             .padding(.horizontal, 30)
                             .onTapGesture {
                                 nav.push(AppRoute.postDetail) //TODO: - 하트 영역이랑 댓글 영역도 고려

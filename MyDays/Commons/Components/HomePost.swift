@@ -1,17 +1,18 @@
 //
-//  HomePostView.swift
+//  HomePost.swift
 //  MyDays
 //
-//  Created by 양재현 on 8/29/25.
+//  Created by 양재현 on 8/30/25.
 //
 
-//MARK: - 홈 게시물 뷰
+//MARK: - 홈 게시물 컴포넌트 (밑에 프리뷰처럼 사용 !!)
 
 import SwiftUI
 import Kingfisher
 
 struct HomePostView: View {
     let post: Post
+    let onLike: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -79,6 +80,9 @@ struct HomePostView: View {
                         .resizable()
                         .frame(width: 20, height: 18)
                         .foregroundColor(.mdBrightBlack)
+                        .onTapGesture{
+                            onLike()
+                        }
                     
                     Text("\(post.likeCount)")
                         .font(.b3())
@@ -107,5 +111,6 @@ struct HomePostView: View {
 }
 
 #Preview {
-    HomePostView(post: Post.mockPosts[0])
+    HomePostView(post: Post.mockPosts[0], onLike: {})
+        .padding(.horizontal, 30)
 }

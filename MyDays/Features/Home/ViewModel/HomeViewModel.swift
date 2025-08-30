@@ -10,7 +10,6 @@ import Foundation
 
 @MainActor
 class HomeViewModel: ObservableObject {
-//    @Published var userProfile: UserProfile? //유저 프로필
     @Published var posts: [Post] = [] //게시물들
     @Published var isLoading: Bool = false
     
