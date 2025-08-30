@@ -1,11 +1,11 @@
 //
-//  PostDetailPostView.swift
+//  DetailPost.swift
 //  MyDays
 //
 //  Created by 양재현 on 8/30/25.
 //
 
-//MARK: - 작성글 디테일 뷰 Post View
+//MARK: - 게시물 디테일 Post (밑에 프리뷰처럼 사용 !!)
 import SwiftUI
 import Kingfisher
 
@@ -109,4 +109,5 @@ struct DetailPostView: View {
 
 #Preview {
     DetailPostView(post: PostDetail.mock, onLike: {})
+        .padding(.horizontal, 30)
 }
