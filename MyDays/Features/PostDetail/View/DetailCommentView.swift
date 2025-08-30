@@ -51,7 +51,7 @@ struct DetailCommentView: View {
             //<---------------------------->
             
             //댓글 내용
-            Text(comment.content)
+            Text(comment.content.forceCharWrapping)
                 .font(.b2())
                 .foregroundColor(.black)
                 .padding(.leading, 52)

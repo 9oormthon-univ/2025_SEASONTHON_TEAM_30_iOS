@@ -12,7 +12,6 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var nav: NavigationManager
     @StateObject var vm = HomeViewModel()
-    //TODO: 텍스트 길어질떄 줄바꿈되는거 그거 Extension
     //TODO: Refreshable
     var body: some View {
         ScrollView {

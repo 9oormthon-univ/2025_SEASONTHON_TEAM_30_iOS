@@ -50,7 +50,7 @@ extension PostDetailComment {
             userTitle: "인기스타",
             userTitleColor: "#6A7BFF",
             createdAt: "2025-08-29",
-            content: "새로운 프로젝트를 시작했어요."
+            content: "긴 댓글 달아보기 긴 댓글 달아보기 긴 댓글 달아보기 긴 댓글 달아보기 긴 댓글 달아보기 긴 댓글 달아보기 긴 댓글 달아보기 긴 댓글 달아보기"
         ),
         PostDetailComment(
             id: "3",
