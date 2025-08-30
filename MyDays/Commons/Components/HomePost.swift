@@ -55,7 +55,7 @@ struct HomePostView: View {
             //<---- 작성글 + 이미지 + 좋아요 + 댓글 ---->
             VStack(alignment: .leading, spacing: 0) {
                 //작성글
-                Text(post.content)
+                Text(post.content.forceCharWrapping)
                     .lineLimit(3) //3줄이상은 ...로 표시
                     .font(.b2())
                     .foregroundColor(.black)
