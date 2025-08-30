@@ -10,6 +10,7 @@ import Kingfisher
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var nav: NavigationManager
     @StateObject var vm = HomeViewModel()
     //TODO: 텍스트 길어질떄 줄바꿈되는거 그거 Extension
     //TODO: Refreshable
@@ -24,6 +25,9 @@ struct HomeView: View {
                     VStack(spacing: 0) {
                         HomePostView(post: post)
                             .padding(.horizontal, 30)
+                            .onTapGesture {
+                                nav.push(AppRoute.postDetail) //TODO: - 하트 영역이랑 댓글 영역도 고려
+                            }
                         
                     }
                     //구분선 마지막 콘텐츠 빼고 주기
@@ -89,7 +93,10 @@ struct HomeHeaderView: View {
 
 
 #Preview {
-    HomeView()
+    NavigationStack{
+        HomeView()
+            .environmentObject(NavigationManager())
+    }
 }
 //MARK: - 홈 뷰 용
 
