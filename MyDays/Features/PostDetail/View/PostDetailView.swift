@@ -12,6 +12,7 @@ import SwiftUI
 struct PostDetailView: View {
     @StateObject var vm = PostDetailViewModel()
     @FocusState var isFocused: Bool //댓글 포커스 상태
+    @EnvironmentObject var nav: NavigationManager
     
     var body: some View {
         ScrollView {
@@ -42,10 +43,29 @@ struct PostDetailView: View {
                     }
                     .padding(.top, 20)
                 }
+                .padding(.top, 20) //safeAreaTop 이랑 게시물사이 간격
             }
         }
         .onTapGesture {
             isFocused = false //다른데 터치하면 포커스 풀리기
+        }
+        .toolbar(.hidden, for: .navigationBar)
+        //상단 바 (챌린지 피드 + 뒤로가기 버튼)
+        .safeAreaInset(edge: .top) {
+            Text("챌린지 피드")
+                .font(.b1())
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
+                .background(.white)
+                .dropshadow1()
+                //뒤로 가기 버튼
+                .overlay(alignment: .leading) {
+                    Image("back")
+                        .onTapGesture {
+                            nav.popLast()
+                        }
+                        .padding(.horizontal, 30)
+                }
         }
         //댓글 텍스트 에디터
         .safeAreaInset(edge: .bottom) {
