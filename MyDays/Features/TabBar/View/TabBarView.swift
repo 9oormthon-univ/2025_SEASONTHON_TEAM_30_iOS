@@ -37,10 +37,10 @@ struct TabBarView: View {
                     HomeView()
                         .tag(TabItem.home)
                     
-                    WriteView()
+                    Color.blue
                         .tag(TabItem.write)
                     
-                    Color.red // <--- !!!!! 요기다가 채영님이 만든 뷰 넣으면 됩니다 ~ !!!!!
+                    Color.red
                         .tag(TabItem.my)
                 }
                 .toolbar(.hidden, for: .tabBar)

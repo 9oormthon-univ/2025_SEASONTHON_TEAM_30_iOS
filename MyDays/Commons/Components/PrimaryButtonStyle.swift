@@ -13,15 +13,14 @@ struct PrimaryButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.b2())
-            .foregroundColor(isDisabled ? .mdDim2 : .white)
+            .font(isDisabled ? .b2() : .b2Bold())
+            .foregroundColor(isDisabled ? .mdBrightBlack : .white)
             .frame(maxWidth: .infinity)
             .frame(height: 48)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(isDisabled ? .mdSurf2 : .mdPrimary)
+                    .fill(isDisabled ? .mdDim : .mdPrimary)
             )
-            .foregroundColor(isDisabled ? .mdDim : .white)
 
     }
 }
@@ -33,9 +32,12 @@ extension ButtonStyle where Self == PrimaryButtonStyle {
 
 
 #Preview{
-    Button("작성하기") {}
-        .buttonStyle(.primary(isDisabled: true))
-    
-    Button("작성하기") {}
-        .buttonStyle(.primary(isDisabled: false))
+    VStack{
+        Button("작성하기") {}
+            .buttonStyle(.primary(isDisabled: true))
+        
+        Button("작성하기") {}
+            .buttonStyle(.primary(isDisabled: false))
+    }
+    .padding(.horizontal, 30)
 }
