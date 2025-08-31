@@ -13,26 +13,35 @@ import Foundation
 // 실제 서비스와 Mock 서비스 모두 이 프로토콜을 따릅니다.
 protocol HomeServiceProtocol {
     func getHomePosts(page: Int) async throws -> [Post]
+    func getHomeMission() async throws -> HomeMission
 }
 
 // MARK: - HomeService (실제 API 통신)
 // HomeServiceProtocol을 채택하여 실제 서버와 통신하는 역할을 합니다.
-class HomeService {
+class HomeService: HomeServiceProtocol {
     // 서버로부터 홈 게시물 조회 요청
     func getHomePosts(page: Int) async throws -> [Post] {
 
         // APIManager를 사용해 서버로부터 데이터 가져오기
-        let response: GetHomeResponse = try await APIManager.shared.request("/profile", method: .get)
+        let response: GetHomePostsResponse = try await APIManager.shared.request("/profile", method: .get)
         
         // 서버 모델을 앱 모델로 변환
         let posts = response.posts.map { Post(from: $0) }
         
         return posts
     }
+    
+    // 홈 미션 조회
+    func getHomeMission() async throws -> HomeMission {
+        let response: GetHomeMissionResponse = try await APIManager.shared.request("/profile", method: .get)
+        let mission = HomeMission(from: response)
+        
+        return mission
+    }
 }
 
 //MARK: - MockHomeService (테스트용)
-class MockHomeService {
+class MockHomeService: HomeServiceProtocol {
     // 서버로부터 홈 조회 요청
     func getHomePosts(page: Int) async throws -> [Post] {
 //        try await Task.sleep(nanoseconds: 1_000_000_000)
@@ -58,5 +67,9 @@ class MockHomeService {
                 
                 return paginatedPosts
 //        return (UserProfile.mock, Post.mockPosts)
+    }
+    // 홈 미션 조회
+    func getHomeMission() async throws -> HomeMission {
+        return HomeMission.mock
     }
 }

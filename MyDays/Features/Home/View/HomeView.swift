@@ -15,7 +15,16 @@ struct HomeView: View {
     //TODO: Refreshable
     var body: some View {
         ScrollView {
-            //TODO: 미션카드
+            //미션카드
+            if let mission = vm.mission {
+                HomeMissionCard(day: mission.day,
+                                mission: mission.text,
+                                isCompleted: mission.isCompleted,
+                                onChallengeTap: { nav.push(AppRoute.write)})
+                    .padding(.horizontal, 30)
+                    .padding(.top, 25)
+                
+            }
 
             
             //게시물 리스트
@@ -53,21 +62,22 @@ struct HomeView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(.top, 30)
+            .padding(.top, 25)
             .background(
                 RoundedRectangle(cornerRadius: 30)
-                    .fill(.white)
+                    .fill(.mdSurf2)
                 //Shadows 디자인 시스템 적용안되서 일단 임시로 이렇게 해둠
                     .shadow(color: Color(hex: "000000", alpha: 0.04), radius: 4, x: 2, y: -2)
                    
             )
         }
-//        .background(.mdSurf1)
+        .background(.mdSurf2) //전체 배경
         //헤더 질문
         .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
             HomeHeaderView()
         }
         .onAppear{
+            vm.getMission()
             vm.getHome()
         }
     }
@@ -76,20 +86,94 @@ struct HomeView: View {
 //MARK: - 젤 위에 헤더부분
 struct HomeHeaderView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack{
-                Text("MyDays")
-                    .foregroundColor(.black)
-                
-                Spacer()
-                Image(systemName: "bell")
-                
-            }
+        HStack(spacing: 0) {
+           Spacer()
+            //알람
+            Image("noti")
+                .padding(10)
+                .onTapGesture {
+                    //알람 기능
+                }
         }
+        .overlay(
+            Image("logo")  
+        )
         .frame(maxWidth: .infinity)
         .frame(height: 40)
         .padding(.horizontal, 30)
-//        .background(.mdSurf1)
+        .background(.mdSurf2)
+    }
+}
+
+//MARK: - 홈 미션 카드
+struct HomeMissionCard: View {
+    let day: String
+    let mission: String
+    let isCompleted: Bool
+    
+    let onChallengeTap: () -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            //Day + 오늘의 챌린지를 확인하세요 !
+            HStack(spacing: 10) {
+                Text(day)
+                    .font(.b3Bold())
+                    .foregroundColor(.mdPrimaryText)
+                    .padding(.horizontal, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(.mdPrimaryCon)
+                    )
+                Text("오늘의 챌린지를 확인하세요!")
+                    .font(.b3Light())
+                    .foregroundColor(.white)
+            }
+            //미션 내용
+            Text(mission.forceCharWrapping)
+                .font(.b2Bold())
+                .foregroundColor(.white)
+                .padding(.top, 15)
+            
+            //도전하기 버튼
+            Button(action: { onChallengeTap() }) {
+                HStack(spacing: 0) {
+                    Spacer()
+                    HStack(spacing: 0) {
+                        Text("도전하기")
+                            .font(.l1())
+                        
+                        Image("right")
+                            .renderingMode(.template)
+                    }
+                    .frame(height: 30)
+                    .padding(.leading, 10)
+                    .foregroundColor(.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 100)
+                            .fill(.mdSurf3)
+                            .stroke(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        .mdPrimary,
+                                        Color(hex: "69FF40"),
+                                    ]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                ),
+                                lineWidth: 2
+                            )
+                    )
+                }
+            }
+        }
+        .padding(.vertical, 20)
+        .padding(.horizontal, 30)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(.mdSurf3)
+                .stroke(.mdDim, lineWidth: 1)
+        )
     }
 }
 

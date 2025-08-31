@@ -10,6 +10,7 @@ import Foundation
 
 @MainActor
 class HomeViewModel: ObservableObject {
+    @Published var mission: HomeMission? //홈 미션 모델
     @Published var posts: [Post] = [] //게시물들
     @Published var isLoading: Bool = false
     
@@ -54,6 +55,13 @@ class HomeViewModel: ObservableObject {
                 self.currentPage += 1
             }
             self.isLoading = false
+        }
+    }
+    //MARK: - 미션 조회
+    func getMission() {
+        Task {
+            let fetchedMission = try await homeService.getHomeMission()
+            self.mission = fetchedMission
         }
     }
 }

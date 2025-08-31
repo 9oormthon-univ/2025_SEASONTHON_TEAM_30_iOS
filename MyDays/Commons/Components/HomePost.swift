@@ -33,14 +33,10 @@ struct HomePostView: View {
                 //유저 닉네임
                 Text(post.userName)
                     .font(.b3())
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                 
                 //유저 칭호
                 UserTitleBadge(title: post.userTitle, color: Color(hex: post.userTitleColor))
-                
-                Circle()
-                    .frame(width: 4, height: 4)
-                    .foregroundColor(.mdDim2)
                 
                 //작성시간
                 Text(post.createdAt)
@@ -58,7 +54,7 @@ struct HomePostView: View {
                 Text(post.content.forceCharWrapping)
                     .lineLimit(3) //3줄이상은 ...로 표시
                     .font(.b2())
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                 
                 //작성글 이미지
                 KFImage(URL(string: post.contentImgUrl))
@@ -75,30 +71,28 @@ struct HomePostView: View {
                 
                 //좋아요, 댓글
                 HStack(spacing: 0) {
-                    Image("heart")
-                        .renderingMode(.template)
+                    Image(post.isLiked ? "heart.fill" : "heart")
                         .resizable()
                         .frame(width: 20, height: 18)
-                        .foregroundColor(.mdBrightBlack)
                         .onTapGesture{
                             onLike()
                         }
                     
                     Text("\(post.likeCount)")
                         .font(.b3())
-                        .foregroundColor(.mdBrightBlack)
+                        .foregroundColor(.white)
                         .padding(.leading, 7)
                     
                     Image("comment")
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 18, height: 18)
-                        .foregroundColor(.mdBrightBlack)
+                        .foregroundColor(.white)
                         .padding(.leading, 10)
                     
                     Text("\(post.commentCount)")
                         .font(.b3())
-                        .foregroundColor(.mdBrightBlack)
+                        .foregroundColor(.white)
                         .padding(.leading, 7)
                 }
                 .padding(.top, 20)
@@ -111,6 +105,11 @@ struct HomePostView: View {
 }
 
 #Preview {
-    HomePostView(post: Post.mockPosts[0], onLike: {})
-        .padding(.horizontal, 30)
+    VStack{
+        //<----- 이 부분 사용 ---------------------------->
+        HomePostView(post: Post.mockPosts[0], onLike: {})
+            .padding(.horizontal, 30)
+        //<----- 이 부분 사용 ---------------------------->
+    }
+    .background(.mdSurf2)
 }

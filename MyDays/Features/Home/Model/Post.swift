@@ -24,7 +24,7 @@ struct Post: Identifiable, Equatable {
 
 // 서버 응답 모델을 Post 모델로 매핑하기 위한 이니셜라이저
 extension Post {
-    init(from data: GetHomeResponse.PostsResponse) {
+    init(from data: GetHomePostsResponse.PostsResponse) {
         self.id = data.postId
         self.userimgUrl = data.userimgUrl
         self.userName = data.userName

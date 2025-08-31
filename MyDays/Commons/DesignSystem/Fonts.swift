@@ -59,7 +59,19 @@ extension UIFont {
         return customFont(for: weight, size: 14)
     }
     
+    static func b3Bold(_ weight: UIFont.Weight = .bold) -> UIFont {
+        return customFont(for: weight, size: 14)
+    }
+    
+    static func b3Light(_ weight: UIFont.Weight = .light) -> UIFont {
+        return customFont(for: weight, size: 14)
+    }
+    
     static func l1(_ weight: UIFont.Weight = .medium) -> UIFont {
+        return customFont(for: weight, size: 12)
+    }
+    
+    static func l1Light(_ weight: UIFont.Weight = .light) -> UIFont {
         return customFont(for: weight, size: 12)
     }
     
@@ -81,8 +93,11 @@ extension View {
         case UIFont.b1(): multiplier = 1.5
         case UIFont.b2(): multiplier = 1.45
         case UIFont.b2Bold(): multiplier = 1.45
-        case UIFont.b3(): multiplier = 1.3
+        case UIFont.b3(): multiplier = 1.4
+        case UIFont.b3Bold(): multiplier = 1.4
+        case UIFont.b3Light(): multiplier = 1.4
         case UIFont.l1(): multiplier = 1.0
+        case UIFont.l1Light(): multiplier = 1.0
         case UIFont.l2(): multiplier = 1.1
        
         default: multiplier = 1.0
@@ -116,8 +131,14 @@ extension View {
             .font(.b2Bold())
         Text("B3")
             .font(.b3())
+        Text("B3-Bold")
+            .font(.b3Bold())
+        Text("B3-light")
+            .font(.b3Light())
         Text("L1")
             .font(.l1())
+        Text("L1-light")
+            .font(.l1Light())
         Text("L2")
             .font(.l2())
     }
