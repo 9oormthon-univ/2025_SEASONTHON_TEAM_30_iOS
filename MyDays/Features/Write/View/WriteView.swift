@@ -56,7 +56,7 @@ struct WriteView: View {
                 .padding(.bottom, 54 + 25) //탭뷰 height 는 54임
             }
         }
-//        .background(.mdSurf1)
+        .background(.mdSurf2)
         //헤더 질문
         .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
             QuestionHeaderView(dayText: vm.mission?.day ?? "",
@@ -85,24 +85,33 @@ struct QuestionHeaderView: View {
     let question: String
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                //Day + 미션 내용
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(dayText)
+                        .font(.t2())
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text(question)
+                        .font(.b1())
+                        .foregroundColor(.white)
+                }
+                
+                Spacer()
+                //닫기 버튼 TODO: X버튼 피그마 확인
+                Image("close")
+                    .onTapGesture {
+                        
+                    }
+            }
             Spacer()
-            Text(dayText)
-                .font(.t2())
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.bottom, 10)
-            
-            Text(question)
-                .font(.b1())
-                .foregroundColor(.black)
-                .padding(.bottom, 20)
-            
         }
         .frame(maxWidth: .infinity)
         .frame(height: 117)
         .padding(.horizontal, 30)
-        .background(.white)
+        .background(.mdSurf2)
         .dropshadow1()
     }
 }
@@ -115,23 +124,25 @@ struct TextEditorStyleModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.black)
+            .accentColor(.white)
+            .foregroundColor(.white)
             .padding(20)
             .contentMargins(.leading, -5) //딱맞네 이렇게 두니
             .contentMargins(.top, -8)
             .contentMargins(.bottom, 8)
         
             .frame(minHeight: 117)
+            .scrollContentBackground(.hidden) //기본 배경 제거
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.white)
+                    .fill(.mdSurf3)
             )
         //placeholder
             .overlay(alignment: .topLeading) {
                 if text == "" {
                     Text(placeholder)
                         .font(.b2())
-                        .foregroundColor(.mdDim)
+                        .foregroundColor(.mdBrightSurf)
                         .padding(.leading, 20)
                         .padding(.top, 20)
                 }
@@ -140,7 +151,7 @@ struct TextEditorStyleModifier: ViewModifier {
             .overlay(alignment: .bottomTrailing) {
                 HStack(spacing: 0) {
                     Text("\(text.count)")
-                        .foregroundColor(text == "" ? .mdDim : .black)
+                        .foregroundColor(text == "" ? .mdDim : .white)
                     
                     Text("/300")
                         .foregroundColor(.mdDim)
@@ -177,16 +188,7 @@ struct SelectedImageView: View {
             .clipped()
             .clipShape( RoundedRectangle(cornerRadius: 12))
             .overlay(alignment: .topTrailing){
-                Circle()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(.mdBrightBlack)
-                    .overlay {
-                        Image("close") //TODO: 이것도 이미지로 받을지 stroke 변경 불가 알려주기
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .foregroundColor(.white)
-                    }
+                Image("close.circle")
                     .onTapGesture {
                         selectedImage = nil
                     }
@@ -201,25 +203,16 @@ struct AddPhotoBox: View {
         VStack(spacing: 0) {
             Text("사진을 추가해주세요")
                 .font(.b1())
-                .foregroundColor(.mdBrightBlack)
-            Circle()
-                .frame(width: 30)
-//                .foregroundColor(.mdSurf1)
-                .overlay {
-                    //TODO: 추후 이미지로 받든지 stroke는 변경불가
-                    Image("plus")
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 14, height: 14)
-                        .foregroundColor(.mdPrimary)
-                }
+                .foregroundColor(.white)
+            
+            Image("plus.circle")
                 .padding(.top, 10)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 26.5)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
+                .fill(.mdSurf3)
         )
         
     }
