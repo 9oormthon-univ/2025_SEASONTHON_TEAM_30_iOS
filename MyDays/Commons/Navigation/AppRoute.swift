@@ -10,4 +10,5 @@ import Foundation
 
 enum AppRoute: Hashable {
     case postDetail //게시물 디테일 페이지
+    case write //게시물 작성페이지
 }

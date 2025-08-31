@@ -9,7 +9,7 @@
 import Foundation
 
 //홈 조회 Response
-struct GetHomeResponse: Decodable {
+struct GetHomePostsResponse: Decodable {
     let posts: [PostsResponse]
     
     struct PostsResponse: Decodable {
@@ -26,4 +26,11 @@ struct GetHomeResponse: Decodable {
         let isLiked: Bool
         let commentCount: Int
     }
+}
+
+//미션 조회 Response
+struct GetHomeMissionResponse: Decodable {
+    let day: String
+    let text: String
+    let isCompleted: Bool
 }

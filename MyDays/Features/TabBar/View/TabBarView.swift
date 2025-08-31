@@ -68,7 +68,11 @@ struct TabBarView: View {
                 switch route {
                 case .postDetail:
                     PostDetailView()
+                    
+                case .write:
+                    WriteView()
                 }
+                
             }
         }
         //네비게이션 매니저 하위뷰에 주입
