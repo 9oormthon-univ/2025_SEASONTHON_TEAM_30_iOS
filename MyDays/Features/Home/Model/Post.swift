@@ -39,6 +39,23 @@ extension Post {
     }
 }
 
+// 캘린더 뷰에서도 Post모델을 활용하여 서버모델 매핑용 이니셜라이저를 추가하였습니다.
+extension Post {
+    init(from data: GetWeeksResponse.DayContentsResponse) {
+        self.id = data.postId
+        self.userimgUrl = data.userimgUrl
+        self.userName = data.userName
+        self.userTitle = data.userTitle
+        self.userTitleColor = data.userTitleColor
+        self.createdAt = data.createdAt
+        self.content = data.content
+        self.contentImgUrl = data.contentImgUrl
+        self.likeCount = data.likeCount
+        self.isLiked = data.isLiked
+        self.commentCount = data.commentCount
+    }
+}
+
 
 // MARK: - Mock 데이터
 extension Post {
@@ -63,5 +80,102 @@ extension Post {
         Post(id: "18", userimgUrl: "https://picsum.photos/50?18", userName: "Rachel", userTitle: "소확행러", userTitleColor: "#FF544E", createdAt: "2025-08-28", content: "오늘 하루 리뷰!", contentImgUrl: "https://picsum.photos/200?18", likeCount: 38, isLiked: true, commentCount: 4),
         Post(id: "19", userimgUrl: "https://picsum.photos/50?19", userName: "Sam", userTitle: "새싹", userTitleColor: "#60CE38", createdAt: "2025-08-28", content: "새로운 취미 시작했습니다.", contentImgUrl: "https://picsum.photos/200?19", likeCount: 21, isLiked: false, commentCount: 3),
         Post(id: "20", userimgUrl: "https://picsum.photos/50?20", userName: "Tina", userTitle: "수다쟁이", userTitleColor: "#FF945A", createdAt: "2025-08-28", content: "오늘 하루 마무리!", contentImgUrl: "https://picsum.photos/200?20", likeCount: 42, isLiked: true, commentCount: 6)
+    ]
+}
+
+//캘린더 뷰 week 용 mock데이터
+extension Post {
+    static let mockWeek: [Post] = [
+        Post(
+            id: "1",
+            userimgUrl: "https://picsum.photos/50?1",
+            userName: "나다",
+            userTitle: "성실꾼",
+            userTitleColor: "#FFDC68",
+            createdAt: "2025-08-25",
+            content: "이번 주의 시작! 다들 힘내세요 💪",
+            contentImgUrl: "https://picsum.photos/200?1",
+            likeCount: 12,
+            isLiked: false,
+            commentCount: 3
+        ),
+        Post(
+            id: "2",
+            userimgUrl: "https://picsum.photos/50?2",
+            userName: "마데",
+            userTitle: "인기스타",
+            userTitleColor: "#6A7BFF",
+            createdAt: "2025-08-26",
+            content: "오늘은 하늘이 정말 예쁘네요 🌤️",
+            contentImgUrl: "https://picsum.photos/200?2",
+            likeCount: 34,
+            isLiked: true,
+            commentCount: 5
+        ),
+        Post(
+            id: "3",
+            userimgUrl: "https://picsum.photos/50?3",
+            userName: "재현",
+            userTitle: "도전왕",
+            userTitleColor: "#FF8A8A",
+            createdAt: "2025-08-27",
+            content: "새로운 프로젝트를 시작했어요! 두근두근 ✨",
+            contentImgUrl: "https://picsum.photos/200?3",
+            likeCount: 20,
+            isLiked: false,
+            commentCount: 4
+        ),
+        Post(
+            id: "4",
+            userimgUrl: "https://picsum.photos/50?4",
+            userName: "민지",
+            userTitle: "기록러",
+            userTitleColor: "#8AFFA3",
+            createdAt: "2025-08-28",
+            content: "오늘은 책을 읽으면서 하루를 마무리했어요 📖",
+            contentImgUrl: "https://picsum.photos/200?4",
+            likeCount: 15,
+            isLiked: true,
+            commentCount: 2
+        ),
+        Post(
+            id: "5",
+            userimgUrl: "https://picsum.photos/50?5",
+            userName: "호준",
+            userTitle: "열정맨",
+            userTitleColor: "#FFD86A",
+            createdAt: "2025-08-29",
+            content: "운동으로 땀 흘리니까 개운하네요! 🏃‍♂️",
+            contentImgUrl: "https://picsum.photos/200?5",
+            likeCount: 45,
+            isLiked: false,
+            commentCount: 7
+        ),
+        Post(
+            id: "6",
+            userimgUrl: "https://picsum.photos/50?6",
+            userName: "지수",
+            userTitle: "감성러",
+            userTitleColor: "#6AC7FF",
+            createdAt: "2025-08-30",
+            content: "카페에서 조용히 음악 들으면서 힐링했어요 ☕️🎶",
+            contentImgUrl: "https://picsum.photos/200?6",
+            likeCount: 29,
+            isLiked: false,
+            commentCount: 6
+        ),
+        Post(
+            id: "7",
+            userimgUrl: "https://picsum.photos/50?7",
+            userName: "세라",
+            userTitle: "소통왕",
+            userTitleColor: "#C96AFF",
+            createdAt: "2025-08-31",
+            content: "이번 주 모두 수고했어요! 다들 좋은 주말 보내세요 🙌",
+            contentImgUrl: "https://picsum.photos/200?7",
+            likeCount: 55,
+            isLiked: true,
+            commentCount: 9
+        )
     ]
 }
