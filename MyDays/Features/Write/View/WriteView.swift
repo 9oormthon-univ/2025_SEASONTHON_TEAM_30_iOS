@@ -11,6 +11,7 @@ import SwiftUI
 
 struct WriteView: View {
     @StateObject var vm: WriteViewModel = WriteViewModel()
+    @FocusState var isFocused: Bool //미션 작성 텍스트 에디터 포커스
     @EnvironmentObject var nav: NavigationManager
     
     var body: some View {
@@ -26,6 +27,7 @@ struct WriteView: View {
                 VStack(spacing: 30) {
                     //텍스트 에디터
                     TextEditor(text: $vm.text)
+                        .focused($isFocused)
                         .textEditorStyle(text: $vm.text, placeholder: "내용을 입력하세요")
                     
                     //선택된 이미지
@@ -57,6 +59,10 @@ struct WriteView: View {
             }
         }
         .background(.mdSurf2)
+        .onTapGesture {
+            isFocused = false //다른데 터치하면 포커스 풀리기
+        }
+        .toolbar(.hidden, for: .navigationBar)
         //헤더 질문
         .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
             QuestionHeaderView(dayText: vm.mission?.day ?? "",
@@ -181,10 +187,12 @@ struct SelectedImageView: View {
     @Binding var selectedImage: UIImage?
     
     var body: some View {
+        let size = UIScreen.main.bounds.width - 109
+        
         Image(uiImage: uiImage)
             .resizable()
-            .aspectRatio(1, contentMode: .fit)
-            .frame(maxWidth: UIScreen.main.bounds.width - 109)
+            .scaledToFill()
+            .frame(width: size, height: size)
             .clipped()
             .clipShape( RoundedRectangle(cornerRadius: 12))
             .overlay(alignment: .topTrailing){
