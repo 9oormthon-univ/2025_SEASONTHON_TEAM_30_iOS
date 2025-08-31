@@ -62,7 +62,7 @@ struct HomeView: View {
                    
             )
         }
-        .background(.mdSurf1)
+//        .background(.mdSurf1)
         //헤더 질문
         .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
             HomeHeaderView()
@@ -89,7 +89,7 @@ struct HomeHeaderView: View {
         .frame(maxWidth: .infinity)
         .frame(height: 40)
         .padding(.horizontal, 30)
-        .background(.mdSurf1)
+//        .background(.mdSurf1)
     }
 }
 
