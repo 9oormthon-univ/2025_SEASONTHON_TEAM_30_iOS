@@ -56,7 +56,7 @@ class PostDetailService: PostDetailServiceProtocol {
 class MockPostDetailService: PostDetailServiceProtocol {
     // 디테일 페이지 조회 요청
     func getPostDetail() async throws -> (PostDetail, [PostDetailComment]) {
-        try await Task.sleep(nanoseconds: 1_000_000_000)
+//        try await Task.sleep(nanoseconds: 1_000_000_000)
         
         return (PostDetail.mock, PostDetailComment.mockComments)
     }

@@ -30,7 +30,7 @@ struct PostDetailView: View {
                     //구분선
                     Divider()
                         .frame(height: 1)
-                        .overlay(.mdSurf2)
+                        .overlay(.mdNavi2)
                         .padding(.horizontal, 30)
                         .padding(.top, 20)
                     
@@ -46,6 +46,7 @@ struct PostDetailView: View {
                 .padding(.top, 20) //safeAreaTop 이랑 게시물사이 간격
             }
         }
+        .background(.mdSurf3)
         .onTapGesture {
             isFocused = false //다른데 터치하면 포커스 풀리기
         }
@@ -54,9 +55,10 @@ struct PostDetailView: View {
         .safeAreaInset(edge: .top) {
             Text("챌린지 피드")
                 .font(.b1())
+                .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
-                .background(.white)
+                .background(.mdSurf3)
                 .dropshadow1()
                 //뒤로 가기 버튼
                 .overlay(alignment: .leading) {
@@ -66,6 +68,7 @@ struct PostDetailView: View {
                         }
                         .padding(.horizontal, 30)
                 }
+              
         }
         //댓글 텍스트 에디터
         .safeAreaInset(edge: .bottom) {
