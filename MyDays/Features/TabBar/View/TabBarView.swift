@@ -19,7 +19,7 @@ struct TabBarView: View {
                     HomeView()
                         .tag(TabItem.home)
                     
-                    Color.blue
+                    CalendarView()
                         .tag(TabItem.calendar)
                     
                     Color.red
