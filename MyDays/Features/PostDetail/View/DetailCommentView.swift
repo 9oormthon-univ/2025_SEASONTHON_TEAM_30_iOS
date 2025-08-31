@@ -31,7 +31,7 @@ struct DetailCommentView: View {
                 //유저 닉네임
                 Text(comment.userName)
                     .font(.b3())
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                 
                 //유저 칭호
                 UserTitleBadge(title: comment.userTitle, color: Color(hex: comment.userTitleColor))
@@ -53,7 +53,7 @@ struct DetailCommentView: View {
             //댓글 내용
             Text(comment.content.forceCharWrapping)
                 .font(.b2())
-                .foregroundColor(.black)
+                .foregroundColor(.white)
                 .padding(.leading, 52)
         }
         
@@ -61,5 +61,9 @@ struct DetailCommentView: View {
 }
 
 #Preview {
-    DetailCommentView(comment: PostDetailComment.mockComments[0])
+    VStack {
+        DetailCommentView(comment: PostDetailComment.mockComments[0])
+            .padding(.horizontal, 30)
+    }
+    .background(.mdSurf3)
 }

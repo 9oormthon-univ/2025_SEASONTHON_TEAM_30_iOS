@@ -16,9 +16,9 @@ struct CommentTextEditorStyleModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .accentColor(.black)
+            .accentColor(.white)
             .font(.b2())
-            .foregroundColor(.black)
+            .foregroundColor(.white)
             .padding(.leading, 20)
             .padding(.trailing, 44)
         
@@ -28,10 +28,17 @@ struct CommentTextEditorStyleModifier: ViewModifier {
         
             .frame(minHeight: 50, maxHeight: 110)
             .fixedSize(horizontal: false, vertical: true)
+            .scrollContentBackground(.hidden) //기본 배경 제거
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(hex: "FFFFFF"))
-                    .stroke(.mdPrimary, lineWidth: 1)
+                    .fill(Color(hex: "000000"))
+                    .stroke(
+                        LinearGradient(
+                        colors: [.mdPrimary, Color(hex: "60CE38")],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ),
+                        lineWidth: 2)
             )
         //댓글 달기 + 전송버튼
             .overlay(alignment: .bottom) {
@@ -39,10 +46,16 @@ struct CommentTextEditorStyleModifier: ViewModifier {
                     if text.isEmpty && !isFocused {
                         Text("댓글달기")
                             .font(.b2Bold())
-                            .foregroundColor(.mdPrimary)
+                            .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [.mdPrimary, Color(hex: "60CE38")],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
                     }
                     Spacer()
-                    Image(text == "" ? "up.primary" : "up.circle")
+                    Image(text == "" ? "up" : "up.circle")
                         .onTapGesture {
                             if !text.isEmpty {
                                 onSend()
@@ -72,9 +85,14 @@ extension View {
     @Previewable @State var text: String = ""
     @FocusState var isFocused: Bool
     
-    TextEditor(text: $text)
-        .focused($isFocused)
-        .commentTextEditorStyle(text: $text, isFocused: isFocused) {
-            print("전송 버튼 탭")
-        }
+    VStack{
+        TextEditor(text: $text)
+            .focused($isFocused)
+            .commentTextEditorStyle(text: $text, isFocused: isFocused) {
+                print("전송 버튼 탭")
+            }
+    }
+    .frame(maxHeight: .infinity)
+    .padding(.horizontal, 22.5)
+    .background(.mdSurf2)
 }

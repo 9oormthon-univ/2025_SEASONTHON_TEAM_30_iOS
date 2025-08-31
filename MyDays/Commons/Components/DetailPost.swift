@@ -32,7 +32,7 @@ struct DetailPostView: View {
                 //유저 닉네임
                 Text(post.userName)
                     .font(.b3())
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                 
                 //유저 칭호
                 UserTitleBadge(title: post.userTitle, color: Color(hex: post.userTitleColor))
@@ -56,7 +56,7 @@ struct DetailPostView: View {
                 //작성글
                 Text(post.content.forceCharWrapping)
                     .font(.b2())
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                 
                 //작성글 이미지
                 KFImage(URL(string: post.contentImgUrl))
@@ -82,19 +82,19 @@ struct DetailPostView: View {
                     
                     Text("\(post.likeCount)")
                         .font(.b3())
-                        .foregroundColor(.mdBrightBlack)
+                        .foregroundColor(.white)
                         .padding(.leading, 7)
                     
                     Image("comment")
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 18, height: 18)
-                        .foregroundColor(.mdBrightBlack)
+                        .foregroundColor(.white)
                         .padding(.leading, 10)
                     
                     Text("\(post.commentCount)")
                         .font(.b3())
-                        .foregroundColor(.mdBrightBlack)
+                        .foregroundColor(.white)
                         .padding(.leading, 7)
                 }
                 .padding(.top, 20)
@@ -108,6 +108,11 @@ struct DetailPostView: View {
 }
 
 #Preview {
-    DetailPostView(post: PostDetail.mock, onLike: {})
-        .padding(.horizontal, 30)
+    VStack {
+        //<----- 이 부분 사용 ---------------------------->
+        DetailPostView(post: PostDetail.mock, onLike: {})
+            .padding(.horizontal, 30)
+        //<----- 이 부분 사용 ---------------------------->
+    }
+    .background(.mdSurf3)
 }
