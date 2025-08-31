@@ -27,31 +27,34 @@ extension ShapeStyle where Self == Color {
     }
     
     //피그마 Color 네임명을 그대로 따라갔는데 추후 수정 가능
-    static var mdPrimary: Color { Color(hex: "#FF544E") }
-    static var mdPricon: Color { Color(hex: "#FF8581") }
-    static var mdPricon2: Color { Color(hex: "#FFCAC8") }
-    static var mdPricon3: Color { Color(hex: "#FFEBEA") }
+    static var mdPrimary: Color { Color(hex: "#0FF2FF") }
+    static var mdPrimaryCon: Color { Color(hex: "#A1FAFF") }
+    static var mdPrimaryText: Color { Color(hex: "#00888F") }
     
-    static var mdSecondary: Color { Color(hex: "#6A7BFF") }
-    static var mdSeconCon: Color { Color(hex: "#909DFF") }
-    
-    static var mdSurf1: Color { Color(hex: "#F5F5F5") }
-    static var mdSurf2: Color { Color(hex: "#ECEEF2") }
+    static var mdSecon: Color { Color(hex: "#60CE38") }
+    static var mdBrightSurf: Color { Color(hex: "#F5F5FD") }
     
     static var mdDim: Color { Color(hex: "#919191") }
     static var mdDim2: Color { Color(hex: "#767676") }
-    
     static var mdBrightBlack: Color { Color(hex: "#111111") }
+    
+    static var mdSurf2: Color { Color(hex: "#1E1F24") }
+    static var mdSurf3: Color { Color(hex: "#292B32") }
+    
+    static var mdError: Color { Color(hex: "#E30000") }
+    static var mdNavi1: Color { Color(hex: "#151617") }
+    static var mdNavi2: Color { Color(hex: "#3F4045") }
+    static var mdNavi3: Color { Color(hex: "#5B5D65") }
 }
 
 
 #Preview {
     let colors: [Color] = [
-        .mdPrimary, .mdPricon, .mdPricon2, .mdPricon3,
-        .mdSecondary, .mdSeconCon,
-        .mdSurf1, .mdSurf2,
-        .mdDim, .mdDim2,
-        .mdBrightBlack
+        .mdPrimary, .mdPrimaryCon, .mdPrimaryText,
+        .mdSecon, .mdBrightSurf,
+        .mdDim, .mdDim2, .mdBrightBlack,
+        .mdSurf2, .mdSurf3,
+        .mdError, .mdNavi1, .mdNavi2, .mdNavi3
     ]
     
     return ScrollView {

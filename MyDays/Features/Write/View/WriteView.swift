@@ -56,7 +56,7 @@ struct WriteView: View {
                 .padding(.bottom, 54 + 25) //탭뷰 height 는 54임
             }
         }
-        .background(.mdSurf1)
+//        .background(.mdSurf1)
         //헤더 질문
         .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
             QuestionHeaderView(dayText: vm.mission?.day ?? "",
@@ -204,7 +204,7 @@ struct AddPhotoBox: View {
                 .foregroundColor(.mdBrightBlack)
             Circle()
                 .frame(width: 30)
-                .foregroundColor(.mdSurf1)
+//                .foregroundColor(.mdSurf1)
                 .overlay {
                     //TODO: 추후 이미지로 받든지 stroke는 변경불가
                     Image("plus")
