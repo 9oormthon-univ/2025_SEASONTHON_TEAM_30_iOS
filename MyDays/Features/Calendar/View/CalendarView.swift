@@ -16,7 +16,7 @@ struct CalendarView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 //주 단위 달력
-                WeekCalendarView(selectedDate: $vm.selectedDate)
+                WeekCalendarView(selectedDate: $vm.selectedDate, weekDays: $vm.weekDays)
                 
                 
                 //미션 카드
@@ -46,7 +46,9 @@ struct CalendarView: View {
             CalendarHeaderView(onCalendarTap: {})
         }
         .onChange(of: vm.selectedDate) { _, _ in
-            vm.selectDate()
+            withAnimation { //주 단위 달력 밑에 뷰들도 애니메이션 효과
+                vm.selectDate()
+            }
         }
         //캘린더 뷰 조회 시
         .onAppear {
@@ -54,38 +56,17 @@ struct CalendarView: View {
         }
     }
 }
-// MARK: - 날짜 모델
-struct CalendarDay: Identifiable {
-    let id = UUID()
-    let date: Date
-    let dayNumber: Int    // 1, 2, 3...
-    let weekday: String   // 월, 화, 수...
-}
+
 // MARK: - Week Calendar View
 struct WeekCalendarView: View {
     @Binding var selectedDate: Date
-    @State private var weekDays: [CalendarDay] = []
+    @Binding var weekDays: [CalendarDay]
     @Namespace private var animation
     
-    let calendar =  Calendar.current
-    
-    private func generateWeekDays() -> [CalendarDay] {
-        let today = Date()
-        let weekdaySymbols = ["일","월","화","수","목","금","토"]
-        var days: [CalendarDay] = []
-        let weekday = calendar.component(.weekday, from: today)
-        for i in 0..<7 {
-            if let day = calendar.date(byAdding: .day, value: i - (weekday - 1), to: today) {
-                let dayNumber = calendar.component(.day, from: day)
-                let weekdayString = weekdaySymbols[calendar.component(.weekday, from: day) - 1]
-                days.append(CalendarDay(date: day, dayNumber: dayNumber, weekday: weekdayString))
-            }
-        }
-        return days
-    }
+    private let calendarManager = CalendarManager()
     
     var body: some View {
-        //렌더링 막기 위해 ?
+        //중복 렌더링 막기 위해 ?
         let selectedGradient = LinearGradient(
             colors: [.mdSurf3, Color(hex: "6E6E6E")],
             startPoint: .top,
@@ -94,7 +75,7 @@ struct WeekCalendarView: View {
         
         HStack(spacing: 0) {
             ForEach(weekDays) { day in
-                let isSelected = calendar.isDate(selectedDate, inSameDayAs: day.date)
+                let isSelected = calendarManager.isSameDay(selectedDate, day.date)
                 VStack(spacing: 8) {
                     //일 ~ 토
                     Text(day.weekday)
@@ -135,8 +116,7 @@ struct WeekCalendarView: View {
         .frame(maxWidth: .infinity)
         .background(.mdSurf2)
         .onAppear{
-            print("날짜받아옴")
-            weekDays = generateWeekDays()
+            weekDays = calendarManager.generateWeekDays()
         }
     }
 }
