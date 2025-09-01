@@ -12,8 +12,9 @@ import Foundation
 class CalendarViewModel: ObservableObject {
     @Published var dayContents: [DayContent] = [] //미션들 + 게시물들
     @Published var selectedDate: Date = Date() //선택된 날짜
+    @Published var weekDays: [CalendarDay] = [] //이번 주 날짜들
     
-    @Published var selectedDayContent: DayContent?
+    @Published var selectedDayContent: DayContent? //선택된 날짜의 콘텐츠 (미션 + 게시물)
     
     private let calendarService = MockCalendarService() //의존성 주입 (Real or Mock)
 
