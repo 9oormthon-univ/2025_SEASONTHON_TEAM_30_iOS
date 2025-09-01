@@ -8,7 +8,7 @@
 // MARK: - 날짜 모델
 import Foundation
 
-struct CalendarDay: Identifiable {
+struct CalendarDay: Identifiable, Hashable {
     let id = UUID()
     let date: Date
     let dayNumber: Int    // 1, 2, 3...

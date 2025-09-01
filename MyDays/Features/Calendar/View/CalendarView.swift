@@ -43,12 +43,18 @@ struct CalendarView: View {
         .padding(.top, -8) // ScrollView, safeAreaInset간에 조그만 gap 크기만큼 조정
         //헤더 질문
         .safeAreaInset(edge: .top) {
-            CalendarHeaderView(onCalendarTap: {})
+            CalendarHeaderView(onCalendarTap: {
+                vm.showMonthCalendar.toggle()
+            })
         }
         .onChange(of: vm.selectedDate) { _, _ in
             withAnimation { //주 단위 달력 밑에 뷰들도 애니메이션 효과
                 vm.selectDate()
             }
+        }
+        //달력 아이콘 누르면 월 단위 캘린더 뷰 등장
+        .fullScreenCover(isPresented: $vm.showMonthCalendar) {
+                MonthCalendarView()
         }
         //캘린더 뷰 조회 시
         .onAppear {
@@ -105,7 +111,7 @@ struct WeekCalendarView: View {
                 .contentShape(Rectangle())
                 .onTapGesture {
                     //TODO: - 애니메이션 밑에 뷰들이 렌더링되서 버퍼링 ?
-//                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.7)) {
+                    //                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.7)) {
                     withAnimation {
                         selectedDate = day.date
                     }
