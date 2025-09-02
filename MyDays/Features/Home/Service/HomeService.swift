@@ -44,7 +44,7 @@ class HomeService: HomeServiceProtocol {
 class MockHomeService: HomeServiceProtocol {
     // 서버로부터 홈 조회 요청
     func getHomePosts(page: Int) async throws -> [Post] {
-//        try await Task.sleep(nanoseconds: 1_000_000_000)
+        try await Task.sleep(nanoseconds: 5_000_000_000)
         
         // 페이지당 게시물 수를 정의합니다.
             let pageSize = 5
