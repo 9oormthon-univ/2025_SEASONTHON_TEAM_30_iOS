@@ -25,40 +25,54 @@ struct HomeView: View {
                     .padding(.top, 25)
                 
             }
-
-            
-            //게시물 리스트
-            LazyVStack(spacing: 0) {
-                ForEach(vm.posts) { post in
+            //게시물 리스트 (스켈레톤 or 진짜게시물)
+            Group {
+                //로딩 중일때 스켈레톤 뷰 보여주기
+                if vm.isLoading {
                     VStack(spacing: 0) {
-                        HomePostView(post: post, onLike: {
-                            //TODO: - 좋아요 눌렀을떄 처리
-                            print("onLike")
-                        })
-                            .padding(.horizontal, 30)
-                            .onTapGesture {
-                                nav.push(AppRoute.postDetail) //TODO: - 하트 영역이랑 댓글 영역도 고려
-                            }
-                        
-                    }
-                    //구분선 마지막 콘텐츠 빼고 주기
-                    if vm.posts.last != nil {
-                        Divider()
-                            .frame(height: 1)
-                            .overlay(.mdSurf2)
-                            .padding(.horizontal, 30)
-                            .padding(.bottom, 20)
+                        ForEach(0..<10) { _ in
+                            SkeletonHomePost()
+                                .skeleton(isRedacted: vm.isLoading)
+                                .padding(.horizontal, 30)
+                        }
                     }
                 }
-                // Sentinel View (무한 스크롤 트리거) TODO: 이거 이상한데 count수정
-                if vm.hasMorePages && vm.posts.count > 2 {
-                    ProgressView()
-                    //                        .padding()
-                        .onAppear {
-                            if !vm.isLoading {
-                                vm.getHome()
+                
+                //게시물 리스트
+                else {
+                    LazyVStack(spacing: 0) {
+                        ForEach(vm.posts) { post in
+                            VStack(spacing: 0) {
+                                HomePostView(post: post, onLike: {
+                                    //TODO: - 좋아요 눌렀을떄 처리
+                                    print("onLike")
+                                })
+                                .padding(.horizontal, 30)
+                                .onTapGesture {
+                                    nav.push(AppRoute.postDetail) //TODO: - 하트 영역이랑 댓글 영역도 고려
+                                }
+                                
+                            }
+                            //구분선 마지막 콘텐츠 빼고 주기
+                            if vm.posts.last != nil {
+                                Divider()
+                                    .frame(height: 1)
+                                    .overlay(.mdSurf2)
+                                    .padding(.horizontal, 30)
+                                    .padding(.bottom, 20)
                             }
                         }
+                        // Sentinel View (무한 스크롤 트리거) TODO: 이거 이상한데 count수정
+                        if vm.hasMorePages && vm.posts.count > 2 {
+                            ProgressView()
+                            //                        .padding()
+                                .onAppear {
+                                    if !vm.isLoading {
+                                        vm.getHome()
+                                    }
+                                }
+                        }
+                    }
                 }
             }
             .frame(maxWidth: .infinity)
