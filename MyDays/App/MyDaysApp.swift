@@ -9,9 +9,20 @@ import SwiftUI
 
 @main
 struct MyDaysApp: App {
+    @StateObject private var appState = AppState()
+    
     var body: some Scene {
         WindowGroup {
-            TabBarView()
+            switch appState.currentView {
+            case .splash:
+//                SplashView()
+                Color.blue
+            case .login:
+                LoginView()
+            case .main:
+                TabBarView()
+            }
         }
+        .environmentObject(appState)
     }
 }
