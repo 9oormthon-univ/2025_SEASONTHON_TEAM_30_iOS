@@ -8,52 +8,48 @@
 //MARK: - 홈 화면(View) 입니다.
 import Kingfisher
 import SwiftUI
-
 struct HomeView: View {
     @EnvironmentObject var nav: NavigationManager
     @StateObject var vm = HomeViewModel()
-    //TODO: Refreshable
+    @Environment(\.refresh) private var refresh
+
     var body: some View {
-        ScrollView {
-            //미션카드
-            if let mission = vm.mission {
-                HomeMissionCard(day: mission.day,
-                                mission: mission.text,
-                                isCompleted: mission.isCompleted,
-                                onChallengeTap: { nav.push(AppRoute.write)})
-                    .padding(.horizontal, 30)
-                    .padding(.top, 25)
-                
-            }
-            //게시물 리스트 (스켈레톤 or 진짜게시물)
-            Group {
-                //로딩 중일때 스켈레톤 뷰 보여주기
-                if vm.isLoading {
-                    VStack(spacing: 0) {
-                        ForEach(0..<10) { _ in
+        Group {
+            // MARK: - 첫 로딩용 Skeleton ScrollView
+            if vm.isFirstLoading {
+                ScrollView {
+                    // 미션카드
+                    missionCard()
+                    //스켈레톤
+                    VStack(spacing: 16) {
+                        ForEach(0..<2, id: \.self) { _ in
                             SkeletonHomePost()
-                                .skeleton(isRedacted: vm.isLoading)
+                                .skeleton(isRedacted: true)
                                 .padding(.horizontal, 30)
                         }
                     }
+                    .padding(.top, 25)
                 }
-                
-                //게시물 리스트
-                else {
+            }
+            // MARK: - 실제 데이터 ScrollView
+           else {
+                ScrollView {
+                    // 미션카드
+                    missionCard()
+                    
                     LazyVStack(spacing: 0) {
                         ForEach(vm.posts) { post in
                             VStack(spacing: 0) {
                                 HomePostView(post: post, onLike: {
-                                    //TODO: - 좋아요 눌렀을떄 처리
                                     print("onLike")
                                 })
                                 .padding(.horizontal, 30)
                                 .onTapGesture {
-                                    nav.push(AppRoute.postDetail) //TODO: - 하트 영역이랑 댓글 영역도 고려
+                                    nav.push(AppRoute.postDetail)
                                 }
-                                
                             }
-                            //구분선 마지막 콘텐츠 빼고 주기
+                            
+                            //구분 선
                             if vm.posts.last != nil {
                                 Divider()
                                     .frame(height: 1)
@@ -62,46 +58,56 @@ struct HomeView: View {
                                     .padding(.bottom, 20)
                             }
                         }
-                        // Sentinel View (무한 스크롤 트리거) TODO: 이거 이상한데 count수정
-                        if vm.hasMorePages && vm.posts.count > 2 {
+                        
+                        // 무한 스크롤 트리거 (페이지 받아올 게 더있으면 progress 대기시켜놓기 ?)
+                        if vm.hasMorePages {
                             ProgressView()
-                            //                        .padding()
                                 .onAppear {
-                                    if !vm.isLoading {
-                                        vm.getHome()
+                                    if !vm.isMoreLoading {
+                                        vm.getMorePosts()
                                     }
                                 }
                         }
                     }
+                    .padding(.top, 25)
+                    .background(.mdSurf2)
+                }
+               //리프레쉬
+                .refreshable {
+                    vm.refreshHome()
                 }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.top, 25)
-            .background(
-                RoundedRectangle(cornerRadius: 30)
-                    .fill(.mdSurf2)
-                //Shadows 디자인 시스템 적용안되서 일단 임시로 이렇게 해둠
-                    .shadow(color: Color(hex: "000000", alpha: 0.04), radius: 4, x: 2, y: -2)
-                   
-            )
+            
+           
         }
-        .background(.mdSurf2) //전체 배경
-        //헤더 질문
-        .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
-            HomeHeaderView()
+        .background(.mdSurf2)
+        .safeAreaInset(edge: .top) {
+            HomeHeaderView(onTapLogo: {
+               
+        })
         }
-        .onAppear{
-            vm.getMission()
-            vm.getHome()
+    }
+    //미션 카드 스켈레톤, 진짜 게시물에 2번쓰는거 번거로우니
+    @ViewBuilder
+    private func missionCard() -> some View {
+        if let mission = vm.mission {
+            HomeMissionCard(day: mission.day,
+                            mission: mission.text,
+                            isCompleted: mission.isCompleted,
+                            onChallengeTap: { nav.push(AppRoute.write)})
+                .padding(.horizontal, 30)
+                .padding(.top, 25)
         }
     }
 }
 
 //MARK: - 젤 위에 헤더부분
 struct HomeHeaderView: View {
+    let onTapLogo: () -> Void
+    
     var body: some View {
         HStack(spacing: 0) {
-           Spacer()
+            Spacer()
             //알람
             Image("noti")
                 .padding(10)
@@ -110,7 +116,10 @@ struct HomeHeaderView: View {
                 }
         }
         .overlay(
-            Image("logo")  
+            Image("logo")
+                .onTapGesture {
+                    onTapLogo()
+                }
         )
         .frame(maxWidth: .infinity)
         .frame(height: 40)
