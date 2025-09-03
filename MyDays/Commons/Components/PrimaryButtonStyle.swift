@@ -14,12 +14,12 @@ struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(isDisabled ? .b2() : .b2Bold())
-            .foregroundColor(isDisabled ? .mdBrightBlack : .white)
+            .foregroundColor(isDisabled ? .mdDim : .black)
             .frame(maxWidth: .infinity)
-            .frame(height: 48)
+            .frame(height: 56)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(isDisabled ? .mdDim : .mdPrimary)
+                    .fill(isDisabled ? .mdNavi2 : .mdPrimary)
             )
 
     }
