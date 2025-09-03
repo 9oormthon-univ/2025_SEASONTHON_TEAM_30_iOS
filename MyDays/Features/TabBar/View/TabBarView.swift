@@ -9,10 +9,8 @@ import SwiftUI
 
 struct TabBarView: View {
     @State private var selectedTab: TabItem = .home
-    @StateObject var navigationManager = NavigationManager()
     
     var body: some View {
-        NavigationStack(path: $navigationManager.path) {
             // 콘텐츠 영역
             TabView(selection: $selectedTab) {
                 Group {
@@ -27,25 +25,10 @@ struct TabBarView: View {
                 }
                 .toolbar(.hidden, for: .tabBar)
             }
-            
             // 커스텀 탭 바
             .overlay(alignment: .bottom) {
                 TabBar(selectedTab: $selectedTab)
             }
-            //네비게이션 목적지
-            .navigationDestination(for: AppRoute.self) { route in
-                switch route {
-                case .postDetail:
-                    PostDetailView()
-                    
-                case .write:
-                    WriteView()
-                }
-                
-            }
-        }
-        //네비게이션 매니저 하위뷰에 주입
-        .environmentObject(navigationManager)
     }
 }
 
