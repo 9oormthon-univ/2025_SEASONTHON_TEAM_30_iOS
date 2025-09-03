@@ -12,56 +12,96 @@ import Foundation
 class HomeViewModel: ObservableObject {
     @Published var mission: HomeMission? //홈 미션 모델
     @Published var posts: [Post] = [] //게시물들
-    @Published var isLoading: Bool = false
+    
+    @Published var isFirstLoading: Bool = false //처음 홈 조회 로딩
+    @Published var isMoreLoading: Bool = false //게시물 더 받아올때 로딩
+    @Published var isRefreshing: Bool = false //리프레쉬 로딩
     
     private let homeService = MockHomeService() //의존성 주입 (Real or Mock)
     
     // 💡 무한 스크롤을 위한 상태 변수
     @Published var currentPage = 1 // 현재 페이지 번호
-    @Published  var hasMorePages = true // 더 이상 페이지가 없는지 여부
+    @Published var hasMorePages = true // 더 이상 페이지가 없는지 여부
     
-    //MARK: - 홈 조회
-    //    func getHome() {
-    //
-    //        isLoading = true
-    //        print("로딩 true")
-    //        Task{
-    //
-    //            // HomeService의 getHome()을 호출하여 데이터를 가져옵니다.
-    //            let (profile, fetchedPosts) = try await homeService.getHomePosts(page: currentPage)
-    //
-    //            // 성공 시, @Published 속성을 업데이트하여 뷰를 갱신합니다.
-    //            self.userProfile = profile
-    //            self.posts = fetchedPosts
-    //
-    //            isLoading = false
-    //            print("로딩 false")
-    //        }
-    //    }
-    func getHome() {
-        guard !isLoading && hasMorePages else {
-            print("이미 로딩중 or 더 이상 페이지업음")
-            return }
-        isLoading = true
-        
+    init() {
+        getHomeFirst()
+    }
+    //MARK: - 홈 첫 조회
+    func getHomeFirst() {
+        self.isFirstLoading = true
         Task {
-            let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
-            
-            
-            if fetchedPosts.isEmpty {
-                self.hasMorePages = false
-            } else {
-                self.posts.append(contentsOf: fetchedPosts)
+            do {
+                getMission()
+                let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
+                
+                self.posts = fetchedPosts
                 self.currentPage += 1
             }
-            self.isLoading = false
+            catch {
+                
+            }
+            self.isFirstLoading = false
         }
     }
-    //MARK: - 미션 조회
-    func getMission() {
+    
+    //MARK: - 스크롤로 게시물 더 가져올때
+    func getMorePosts() {
+        // 이미 페이지를 불러오고 있거나 더 이상 페이지가 없으면 무시
+        guard !isMoreLoading && hasMorePages else {
+            print("더 이상 페이지 없음")
+            return
+        }
+        self.isMoreLoading = true
+        
         Task {
-            let fetchedMission = try await homeService.getHomeMission()
-            self.mission = fetchedMission
+            do {
+                let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
+                
+                
+                if fetchedPosts.isEmpty {
+                    self.hasMorePages = false
+                } else {
+                    self.posts.append(contentsOf: fetchedPosts)
+                    self.currentPage += 1
+                }
+            }
+            catch {
+                
+            }
+            self.isMoreLoading = false
+        }
+    }
+    //MARK: - 새로고침
+    func refreshHome() {
+        Task {
+            self.currentPage = 1
+            self.hasMorePages = true
+            self.mission = nil // 미션도 초기화
+
+            do {
+                getMission()
+                let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
+                self.posts = [] // 기존 게시물 초기화
+               
+                
+                self.posts = fetchedPosts
+                self.currentPage += 1
+            } catch {
+                // 에러 처리
+            }
+        }
+    }
+    
+    //MARK: - 미션 조회
+    private func getMission() {
+        Task {
+            do {
+                let fetchedMission = try await homeService.getHomeMission()
+                self.mission = fetchedMission
+            }
+            catch {
+                
+            }
         }
     }
 }

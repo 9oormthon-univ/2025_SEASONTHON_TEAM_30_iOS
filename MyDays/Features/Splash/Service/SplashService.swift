@@ -36,7 +36,7 @@ class MockSplashService: SplashServiceProtocol {
         try await Task.sleep(nanoseconds: 2_000_000_000)
         
         //자동 로그인 실패로 테스트 하려면
-        throw NSError(domain: "MockSplashError", code: 401, userInfo: [NSLocalizedDescriptionKey: "자동 로그인 실패"])
+//        throw NSError(domain: "MockSplashError", code: 401, userInfo: [NSLocalizedDescriptionKey: "자동 로그인 실패"])
         return SplashUserSession.mock
     }
 }
