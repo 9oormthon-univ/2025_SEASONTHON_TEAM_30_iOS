@@ -76,4 +76,10 @@ class WriteViewModel: ObservableObject {
             }
         }
     }
+    
+    //MARK: - 이미지 X표 누를때
+    func closeImage() {
+        self.selectedImage = nil
+        self.selectedItem = nil
+    }
 }

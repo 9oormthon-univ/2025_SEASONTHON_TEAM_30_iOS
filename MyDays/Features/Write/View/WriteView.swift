@@ -16,23 +16,30 @@ struct WriteView: View {
     
     var body: some View {
         ScrollView {
-            //오늘의 미션을 했다면
-            if vm.mission?.isCompleted == true {
-                TodayCompletedMissionBox()
-                    .padding(.top, 40)
-                    .padding(.horizontal, 26.5)
-            }
-            //오늘의 미션을 안했다면
-            else {
-                VStack(spacing: 30) {
+            if let mission = vm.mission {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(mission.day) //TODO: 미션 Day 없애는지
+                        .font(.t2())
+                        .foregroundColor(.white)
+                        .padding(.top, 10)
+                    
+                    Text(mission.text)
+                        .font(.b1())
+                        .foregroundColor(.white)
+                        .padding(.top, 10)
+                    
                     //텍스트 에디터
                     TextEditor(text: $vm.text)
                         .focused($isFocused)
                         .textEditorStyle(text: $vm.text, placeholder: "내용을 입력하세요")
+                        .padding(.top, 30)
                     
                     //선택된 이미지
                     if let selectedImage = vm.selectedImage {
-                        SelectedImageView(uiImage: selectedImage, selectedImage: $vm.selectedImage)
+                        SelectedImageView(uiImage: selectedImage, onClose: {
+                            vm.closeImage()
+                        })
+                        .padding(.top, 30)
                     }
                     
                     //사진 추가 박스
@@ -40,6 +47,7 @@ struct WriteView: View {
                         PhotosPicker(selection: $vm.selectedItem,
                                      matching: .images) {
                             AddPhotoBox()
+                                .padding(.top, 30)
                         }
                     }
                     
@@ -48,25 +56,27 @@ struct WriteView: View {
                         .buttonStyle(.primary(isDisabled: vm.disabled))
                         .disabled(vm.disabled)
                         .overlay {
+                            //TODO: 이거 말고 로딩 로티 .. ?
                             if vm.isLoading {
                                 ProgressView()
                             }
                         }
+                        .padding(.top, 30)
                 }
-                .padding(.top, 40)
+                .padding(.top, 20)
                 .padding(.horizontal, 30)
                 .padding(.bottom, 54 + 25) //탭뷰 height 는 54임
             }
         }
+        .padding(.top, -8) //스크롤뷰, 헤더간 간격
         .background(.mdSurf2)
         .onTapGesture {
             isFocused = false //다른데 터치하면 포커스 풀리기
         }
         .toolbar(.hidden, for: .navigationBar)
-        //헤더 질문
+        //헤더뷰
         .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
-            QuestionHeaderView(dayText: vm.mission?.day ?? "",
-                               question: vm.mission?.text ?? "")
+            WriteHeaderView(onBack: { nav.popLast() })
         }
         //사진 변경 감지해서 로드
         .onChange(of: vm.selectedItem) { _, _ in
@@ -86,39 +96,25 @@ struct WriteView: View {
     }
 }
 //MARK: - 젤 위에 질문뷰
-struct QuestionHeaderView: View {
-    let dayText: String
-    let question: String
+struct WriteHeaderView: View {
+    let onBack: () -> Void
     
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                //Day + 미션 내용
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(dayText)
-                        .font(.t2())
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Text(question)
-                        .font(.b1())
-                        .foregroundColor(.white)
-                }
-                
-                Spacer()
-                //닫기 버튼 TODO: X버튼 피그마 확인
-                Image("close")
+        Text("챌린지 작성")
+            .font(.b1())
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 54)
+            .padding(.horizontal, 30)
+            .background(.mdSurf2)
+            .dropshadow1()
+            .overlay(alignment: .leading) {
+                Image("back")
                     .onTapGesture {
-                        
+                        onBack()
                     }
+                    .padding(.horizontal, 30)
             }
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 117)
-        .padding(.horizontal, 30)
-        .background(.mdSurf2)
-        .dropshadow1()
     }
 }
 
@@ -184,10 +180,10 @@ extension View {
 //MARK: - 선택된 이미지
 struct SelectedImageView: View {
     let uiImage: UIImage
-    @Binding var selectedImage: UIImage?
+    let onClose: () -> Void
     
     var body: some View {
-        let size = UIScreen.main.bounds.width - 109
+        let size = UIScreen.main.bounds.width - 60
         
         Image(uiImage: uiImage)
             .resizable()
@@ -198,7 +194,7 @@ struct SelectedImageView: View {
             .overlay(alignment: .topTrailing){
                 Image("close.circle")
                     .onTapGesture {
-                        selectedImage = nil
+                        onClose()
                     }
                     .padding(20)
             }
@@ -223,21 +219,6 @@ struct AddPhotoBox: View {
                 .fill(.mdSurf3)
         )
         
-    }
-}
-
-//MARK: - 오늘의 챌린지 완료 박스
-struct TodayCompletedMissionBox: View {
-    var body: some View {
-        Text("오늘의 챌린지를 완료했어요!")
-            .font(.b1())
-            .foregroundColor(.mdBrightBlack)
-            .frame(maxWidth: .infinity)
-            .frame(height: 117)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(.white)
-            )
     }
 }
 
