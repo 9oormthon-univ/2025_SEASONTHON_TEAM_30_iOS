@@ -18,7 +18,11 @@ struct MonthCalendarView: View {
             //캘린더 1개만 있으면 중앙정렬
             if vm.months.count == 1 {
                 VStack {
-                    MonthCalendar(monthDays: vm.months.first!, posts: vm.posts)
+                    MonthCalendar(monthDays: vm.months.first!, posts: vm.posts) { postId in
+                        //날짜 눌렀을때
+                        vm.selectedPostId = postId
+                        vm.showCompletedDetail.toggle()
+                    }
                 }
                 .frame(maxHeight: .infinity)
                 .padding(.bottom, 62 + 66) //safeArea + top 합친게 62 + 66
@@ -28,7 +32,11 @@ struct MonthCalendarView: View {
                 ScrollView {
                     LazyVStack(spacing: 30) {
                         ForEach(vm.months.reversed(), id: \.self) { monthDays in
-                            MonthCalendar(monthDays: monthDays, posts: vm.posts)
+                            MonthCalendar(monthDays: monthDays, posts: vm.posts) {postId in 
+                                //날짜 눌렀을때
+                                vm.selectedPostId = postId
+                                vm.showCompletedDetail.toggle()
+                            }
                         }
                     }
                     .padding(.top, 20)
@@ -60,6 +68,10 @@ struct MonthCalendarView: View {
                     }
             }
         }
+        //날짜 누르면 디테일 뷰로 진입
+        .fullScreenCover(isPresented: $vm.showCompletedDetail) {
+            CompletedPostDetailView(postId: vm.selectedPostId)
+        }
         .onAppear {
             vm.getMonthCalendar()
         }
@@ -69,9 +81,9 @@ struct MonthCalendarView: View {
 
 //MARK: - 달력
 struct MonthCalendar: View {
-    @EnvironmentObject var nav: NavigationManager
     let monthDays: [CalendarDay] //해당 월의 날짜 리스트
     let posts: [MonthCalendarPost]
+    let onTabDate: (String) -> Void
     
     private let calendarManager = CalendarManager()
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
@@ -116,8 +128,7 @@ struct MonthCalendar: View {
                             ZStack {
                                 //게시물과 같은 날이면 이미지 표시
                                 if let post = post {
-                                    //TODO: - 네비게이션 푸시 말고 풀스크린 방안도 생각 ..
-                                    Button(action: { nav.push(AppRoute.postDetail) }) {
+                                    Button(action: { onTabDate(post.postId) }) {
                                         KFImage(URL(string: post.imageUrl))
                                             .placeholder { // 로딩 중 보여줄 뷰
                                                 Circle()

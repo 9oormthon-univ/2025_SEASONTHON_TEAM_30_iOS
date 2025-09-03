@@ -39,6 +39,23 @@ extension PostDetail {
     }
 }
 
+// 완료한 디테일 페이지 서버 응답 모델을 Post 모델로 매핑하기 위한 이니셜라이저
+extension PostDetail {
+    init(from data: CompletedDetailResponse.PostsResponse) {
+        self.id = data.postId
+        self.userimgUrl = data.userimgUrl
+        self.userName = data.userName
+        self.userTitle = data.userTitle
+        self.userTitleColor = data.userTitleColor
+        self.createdAt = data.createdAt
+        self.content = data.content
+        self.contentImgUrl = data.contentImgUrl
+        self.likeCount = data.likeCount
+        self.isLiked = data.isLiked
+        self.commentCount = data.commentCount
+    }
+}
+
 
 // MARK: - Mock 데이터
 extension PostDetail {
