@@ -37,11 +37,11 @@ extension PostDetailComment {
         PostDetailComment(
             id: "1",
             userimgUrl: "https://picsum.photos/50?1",
-            userName: "나다",
-            userTitle: "성실꾼",
-            userTitleColor: "#FFDC68",
-            createdAt: "2025-08-29",
-            content: "오늘 날씨가 정말 좋네요 저도 휴양을 떠나고 싶네요 ㅎㅎ!"
+            userName: "가나다라마바",
+            userTitle: "하트부자💗",
+            userTitleColor: "#FF83DA",
+            createdAt: "3분전",
+            content: "추천 감사해요! 오늘 퇴근길에 바로 들어볼게요 🎧"
         ),
         PostDetailComment(
             id: "2",

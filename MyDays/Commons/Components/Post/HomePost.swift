@@ -25,19 +25,20 @@ struct HomePostView: View {
                     }
                     .cancelOnDisappear(true)
                     .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxWidth: 42)
+                    .scaledToFill()
+                    .frame(width: 42, height: 42)
                     .clipped()
                     .clipShape(Circle())
                 
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 6) {
                     //유저 칭호
-                    UserTitleBadge(title: post.userTitle, color: Color(hex: post.userTitleColor))
+                    UserTitleBadge(title: post.userTitle, color: post.userTitleColor)
                     
                     //유저 닉네임
                     Text(post.userName)
-                        .font(.b3())
+                        .font(.b1Bold())
                         .foregroundColor(.white)
+                        .padding(.leading, 4)
                 }
                 Spacer()
             }
@@ -49,26 +50,31 @@ struct HomePostView: View {
                 //작성글
                 Text(post.content.forceCharWrapping)
                     .lineLimit(3) //3줄이상은 ...로 표시
-                    .font(.b2())
+                    .font(.b3())
                     .foregroundColor(.white)
+                    .padding(.horizontal, 4)
                 
                 //작성시간
                 Text(post.createdAt)
                     .font(.b3())
                     .foregroundColor(.mdDim2)
+                    .padding(.horizontal, 4)
+                    .padding(.top, 8)
                 
                 //작성글 이미지
+                let size = UIScreen.main.bounds.width - 48
+                
                 KFImage(URL(string: post.contentImgUrl))
                     .placeholder { // 로딩 중
                         ProgressView()
                     }
                     .cancelOnDisappear(true)
                     .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxWidth: UIScreen.main.bounds.width - 109)
+                    .scaledToFill()
+                    .frame(width: size, height: size)
                     .clipped()
                     .clipShape( RoundedRectangle(cornerRadius: 12))
-                    .padding(.top, 10)
+                    .padding(.top, 8)
                 
                 //좋아요, 댓글
                 HStack(spacing: 0) {
@@ -89,19 +95,21 @@ struct HomePostView: View {
                         .resizable()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.white)
-                        .padding(.leading, 10)
+                        .padding(.leading, 20)
                     
                     Text("\(post.commentCount)")
                         .font(.b3())
                         .foregroundColor(.white)
                         .padding(.leading, 7)
                 }
-                .padding(.top, 20)
+                .padding(.leading, 8)
+                .padding(.top, 16)
             }
-            .padding(.leading, 49)
+            .padding(.top, 8)
+//            .padding(.horizontal, 20)
             //<---------------------------------->
         }
-        .padding(.bottom, 20)
+        .padding(.bottom, 25)
     }
 }
 
