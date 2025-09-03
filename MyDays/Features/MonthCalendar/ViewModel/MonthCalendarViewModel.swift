@@ -12,6 +12,8 @@ import Foundation
 class MonthCalendarViewModel: ObservableObject {
     @Published var months: [[CalendarDay]] = [] //1월(1~31일), 2월(1~31일) 달력묶음
     @Published var posts: [MonthCalendarPost] = [] //(postPk, 이미지url, date)의 리스트
+    @Published var showCompletedDetail: Bool = false //완료한 디테일 페이지로 이동시켜야하는지
+    @Published var selectedPostId: String = "" //날짜 터치된 게시물 id
     
     private let calendarManager = CalendarManager()
     private let mnthCalendarService = MockMonthCalendarService() //의존성 주입 (Real or Mock)

@@ -18,7 +18,7 @@ struct PostDetailComment: Identifiable, Equatable {
     let content: String //댓글 내용
 }
 
-// 서버 응답 모델을 Post 모델로 매핑하기 위한 이니셜라이저
+// 서버 응답 모델을 매핑하기 위한 이니셜라이저
 extension PostDetailComment {
     init(from data: GetPostDetailResponse.CommentsResponse) {
         self.id = data.commentId
@@ -30,6 +30,20 @@ extension PostDetailComment {
         self.content = data.content
     }
 }
+
+// 완료한 디테일 페이지 서버 응답 모델을 매핑하기 위한 이니셜라이저
+extension PostDetailComment {
+    init(from data: CompletedDetailResponse.CommentsResponse) {
+        self.id = data.commentId
+        self.userimgUrl = data.userimgUrl
+        self.userName = data.userName
+        self.userTitle = data.userTitle
+        self.userTitleColor = data.userTitleColor
+        self.createdAt = data.createdAt
+        self.content = data.content
+    }
+}
+
 
 //MARK: - Mock 데이터
 extension PostDetailComment {
