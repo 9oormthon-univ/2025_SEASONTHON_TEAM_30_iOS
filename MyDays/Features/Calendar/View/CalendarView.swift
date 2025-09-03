@@ -21,16 +21,20 @@ struct CalendarView: View {
                 
                 //미션 카드
                 if let dayContent = vm.selectedDayContent {
-                    CalendarMissionCard(day: "DAY \(dayContent.day)", date: dayContent.date, mission: dayContent.text)
-                        .padding(.top, 10)
+                    CalendarMissionCard(date: dayContent.date,
+                                        mission: dayContent.text,
+                                        isCompleted: dayContent.isCompleted)
+                        .padding(.top, 20)
+                        .padding(.horizontal, 30)
                     
                     //선택된 날짜의 게시물
                     if let post = dayContent.post {
                         HomePostView(post: post) {
                             //좋아요 로직 처리
                         }
-                        .padding(.horizontal, 30)
-                        .padding(.top, 30)
+                        .contentShape(Rectangle())
+                        .padding(.horizontal, 24)
+                        .padding(.top, 46)
                         .onTapGesture {
                             nav.push(AppRoute.postDetail)
                         }
@@ -156,21 +160,12 @@ struct CalendarHeaderView: View {
 
 //MARK: - 캘린더 미션 카드
 struct CalendarMissionCard: View {
-    let day: String
     let date: String
     let mission: String
+    let isCompleted: Bool
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            //DAY 1
-            Text(day)
-                .font(.b3Bold())
-                .foregroundColor(.mdPrimaryText)
-                .padding(.horizontal, 10)
-                .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(.mdPrimaryCon)
-                )
+        VStack(alignment: .leading, spacing: 8) {
             //9월 2일 화요일
             Text(date)
                 .font(.t2())
@@ -178,12 +173,38 @@ struct CalendarMissionCard: View {
             
             //미션 내용
             Text(mission.forceCharWrapping)
-                .font(.b2())
-                .foregroundColor(.mdBrightSurf)
+                .font(.b2Bold())
+                .foregroundColor(.white)
+            
+            if isCompleted {
+                //도전 완료 체크 박스
+                HStack(spacing: 0) {
+                    Spacer()
+                    
+                    HStack(spacing: 0) {
+                        Text("도전 완료")
+                            .font(.l1())
+                            .foregroundColor(.white)
+                        
+                        Image("check")
+                    }
+                    .padding(.leading, 16)
+                    .padding(.trailing, 4)
+                    .padding(.vertical, 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 100)
+                            .fill(Color(hex: "606060"))
+                    )
+                }
+            }
         }
+        .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(30)
-        .background(.mdSurf3)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(.mdSurf3)
+                .stroke(.mdDim, lineWidth: 1)
+        )
     }
 }
 
