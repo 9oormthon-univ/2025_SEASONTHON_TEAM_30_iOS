@@ -71,23 +71,41 @@ class HomeViewModel: ObservableObject {
             self.isMoreLoading = false
         }
     }
+    
     //MARK: - 새로고침
     func refreshHome() {
         Task {
             self.currentPage = 1
             self.hasMorePages = true
             self.mission = nil // 미션도 초기화
-
+            
             do {
                 getMission()
                 let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
                 self.posts = [] // 기존 게시물 초기화
-               
+                
                 
                 self.posts = fetchedPosts
                 self.currentPage += 1
             } catch {
                 // 에러 처리
+            }
+        }
+    }
+    
+    //MARK: - 좋아요 누르기/취소
+    func postLike(post: Post) {
+        Task {
+            do {
+                _ = try await homeService.postlike(postId: post.id)
+                // posts 배열에서 해당 post 인덱스 찾기
+                if let index = posts.firstIndex(where: { $0.id == post.id }) {
+                    posts[index].isLiked.toggle()          // 좋아요 상태 반전
+                    posts[index].likeCount += posts[index].isLiked ? 1 : -1 // 좋아요 카운트 변경
+                }
+            }
+            catch {
+                print("좋아요 누르기/취소 에러")
             }
         }
     }

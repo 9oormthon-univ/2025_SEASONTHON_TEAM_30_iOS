@@ -14,6 +14,7 @@ import Foundation
 protocol HomeServiceProtocol {
     func getHomePosts(page: Int) async throws -> [Post]
     func getHomeMission() async throws -> HomeMission
+    func postlike(postId: String) async throws -> EmptyData
 }
 
 // MARK: - HomeService (실제 API 통신)
@@ -37,6 +38,17 @@ class HomeService: HomeServiceProtocol {
         let mission = HomeMission(from: response)
         
         return mission
+    }
+    
+    // 좋아요 기능
+    func postlike(postId: String) async throws -> EmptyData {
+        let parameters: Parameters = [
+            "postId": postId
+        ]
+        
+        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        
+        return response
     }
 }
 
@@ -71,5 +83,9 @@ class MockHomeService: HomeServiceProtocol {
     // 홈 미션 조회
     func getHomeMission() async throws -> HomeMission {
         return HomeMission.mock
+    }
+    // 좋아요 기능
+    func postlike(postId: String) async throws -> EmptyData {
+        return EmptyData()
     }
 }

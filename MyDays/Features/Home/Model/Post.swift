@@ -17,8 +17,8 @@ struct Post: Identifiable, Equatable {
     let createdAt: String //작성 시간
     let content: String //내용
     let contentImgUrl: String //게시물 이미지 Url
-    let likeCount: Int //좋아요 개수
-    let isLiked: Bool //좋아요 눌렀는지
+    var likeCount: Int //좋아요 개수
+    var isLiked: Bool //좋아요 눌렀는지
     let commentCount: Int //댓글 개수
 }
 

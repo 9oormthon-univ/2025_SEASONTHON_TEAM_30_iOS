@@ -30,7 +30,7 @@ struct GetHomePostsResponse: Decodable {
 
 //미션 조회 Response
 struct GetHomeMissionResponse: Decodable {
-    let day: String
+    let userImgUrl: String
     let text: String
     let isCompleted: Bool
 }
