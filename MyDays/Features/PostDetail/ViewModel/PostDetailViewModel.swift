@@ -13,6 +13,9 @@ class PostDetailViewModel: ObservableObject {
     @Published var post: PostDetail? //게시물 정보
     @Published var comments: [PostDetailComment] = [] //댓글들
     @Published var commentText: String = "" //입력한 댓글 text
+    @Published var isShowActionSheet: Bool = false //액션 시트 보여줄지
+    @Published var isShowAlert: Bool = false //삭제 알럿 보여줄지
+    @Published var isCompleteDelete: Bool = false //삭제 완료 후 네비게이션 트리거
     
     private let postDetailService = MockPostDetailService() //의존성 주입 (Real or Mock)
 
@@ -62,6 +65,22 @@ class PostDetailViewModel: ObservableObject {
             }
             catch {
                 print("좋아요 누르기/취소 에러")
+            }
+        }
+    }
+    
+    //MARK: - 게시물 삭제
+    func deletePost() {
+        guard let postId = self.post?.id else { return }
+        Task {
+            do {
+                _ = try await postDetailService.deletePost(request: DeletePostRequest(
+                    postId: postId
+                ))
+                self.isCompleteDelete = true //네비게이션 트리거
+            }
+            catch {
+                
             }
         }
     }

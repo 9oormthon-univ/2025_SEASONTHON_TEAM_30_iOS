@@ -43,3 +43,8 @@ struct SendCommentRequest: Decodable {
     let postId: String
     let content: String
 }
+
+//게시물 삭제 Request
+struct DeletePostRequest: Decodable {
+    let postId: String
+}

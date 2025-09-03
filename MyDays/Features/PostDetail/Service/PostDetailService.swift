@@ -14,6 +14,7 @@ protocol PostDetailServiceProtocol {
     func getPostDetail() async throws -> (PostDetail, [PostDetailComment])
     func sendComment(request: SendCommentRequest) async throws -> EmptyData
     func postlike(postId: String) async throws -> EmptyData
+    func deletePost(request: DeletePostRequest) async throws -> EmptyData
 }
 
 // MARK: - PostDetailService (실제 API 통신)
@@ -50,6 +51,17 @@ class PostDetailService: PostDetailServiceProtocol {
         
         return response
     }
+    
+    // 게시물 삭제
+    func deletePost(request: DeletePostRequest) async throws -> EmptyData {
+        let parameters: Parameters = [
+            "postId": request.postId
+        ]
+        
+        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        
+        return response
+    }
 }
 
 //MARK: - MockPostDetailService (테스트용)
@@ -68,6 +80,11 @@ class MockPostDetailService: PostDetailServiceProtocol {
     
     // 좋아요 기능
     func postlike(postId: String) async throws -> EmptyData {
+        return EmptyData()
+    }
+    
+    // 게시물 삭제
+    func deletePost(request: DeletePostRequest) async throws -> EmptyData {
         return EmptyData()
     }
 }
