@@ -11,6 +11,7 @@ import SwiftUI
 struct TabBar: View {
     @Binding var selectedTab: TabItem
     @Namespace private var namespace
+    let onHomeTapped: () -> Void //홈 탭을 탭했는지 (스크롤 위해)
     
     var body: some View {
         HStack(spacing: 0) {
@@ -73,6 +74,11 @@ struct TabBar: View {
         )
         .contentShape(Rectangle())
         .onTapGesture {
+            // <---- 홈 화면 스크롤 트리거를 위한 로직 ---->
+            if tab == .home, selectedTab == .home {
+                onHomeTapped()
+            }
+            // <---------------------------------->
             withAnimation(.interactiveSpring(response: 0.6, dampingFraction: 0.85, blendDuration: 0.2)) {
                 selectedTab = tab
             }
@@ -83,5 +89,5 @@ struct TabBar: View {
 #Preview {
     @Previewable @State var selectedTab: TabItem = .home
    
-    TabBar(selectedTab: $selectedTab)
+    TabBar(selectedTab: $selectedTab) {}
 }

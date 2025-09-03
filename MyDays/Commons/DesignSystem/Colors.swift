@@ -40,6 +40,7 @@ extension ShapeStyle where Self == Color {
     
     static var mdSurf2: Color { Color(hex: "#1E1F24") }
     static var mdSurf3: Color { Color(hex: "#292B32") }
+    static var mdSurf4: Color { Color(hex: "#3F4045") }
     
     static var mdError: Color { Color(hex: "#E30000") }
     static var mdNavi1: Color { Color(hex: "#151617") }
@@ -53,7 +54,7 @@ extension ShapeStyle where Self == Color {
         .mdPrimary, .mdPrimaryCon, .mdPrimaryText,
         .mdSecon, .mdBrightSurf,
         .mdDim, .mdDim2, .mdBrightBlack,
-        .mdSurf2, .mdSurf3,
+        .mdSurf2, .mdSurf3, .mdSurf4,
         .mdError, .mdNavi1, .mdNavi2, .mdNavi3
     ]
     
