@@ -26,8 +26,7 @@ struct LoginView: View {
         //작성 완료 감지해서 디테일 페이지로 이동
         .onChange(of: vm.isNewUser) { _, newValue in
             if newValue {
-//                nav.push(AppRoute.setNickname) //닉네임 설정 페이지로 이동시키기
-                print("닉네임 설정 페이지로 이동")
+                nav.push(AppRoute.setNickname) //닉네임 설정 페이지로 이동시키기
                 vm.isNewUser = false // 플래그 리셋 (중복 이동 방지)
             }
         }
