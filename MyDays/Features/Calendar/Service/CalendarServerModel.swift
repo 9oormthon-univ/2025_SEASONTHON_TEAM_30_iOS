@@ -17,6 +17,7 @@ struct GetWeeksResponse: Decodable {
         let day: Int
         let date: String
         let missionText: String
+        let isCompleted: Bool
         
         //게시물 내용들
         let postId: String
