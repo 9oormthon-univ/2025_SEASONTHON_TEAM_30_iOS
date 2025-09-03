@@ -23,15 +23,16 @@ struct CommentTextEditorStyleModifier: ViewModifier {
             .padding(.trailing, 44)
         
             .contentMargins(.leading, -5)
-            .contentMargins(.top, 5)
+            .contentMargins(.top, 8)
         //                .contentMargins(.bottom, 5)
         
-            .frame(minHeight: 50, maxHeight: 110)
+            .frame(minHeight: 56, maxHeight: 116)
             .fixedSize(horizontal: false, vertical: true)
             .scrollContentBackground(.hidden) //기본 배경 제거
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(hex: "000000"))
+                    .fill(Color.black.opacity(1.0))
+
                     .stroke(
                         LinearGradient(
                         colors: [.mdPrimary, Color(hex: "60CE38")],
@@ -39,6 +40,7 @@ struct CommentTextEditorStyleModifier: ViewModifier {
                         endPoint: .trailing
                     ),
                         lineWidth: 2)
+
             )
         //댓글 달기 + 전송버튼
             .overlay(alignment: .bottom) {
@@ -63,7 +65,7 @@ struct CommentTextEditorStyleModifier: ViewModifier {
                         }
                 }
                 .padding(.horizontal, 20)
-                .padding(.vertical, 14)
+                .padding(.vertical, 16.5)
             }
         //100자 초과하면 막기
             .onChange(of: text) { _, newValue in
@@ -74,6 +76,18 @@ struct CommentTextEditorStyleModifier: ViewModifier {
         
     }
 }
+struct VisualEffectBlur: UIViewRepresentable {
+    var style: UIBlurEffect.Style
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        UIVisualEffectView(effect: UIBlurEffect(style: style))
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: style)
+    }
+}
+
 extension View {
     func commentTextEditorStyle(text: Binding<String>, isFocused: Bool, onSend: @escaping () ->  Void) -> some View {
         self.modifier(CommentTextEditorStyleModifier(text: text, isFocused: isFocused, onSend: onSend))
