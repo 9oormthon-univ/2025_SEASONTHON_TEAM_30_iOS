@@ -149,7 +149,7 @@ struct HomeMissionCard: View {
                             .fill(.mdPrimaryCon)
                     )
                 Text("오늘의 챌린지를 확인하세요!")
-                    .font(.b3Light())
+//                    .font(.b3Light())
                     .foregroundColor(.white)
             }
             //미션 내용

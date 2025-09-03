@@ -43,7 +43,11 @@ extension UIFont {
         return customFont(for: weight, size: 20)
     }
     
-    static func b1(_ weight: UIFont.Weight = .medium) -> UIFont {
+    static func b1(_ weight: UIFont.Weight = .regular) -> UIFont {
+        return customFont(for: weight, size: 16)
+    }
+    
+    static func b1Bold(_ weight: UIFont.Weight = .bold) -> UIFont {
         return customFont(for: weight, size: 16)
     }
     
@@ -55,7 +59,7 @@ extension UIFont {
         return customFont(for: weight, size: 15)
     }
     
-    static func b3(_ weight: UIFont.Weight = .light) -> UIFont {
+    static func b3(_ weight: UIFont.Weight = .regular) -> UIFont {
         return customFont(for: weight, size: 14)
     }
     
@@ -63,15 +67,11 @@ extension UIFont {
         return customFont(for: weight, size: 14)
     }
     
-    static func b3Light(_ weight: UIFont.Weight = .light) -> UIFont {
+    static func b3BoldNickname(_ weight: UIFont.Weight = .bold) -> UIFont {
         return customFont(for: weight, size: 14)
     }
     
     static func l1(_ weight: UIFont.Weight = .medium) -> UIFont {
-        return customFont(for: weight, size: 12)
-    }
-    
-    static func l1Light(_ weight: UIFont.Weight = .light) -> UIFont {
         return customFont(for: weight, size: 12)
     }
     
@@ -91,13 +91,13 @@ extension View {
         case UIFont.t1(): multiplier = 1.3
         case UIFont.t2(): multiplier = 1.3
         case UIFont.b1(): multiplier = 1.5
-        case UIFont.b2(): multiplier = 1.45
-        case UIFont.b2Bold(): multiplier = 1.45
+        case UIFont.b1Bold(): multiplier = 1.5
+        case UIFont.b2(): multiplier = 1.5
+        case UIFont.b2Bold(): multiplier = 1.5
         case UIFont.b3(): multiplier = 1.4
-        case UIFont.b3Bold(): multiplier = 1.4
-        case UIFont.b3Light(): multiplier = 1.4
+        case UIFont.b3Bold(): multiplier = 1.5
+        case UIFont.b3BoldNickname(): multiplier = 1.1
         case UIFont.l1(): multiplier = 1.0
-        case UIFont.l1Light(): multiplier = 1.0
         case UIFont.l2(): multiplier = 1.1
        
         default: multiplier = 1.0
@@ -125,6 +125,8 @@ extension View {
             .font(.t2())
         Text("B1")
             .font(.b1())
+        Text("B1-Bold")
+            .font(.b1Bold())
         Text("B2")
             .font(.b2())
         Text("B2-Bold")
@@ -133,12 +135,10 @@ extension View {
             .font(.b3())
         Text("B3-Bold")
             .font(.b3Bold())
-        Text("B3-light")
-            .font(.b3Light())
+        Text("B3-Bold-Nickname")
+            .font(.b3BoldNickname())
         Text("L1")
             .font(.l1())
-        Text("L1-light")
-            .font(.l1Light())
         Text("L2")
             .font(.l2())
     }

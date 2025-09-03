@@ -11,21 +11,29 @@ import SwiftUI
 
 struct UserTitleBadge: View {
     let title: String
-    let color: Color
+    let color: String
     
     var body: some View {
         Text(title)
-            .font(.l2())
-            .foregroundColor(.mdBrightBlack)
-            .padding(.horizontal, 10)
+            .font(.b3BoldNickname())
+            .foregroundColor(Color(hex: color))
+            .padding(.horizontal, 8)
             .padding(.vertical, 3)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.white.shadow(.inner(color: color, radius: 20, x: 0, y: -3)))
+                    .fill(Color(hex: color, alpha: 0.2))
             )
     }
 }
 
 #Preview {
-    UserTitleBadge(title: "성실꾼", color: Color(hex: "FFDC68"))
+    VStack{
+        UserTitleBadge(title: "챌린저🚴", color: "A35CFF")
+        UserTitleBadge(title: "하트부자💗", color: "FF83DA")
+        UserTitleBadge(title: "소확행러🫰", color: "FEBC2F")
+        UserTitleBadge(title: "스타터 🏁", color: "FFFFFF")
+        UserTitleBadge(title: "소통왕🗽", color: "0FF2FF")
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(.mdSurf2)
 }

@@ -5,7 +5,7 @@
 //  Created by 양재현 on 8/30/25.
 //
 
-//MARK: - 작성글 디테일 뷰 Comment View
+//MARK: - 댓글 컴포넌트
 import SwiftUI
 import Kingfisher
 
@@ -23,40 +23,42 @@ struct DetailCommentView: View {
                     }
                     .cancelOnDisappear(true)
                     .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxWidth: 42)
+                    .scaledToFill()
+                    .frame(width: 42, height: 42)
                     .clipped()
                     .clipShape(Circle())
                 
-                //유저 닉네임
-                Text(comment.userName)
-                    .font(.b3())
+                VStack(alignment: .leading, spacing: 6) {
+                    //유저 칭호
+                    UserTitleBadge(title: comment.userTitle, color: comment.userTitleColor)
+                    
+                    //유저 닉네임
+                    Text(comment.userName)
+                        .font(.b1Bold())
+                        .foregroundColor(.white)
+                        .padding(.leading, 4)
+                }
+                
+                Spacer()
+            }
+           
+            //<---------------------------->
+            VStack(alignment: .leading, spacing: 0) {
+                //댓글 내용
+                Text(comment.content.forceCharWrapping)
+                    .font(.b2())
                     .foregroundColor(.white)
-                
-                //유저 칭호
-                UserTitleBadge(title: comment.userTitle, color: Color(hex: comment.userTitleColor))
-                
-                Circle()
-                    .frame(width: 4, height: 4)
-                    .foregroundColor(.mdDim2)
+                    .padding(.top, 8)
                 
                 //작성시간
                 Text(comment.createdAt)
                     .font(.b3())
                     .foregroundColor(.mdDim2)
-                
-                Spacer()
+                    .padding(.top, 8)
             }
-            .frame(maxWidth: .infinity)
-            //<---------------------------->
-            
-            //댓글 내용
-            Text(comment.content.forceCharWrapping)
-                .font(.b2())
-                .foregroundColor(.white)
-                .padding(.leading, 52)
+            .padding(.leading, 4)
         }
-        
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

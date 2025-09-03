@@ -92,7 +92,7 @@ struct MonthCalendar: View {
                 HStack(spacing: 0) {
                     ForEach(["일","월","화","수","목","금","토"], id: \.self) { weekday in
                         Text(weekday)
-                            .font(.l1Light())
+//                            .font(.l1Light())
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, minHeight: 45)
                     }

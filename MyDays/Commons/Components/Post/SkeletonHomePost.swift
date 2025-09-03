@@ -11,8 +11,10 @@ import SwiftUI
 import Kingfisher
 
 struct SkeletonHomePost: View {
-    let totalWidth = UIScreen.main.bounds.width - 30
+//    let totalWidth = UIScreen.main.bounds.width - 30
     let color: Color = Color.black.opacity(0.3) //스켈레톤 색깔
+    
+    let size = UIScreen.main.bounds.width - 48
     
     var body: some View {
         VStack(spacing: 0) {
@@ -27,12 +29,12 @@ struct SkeletonHomePost: View {
                     //유저 칭호 부분
                     Capsule()
                         .fill(color)
-                        .frame(width: totalWidth / 6, height: 10)
+                        .frame(width: size / 6, height: 12)
 
                     //유저 닉네임 부분
                     Capsule()
                         .fill(color)
-                        .frame(width: totalWidth / 5, height: 10)
+                        .frame(width: size / 5, height: 12)
                 }
                 Spacer()
             }
@@ -42,36 +44,34 @@ struct SkeletonHomePost: View {
             //<---- 작성글 + 작성시간 + 이미지 + 좋아요 + 댓글 ---->
             VStack(alignment: .leading, spacing: 0) {
                 //작성글 부분
+                let contentSize = 15.0
                 VStack(alignment: .leading, spacing: 10) {
                     Capsule()
                         .fill(color)
-                        .frame(width: UIScreen.main.bounds.width - 109, height: 10)
+                        .frame(width: size, height: contentSize)
                     
                     Capsule()
                         .fill(color)
-                        .frame(width: UIScreen.main.bounds.width - 139, height: 10)
+                        .frame(width: size, height: contentSize)
+                    
+                    Capsule()
+                        .fill(color)
+                        .frame(width: size - 50, height: contentSize)
                 }
-                
-//                //작성시간
-//                Text(post.createdAt)
-//                    .font(.b3())
-//                    .foregroundColor(.mdDim2)
                 
                 //원래 이미지가 있어야 할 곳
                 RoundedRectangle(cornerRadius: 12)
                     .fill(color)
-                    .frame(width: UIScreen.main.bounds.width - 109)
-                    .frame(height: UIScreen.main.bounds.width - 109)
+                    .frame(width: size, height: size)
                     .padding(.top, 10)
                 
                 //좋아요, 댓글 부분
                 Capsule()
                     .fill(color)
-                    .frame(width: totalWidth / 3, height: 10)
+                    .frame(width: size / 3, height: contentSize)
                     .padding(.top, 10)
             }
             .padding(.top, 5)
-            .padding(.leading, 49)
             //<---------------------------------->
         }
         .padding(.bottom, 20)

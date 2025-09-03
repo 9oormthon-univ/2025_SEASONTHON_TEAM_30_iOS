@@ -23,6 +23,9 @@ struct PostDetailView: View {
                         post: post,
                         onLike: {
                             vm.postLike()
+                        },
+                        onMore: {
+                            print("더보기 버튼 탭")
                         }
                     )
                     .padding(.horizontal, 30)

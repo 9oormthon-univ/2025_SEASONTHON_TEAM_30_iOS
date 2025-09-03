@@ -12,11 +12,12 @@ import Kingfisher
 struct DetailPostView: View {
     let post: PostDetail
     let onLike: () -> Void
+    let onMore: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
-            //<--- 유저 이미지 + 닉넴 + 칭호 + 작성시간 --->
-            HStack(spacing: 10) {
+            //<--- 유저 이미지 + 칭호 + 닉넴 --->
+            HStack(spacing: 0) {
                 //유저 이미지
                 KFImage(URL(string: post.userimgUrl))
                     .placeholder { // 로딩 중
@@ -24,52 +25,61 @@ struct DetailPostView: View {
                     }
                     .cancelOnDisappear(true)
                     .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxWidth: 42)
+                    .scaledToFill()
+                    .frame(width: 42, height: 42)
                     .clipped()
                     .clipShape(Circle())
                 
-                //유저 닉네임
-                Text(post.userName)
+                VStack(alignment: .leading, spacing: 6) {
+                    //유저 칭호
+                    UserTitleBadge(title: post.userTitle, color: post.userTitleColor)
+                    
+                    //유저 닉네임
+                    Text(post.userName)
+                        .font(.b1Bold())
+                        .foregroundColor(.white)
+                        .padding(.leading, 4)
+                }
+                .padding(.leading, 10)
+                
+                Spacer()
+                Image("dot.vertical")
+                    .onTapGesture {
+                        onMore()
+                    }
+            }
+            .frame(maxWidth: .infinity)
+            //<----------------------------------->
+            
+            //<---- 작성글 + 작성시간 + 이미지 + 좋아요 + 댓글 ---->
+            VStack(alignment: .leading, spacing: 0) {
+                //작성글
+                Text(post.content.forceCharWrapping)
                     .font(.b3())
                     .foregroundColor(.white)
-                
-                //유저 칭호
-                UserTitleBadge(title: post.userTitle, color: Color(hex: post.userTitleColor))
-                
-                Circle()
-                    .frame(width: 4, height: 4)
-                    .foregroundColor(.mdDim2)
+                    .padding(.horizontal, 4)
                 
                 //작성시간
                 Text(post.createdAt)
                     .font(.b3())
                     .foregroundColor(.mdDim2)
-                
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            //<---------------------------->
-            
-            //<---- 작성글 + 이미지 + 좋아요 + 댓글 ---->
-            VStack(alignment: .leading, spacing: 0) {
-                //작성글
-                Text(post.content.forceCharWrapping)
-                    .font(.b2())
-                    .foregroundColor(.white)
+                    .padding(.horizontal, 4)
+                    .padding(.top, 8)
                 
                 //작성글 이미지
+                let size = UIScreen.main.bounds.width - 48
+                
                 KFImage(URL(string: post.contentImgUrl))
                     .placeholder { // 로딩 중
                         ProgressView()
                     }
                     .cancelOnDisappear(true)
                     .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxWidth: UIScreen.main.bounds.width - 60)
+                    .scaledToFill()
+                    .frame(width: size, height: size)
                     .clipped()
                     .clipShape( RoundedRectangle(cornerRadius: 12))
-                    .padding(.top, 10)
+                    .padding(.top, 8)
                 
                 //좋아요, 댓글
                 HStack(spacing: 0) {
@@ -90,27 +100,27 @@ struct DetailPostView: View {
                         .resizable()
                         .frame(width: 18, height: 18)
                         .foregroundColor(.white)
-                        .padding(.leading, 10)
+                        .padding(.leading, 20)
                     
                     Text("\(post.commentCount)")
                         .font(.b3())
                         .foregroundColor(.white)
                         .padding(.leading, 7)
                 }
-                .padding(.top, 20)
+                .padding(.leading, 8)
+                .padding(.top, 16)
             }
-            .padding(.top, 10)
-            
+//            .padding(.horizontal, 20)
+            .padding(.top, 8)
             //<---------------------------------->
         }
-        .frame(maxWidth: .infinity)
+        .padding(.bottom, 25)
     }
 }
-
 #Preview {
     VStack {
         //<----- 이 부분 사용 ---------------------------->
-        DetailPostView(post: PostDetail.mock, onLike: {})
+        DetailPostView(post: PostDetail.mock, onLike: {}, onMore: {})
             .padding(.horizontal, 30)
         //<----- 이 부분 사용 ---------------------------->
     }
