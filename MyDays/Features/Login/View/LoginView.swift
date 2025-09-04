@@ -15,14 +15,21 @@ struct LoginView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("로그인 뷰")
+            Image("logo.splash")
             
-            Button(action: { vm.kakaoLogin() }) {
-                Text("카카오 로그인 버튼")
-            }
+            Text("매일 한 번, 가장 나다운 순간")
+                .font(.t1())
+                .foregroundColor(.white)
+                .padding(.top, 45)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.mdSurf3)
+        .overlay(alignment: .bottom) {
+            Button(action: { vm.kakaoLogin() }) {
+                LoginButton()
+                    .padding(.horizontal, 40)
+            }
+        }
+        .background(.mdSurf2)
         //작성 완료 감지해서 디테일 페이지로 이동
         .onChange(of: vm.isNewUser) { _, newValue in
             if newValue {
@@ -38,6 +45,24 @@ struct LoginView: View {
                 vm.isSwitchMain = false // 플래그 리셋 (중복 이동 방지)
             }
         }
+    }
+}
+//TODO: 로그인 버튼 제대로 만들기 (디자인 나오면)
+struct LoginButton: View {
+    var body: some View {
+        Text("카카오 로그인")
+//            .font(.l1())
+            .foregroundColor(.black)
+            .padding(.vertical, 11)
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .leading) {
+                Image("back")
+                    .padding(.leading, 10)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(.yellow)
+            )
     }
 }
 
