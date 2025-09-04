@@ -7,6 +7,8 @@
 
 //MARK: - 로그인 뷰모델 입니다.
 import Foundation
+import KakaoSDKUser
+import KakaoSDKAuth
 
 @MainActor
 class LoginViewModel: ObservableObject {
@@ -17,28 +19,59 @@ class LoginViewModel: ObservableObject {
     
     //MARK: - 카카오 로그인 시도
     func kakaoLogin() {
-        Task {
-            //TODO: 여기 엑세스, 리프레쉬 ""로 되있는거 카카오에서 받아온 토큰을 넣어주기
-            let userSession = try await loginService.kakaoLogin(request: KakaLoginRequest(accessToken: "", refreshToken: ""))
-            
-            //keyChain에 백에서 받아온 액세스, 리프레쉬 토큰 저장
-            KeychainHelper.save(key: "accessToken", value: userSession.accessToken)
-            KeychainHelper.save(key: "refreshToken", value: userSession.refreshToken)
-            
-//            // 불러오기 참고용 (엑세스는 APIManager 헤더에서 쓰면 될 듯)
-//            if let accessToken = KeychainHelper.load(key: "accessToken") {
-//                print("AccessToken: \(accessToken)")
-//            }
-//            // 리프레쉬는 스플래쉬 api에서 활용하면 될듯
-//            if let refreshToken = KeychainHelper.load(key: "refreshToken") {
-//                print("refreshToken: \(refreshToken)")
-//            }
-            
-            self.isNewUser = userSession.isNewUser
-            //기존 유저면 홈으로 이동 
-            if self.isNewUser == false {
-                self.isSwitchMain = true
+        // 카카오톡 실행 가능 여부 확인
+        if UserApi.isKakaoTalkLoginAvailable() {
+            // 카카오톡 로그인
+            UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    guard let token = oauthToken else {
+                        return
+                    }
+                    print("카카오톡 로그인 성공, 토큰:", token)
+                    self.sendTokenToServer(oauthToken: token)
+                }
+            }
+        } else {
+            // 카카오계정 로그인
+            UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    guard let token = oauthToken else {
+                        return
+                    }
+                    print("카카오계정 로그인 성공, 토큰:", token)
+                    self.sendTokenToServer(oauthToken: token)
+                }
             }
         }
     }
+    
+    // MARK: - 서버로 토큰 전송 및 Keychain 저장
+    private func sendTokenToServer(oauthToken: OAuthToken) {
+        Task {
+            do {
+                //서버로 access, refresh 토큰 전송
+                let userSession = try await loginService.kakaoLogin(request: KakaLoginRequest(accessToken: oauthToken.accessToken, refreshToken: oauthToken.refreshToken))
+                
+                //keyChain에 백에서 받아온 액세스, 리프레쉬 토큰 저장
+                KeychainHelper.save(key: "accessToken", value: userSession.accessToken)
+                KeychainHelper.save(key: "refreshToken", value: userSession.refreshToken)
+                
+                self.isNewUser = userSession.isNewUser
+                //기존 유저면 홈으로 이동
+                if self.isNewUser == false {
+                    self.isSwitchMain = true
+                }
+            }
+            catch {
+                print("‼️서버와 카카오 로그인 통신 오류")
+                print(error)
+            }
+        }
+    }
+    
 }
+
