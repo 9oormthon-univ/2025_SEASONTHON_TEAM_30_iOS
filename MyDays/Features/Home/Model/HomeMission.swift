@@ -27,7 +27,7 @@ extension HomeMission {
 extension HomeMission {
     static let mock = HomeMission(
         userImgUrl: "https://picsum.photos/50?1",
-        text: "나의 장점 3가지는 무엇입니까???",
+        text: "당신을 행복하게 하는 음악을 찾아 듣고 공유해보세요.",
         isCompleted: false
     )
 }

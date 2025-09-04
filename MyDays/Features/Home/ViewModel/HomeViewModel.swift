@@ -38,7 +38,7 @@ class HomeViewModel: ObservableObject {
                 self.currentPage += 1
             }
             catch {
-                
+                print("‼️홈 첫 조회 오류")
             }
             self.isFirstLoading = false
         }
@@ -57,7 +57,6 @@ class HomeViewModel: ObservableObject {
             do {
                 let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
                 
-                
                 if fetchedPosts.isEmpty {
                     self.hasMorePages = false
                 } else {
@@ -66,7 +65,7 @@ class HomeViewModel: ObservableObject {
                 }
             }
             catch {
-                
+                print("‼️게시물 더 받기 오류")
             }
             self.isMoreLoading = false
         }
@@ -77,10 +76,8 @@ class HomeViewModel: ObservableObject {
         Task {
             self.currentPage = 1
             self.hasMorePages = true
-            self.mission = nil // 미션도 초기화
             
             do {
-                getMission()
                 let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
                 self.posts = [] // 기존 게시물 초기화
                 
@@ -88,7 +85,7 @@ class HomeViewModel: ObservableObject {
                 self.posts = fetchedPosts
                 self.currentPage += 1
             } catch {
-                // 에러 처리
+                print("‼️새로고침 오류")
             }
         }
     }
@@ -105,20 +102,20 @@ class HomeViewModel: ObservableObject {
                 }
             }
             catch {
-                print("좋아요 누르기/취소 에러")
+                print("‼️좋아요 오류")
             }
         }
     }
     
     //MARK: - 미션 조회
-    private func getMission() {
+    func getMission() {
         Task {
             do {
                 let fetchedMission = try await homeService.getHomeMission()
                 self.mission = fetchedMission
             }
             catch {
-                
+                print("‼️미션받기 오류")
             }
         }
     }

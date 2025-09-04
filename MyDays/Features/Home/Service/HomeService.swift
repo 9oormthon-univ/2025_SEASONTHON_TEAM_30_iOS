@@ -82,6 +82,7 @@ class MockHomeService: HomeServiceProtocol {
     }
     // 홈 미션 조회
     func getHomeMission() async throws -> HomeMission {
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         return HomeMission.mock
     }
     // 좋아요 기능
