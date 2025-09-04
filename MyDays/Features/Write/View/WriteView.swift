@@ -85,6 +85,7 @@ struct WriteView: View {
         //작성 완료 감지해서 디테일 페이지로 이동
         .onChange(of: vm.navigateToPostId) { _, newValue in
             if let postId = newValue {
+                nav.popToRoot() //작성 화면 나오면서
                 nav.push(AppRoute.postDetail(postId: postId))
                 vm.navigateToPostId = nil // 한 번 쓰고 초기화
             }
