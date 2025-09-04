@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import KakaoSDKAuth
 
 @main
 struct MyDaysApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var appState = AppState()
     @StateObject var navigationManager = NavigationManager()
     
@@ -40,6 +42,12 @@ struct MyDaysApp: App {
                     case .setting:
                         Color.black //TODO: 추후 세팅페이지로 변경
                     }
+                }
+            }
+            //카카오 로그인 딥링크용
+            .onOpenURL { url in
+                if AuthApi.isKakaoTalkLoginUrl(url) {
+                    _ = AuthController.handleOpenUrl(url: url)
                 }
             }
             .environmentObject(appState) //루트 뷰 상태 하위뷰에 주입
