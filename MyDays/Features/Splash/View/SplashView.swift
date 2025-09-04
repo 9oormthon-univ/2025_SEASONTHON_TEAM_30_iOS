@@ -15,12 +15,19 @@ struct SplashView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("스플래쉬 뷰")
-                .font(.largeTitle)
+            Image("logo.splash")
+            
+            Text("매일 한 번, 가장 나다운 순간")
+                .font(.t1())
                 .foregroundColor(.white)
+                .padding(.top, 45)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.mdSurf3)
+        .overlay(alignment: .bottom) {
+            Image("mydays.splash")
+        }
+        .background(.mdSurf2)
+        
         //자동 로그인 성공 시 감지해서 메인화면으로 이동
         .onChange(of: vm.isSwitchMain) { _, newValue in
             if newValue {
