@@ -14,26 +14,40 @@ struct SetNicknameView: View {
     @EnvironmentObject var nav: NavigationManager
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             Text("마이데이즈에서 사용할\n닉네임을 적어주세요")
                 .foregroundColor(.white)
+                .padding(.top, 100)
             
             TextField("닉네임을 입력해주세요", text: $vm.nickName)
                 .padding()
-                .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.white, lineWidth: 1) // 테두리
-                )
-            //TODO: 정규식
+                .overlay(alignment: .bottom) {
+                  Divider()
+                        .frame(height: 1)
+                        .overlay(.white)
+                }
+                .padding(.top, 100)
             
-            Spacer()
+            //TODO: 정규식
             Button(action: { vm.setNickname() }) { //TODO: isLoading이면 프로그레스바?
-                Text("닉네임 설정 완료")
+                Text("닉네임 설정 완료 버튼")
                     .foregroundColor(.white)
             }
             .disabled(vm.isDisabled)
+            .frame(maxWidth: .infinity)
+            .padding(.top, 30)
+            
+            Spacer()
+           
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(alignment: .top) {
+            Image("logo.set.nickname")
+        }
+        .overlay(alignment: .bottom) {
+            Image("mydays.splash")
+        }
+        .padding(.horizontal, 30)
         .background(.mdSurf2)
         //닉네임 설정 성공 시 감지해서 메인 화면으로 전환
         .onChange(of: vm.isSwitchMain) { _, newValue in
