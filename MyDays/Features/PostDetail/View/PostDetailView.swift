@@ -13,6 +13,7 @@ struct PostDetailView: View {
     @StateObject var vm = PostDetailViewModel()
     @FocusState var isFocused: Bool //댓글 포커스 상태
     @EnvironmentObject var nav: NavigationManager
+    let postId: String
     
     var body: some View {
         ScrollView {
@@ -28,25 +29,25 @@ struct PostDetailView: View {
                             vm.isShowActionSheet.toggle()
                         }
                     )
-                    .padding(.horizontal, 30)
+                    .padding(.horizontal, 24)
                     
                     //구분선
                     Divider()
                         .frame(height: 1)
                         .overlay(.mdNavi2)
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, 24)
                     
                     //댓글 리스트
                     LazyVStack(spacing: 20) {
                         ForEach(vm.comments) { comment in
                             DetailCommentView(comment: comment)
-                                .padding(.horizontal, 30)
+                                .padding(.horizontal, 24)
                         }
                     }
                     .padding(.top, 20)
                 }
                 .padding(.bottom, 20) //마지막 게시물이랑 간격 차이
-                .padding(.top, 20) //safeAreaTop 이랑 게시물사이 간격
+                .padding(.top, 36) //safeAreaTop 이랑 게시물사이 간격
             }
         }
         .background(.mdSurf3)
@@ -57,21 +58,24 @@ struct PostDetailView: View {
         .toolbar(.hidden, for: .navigationBar)
         //상단 바 (챌린지 피드 + 뒤로가기 버튼)
         .safeAreaInset(edge: .top) {
+            HStack(spacing: 0) {
+                //뒤로가기 버튼
+                Image("back")
+                    .onTapGesture {
+                        nav.popLast()
+                    }
+                Spacer()
+            }
+            .overlay(
                 Text("챌린지 피드")
                     .font(.b1())
                     .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 54)
-                    .background(.mdSurf3)
-                    .dropshadow1()
-                //뒤로 가기 버튼
-                    .overlay(alignment: .leading) {
-                        Image("back")
-                            .onTapGesture {
-                                nav.popLast()
-                            }
-                            .padding(.horizontal, 30)
-                    }
+            )
+            .padding(.top, 10)
+            .frame(maxWidth: .infinity)
+            .frame(height: 54)
+            .padding(.horizontal, 30)
+            .background(.mdSurf3)
         }
         //댓글 텍스트 에디터
         .safeAreaInset(edge: .bottom) {
@@ -118,6 +122,6 @@ struct PostDetailView: View {
 
 #Preview {
     NavigationStack {
-        PostDetailView()
+        PostDetailView(postId: PostDetail.mock.id)
     }
 }

@@ -51,7 +51,7 @@ struct HomeView: View {
                                     .contentShape(Rectangle())
                                     .padding(.horizontal, 24)
                                     .onTapGesture {
-                                        nav.push(AppRoute.postDetail)
+                                        nav.push(AppRoute.postDetail(postId: post.id))
                                     }
                                 }
                                 

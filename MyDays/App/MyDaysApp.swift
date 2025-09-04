@@ -31,8 +31,8 @@ struct MyDaysApp: App {
                     case .setNickname:
                         SetNicknameView()
                         
-                    case .postDetail:
-                        PostDetailView()
+                    case .postDetail(let postId):
+                        PostDetailView(postId: postId)
                         
                     case .write:
                         WriteView()
