@@ -104,7 +104,7 @@ struct MonthCalendar: View {
                 HStack(spacing: 0) {
                     ForEach(["일","월","화","수","목","금","토"], id: \.self) { weekday in
                         Text(weekday)
-//                            .font(.l1Light())
+                            .font(.l1())
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, minHeight: 45)
                     }
@@ -141,13 +141,18 @@ struct MonthCalendar: View {
                                             .frame(width: 45, height: 45)
                                             .clipped()
                                             .clipShape(Circle())
+                                            .overlay {
+                                                Circle()
+                                                    .fill(Color.black.opacity(0.6))
+                                                    .frame(width: 45, height: 45)
+                                            }
                                     }
                                 }
                                 //각 날짜
                                 Text("\(day.dayNumber)")
-                                    .font(.l1())
+                                    .font(post == nil ? .l1() : .l1Bold())
                                     .frame(maxWidth: .infinity, minHeight: 45)
-                                    .foregroundColor(post == nil ? .white : .mdPrimary)
+                                    .foregroundColor(.white)
                                     .allowsHitTesting(false) //사진 터치가 막혀서 방지를 위해
                             }
                         }
