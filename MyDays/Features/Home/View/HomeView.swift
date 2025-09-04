@@ -94,14 +94,16 @@ struct HomeView: View {
                     }
                 }
             }
-              
-            
         }
         .padding(.top, -8)
         .background(.mdSurf2)
         //홈 헤더
         .safeAreaInset(edge: .top) {
             HomeHeaderView()
+        }
+        //홈 조회시
+        .onAppear {
+            vm.getMission()
         }
     }
     //미션 카드 스켈레톤, 진짜 게시물에 2번쓰는거 번거로우니
@@ -110,8 +112,13 @@ struct HomeView: View {
         if let mission = vm.mission {
             HomeMissionCard(imgUrl: mission.userImgUrl,
                             mission: mission.text,
-                            isCompleted: mission.isCompleted,
-                            onChallengeTap: { nav.push(AppRoute.write)})
+                            isCompleted: mission.isCompleted)
+            .onTapGesture {
+                //미션 완료 안했으면 글쓰기 창으로 보내기
+                if !mission.isCompleted {
+                    nav.push(AppRoute.write)
+                }
+            }
             .padding(.horizontal, 30)
             .padding(.top, 24)
         }
@@ -144,8 +151,6 @@ struct HomeMissionCard: View {
     let imgUrl: String
     let mission: String
     let isCompleted: Bool
-    
-    let onChallengeTap: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -192,7 +197,6 @@ struct HomeMissionCard: View {
             
             
             //도전하기 버튼
-            Button(action: { onChallengeTap() }) {
                 HStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {
@@ -222,7 +226,6 @@ struct HomeMissionCard: View {
                             )
                     )
                 }
-            }
             .padding(.top, 10)
         }
         .padding(.vertical, 20)

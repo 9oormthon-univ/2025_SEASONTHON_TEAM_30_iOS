@@ -13,6 +13,7 @@ struct DetailPostView: View {
     let post: PostDetail
     let onLike: () -> Void
     let onMore: () -> Void
+    @State var hapticFeedback = false //좋아요 햅틱 피드백
     
     var body: some View {
         VStack(spacing: 0) {
@@ -83,12 +84,15 @@ struct DetailPostView: View {
                 
                 //좋아요, 댓글
                 HStack(spacing: 0) {
-                    Image(post.isLiked ? "heart.fill" : "heart")
-                        .resizable()
-                        .frame(width: 20, height: 18)
-                        .onTapGesture{
-                            onLike()
-                        }
+                    Button(action: {
+                        hapticFeedback.toggle() //햅틱 피드백
+                        onLike()
+                    }) {
+                        Image(post.isLiked ? "heart.fill" : "heart")
+                            .resizable()
+                            .frame(width: 20, height: 18)
+                    }
+                    .sensoryFeedback(.impact(weight: .light), trigger: hapticFeedback)
                     
                     Text("\(post.likeCount)")
                         .font(.b3())
