@@ -33,7 +33,7 @@ class SplashService: SplashServiceProtocol {
 class MockSplashService: SplashServiceProtocol {
     // 스플레쉬 조회 요청
     func getSplash(request: GetSplashRequest) async throws -> SplashUserSession {
-        try await Task.sleep(nanoseconds: 2_000_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         
         //자동 로그인 실패로 테스트 하려면
 //        throw NSError(domain: "MockSplashError", code: 401, userInfo: [NSLocalizedDescriptionKey: "자동 로그인 실패"])
