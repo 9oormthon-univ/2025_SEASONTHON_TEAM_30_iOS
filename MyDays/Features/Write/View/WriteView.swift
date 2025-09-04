@@ -83,10 +83,10 @@ struct WriteView: View {
             vm.loadTransferable()
         }
         //작성 완료 감지해서 디테일 페이지로 이동
-        .onChange(of: vm.shouldNavigateToDetail) { _, newValue in
-            if newValue {
-                nav.push(AppRoute.postDetail)
-                vm.shouldNavigateToDetail = false // 플래그 리셋 (중복 이동 방지)
+        .onChange(of: vm.navigateToPostId) { _, newValue in
+            if let postId = newValue {
+                nav.push(AppRoute.postDetail(postId: postId))
+                vm.navigateToPostId = nil // 한 번 쓰고 초기화
             }
         }
         //작성 화면 페이지 조회 시

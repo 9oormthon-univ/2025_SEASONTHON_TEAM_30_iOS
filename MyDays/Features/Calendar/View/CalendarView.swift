@@ -36,7 +36,7 @@ struct CalendarView: View {
                         .padding(.horizontal, 24)
                         .padding(.top, 46)
                         .onTapGesture {
-                            nav.push(AppRoute.postDetail)
+                            nav.push(AppRoute.postDetail(postId: post.id))
                         }
                     }
                 }

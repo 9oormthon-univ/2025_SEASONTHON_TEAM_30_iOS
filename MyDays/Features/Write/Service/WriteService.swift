@@ -13,7 +13,7 @@ import Foundation
 // 실제 서비스와 Mock 서비스 모두 이 프로토콜을 따릅니다.
 protocol WriteServiceProtocol {
     func getWritePage() async throws -> WriteMission
-    func postMission(request: PostMissionRequest) async throws -> EmptyData
+    func postMission(request: PostMissionRequest) async throws -> String //PostId 리스폰
 }
 
 // MARK: - WriteService (실제 API 통신)
@@ -28,14 +28,14 @@ class WriteService: WriteServiceProtocol {
     }
     
     //게시물(미션) 작성
-    func postMission(request: PostMissionRequest) async throws -> EmptyData {
+    func postMission(request: PostMissionRequest) async throws -> String {
         let parameters: Parameters = [
             "content": request.content,
             "base64Img": request.base64Img
         ]
-        let response: EmptyData = try await APIManager.shared.request("/posts", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: String = try await APIManager.shared.request("/posts", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
-        return response
+        return response //postID임
     }
 }
 
@@ -48,9 +48,9 @@ class MockWriteService: WriteServiceProtocol {
     }
     
     //게시물(미션) 작성
-    func postMission(request: PostMissionRequest) async throws -> EmptyData {
+    func postMission(request: PostMissionRequest) async throws -> String {
         try await Task.sleep(nanoseconds: 1_000_000_000)
-        return EmptyData()
+        return "post1234"
     }
 }
 
