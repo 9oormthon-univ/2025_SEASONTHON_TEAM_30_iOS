@@ -75,6 +75,10 @@ extension UIFont {
         return customFont(for: weight, size: 12)
     }
     
+    static func l1Bold(_ weight: UIFont.Weight = .bold) -> UIFont {
+        return customFont(for: weight, size: 12)
+    }
+    
     static func l2(_ weight: UIFont.Weight = .regular) -> UIFont {
         return customFont(for: weight, size: 14)
     }
@@ -98,6 +102,7 @@ extension View {
         case UIFont.b3Bold(): multiplier = 1.5
         case UIFont.b3BoldNickname(): multiplier = 1.1
         case UIFont.l1(): multiplier = 1.0
+        case UIFont.l1Bold(): multiplier = 1.0
         case UIFont.l2(): multiplier = 1.1
        
         default: multiplier = 1.0
@@ -139,6 +144,8 @@ extension View {
             .font(.b3BoldNickname())
         Text("L1")
             .font(.l1())
+        Text("L1-Bold")
+            .font(.l1Bold())
         Text("L2")
             .font(.l2())
     }
