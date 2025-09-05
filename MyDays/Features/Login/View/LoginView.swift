@@ -5,7 +5,7 @@
 //  Created by 양재현 on 9/2/25.
 //
 
-//MARK: - 로그인 뷰
+//MARK: - 소셜 로그인 뷰
 import SwiftUI
 
 struct LoginView: View {
@@ -14,22 +14,39 @@ struct LoginView: View {
     @EnvironmentObject var appState: AppState
     
     var body: some View {
-        VStack(spacing: 0) {
-            Image("logo.splash")
+        VStack(alignment: .leading, spacing: 0) {
+            //로고
+            Image("logo.login")
+                .padding(.horizontal, 46)
+                .padding(.top, 102)
             
-            Text("매일 한 번, 가장 나다운 순간")
-                .font(.t1())
+            Text("매일 한 번\n가장 나다운 순간을 경험해보세요")
+                .font(.t2())
                 .foregroundColor(.white)
-                .padding(.top, 45)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay(alignment: .bottom) {
+                .padding(.horizontal, 46)
+                .padding(.top, 30)
+            
+            Spacer()
+            
+            //로그인 버튼 위 캐릭터들
+            HStack {
+                Spacer()
+                Image("char.login")
+                    .resizable()
+                    .frame(width: 230, height: 134)
+            }
+            .padding(.trailing, 24)
+            
+            //카카오 로그인 버튼
             Button(action: { vm.kakaoLogin() }) {
                 LoginButton()
-                    .padding(.horizontal, 40)
+                    .padding(.horizontal, 24)
             }
+            .padding(.top, 11)
+            .padding(.bottom, 30)
         }
-        .background(.mdSurf2)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.mdNavi1)
         //작성 완료 감지해서 디테일 페이지로 이동
         .onChange(of: vm.isNewUser) { _, newValue in
             if newValue {
@@ -50,18 +67,18 @@ struct LoginView: View {
 //TODO: 로그인 버튼 제대로 만들기 (디자인 나오면)
 struct LoginButton: View {
     var body: some View {
-        Text("카카오 로그인")
-//            .font(.l1())
-            .foregroundColor(.black)
+        Text("카카오로 시작하기")
+            .font(.b2Bold())
+            .foregroundColor(Color(hex: "000000", alpha: 0.85))
             .padding(.vertical, 11)
             .frame(maxWidth: .infinity)
             .overlay(alignment: .leading) {
-                Image("back")
-                    .padding(.leading, 10)
+                Image("kakao.logo")
+                    .padding(.leading, 14)
             }
             .background(
                 RoundedRectangle(cornerRadius: 6)
-                    .fill(.yellow)
+                    .fill(Color(hex: "FEE500"))
             )
     }
 }

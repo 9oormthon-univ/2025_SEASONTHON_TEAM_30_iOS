@@ -14,4 +14,5 @@ enum AppRoute: Hashable {
     case postDetail(postId: String) //게시물 디테일 페이지
     case write //게시물 작성페이지
     case setting //설정 페이지
+    case completedLogin(nickName: String) //닉네임 설정후 페이지
 }

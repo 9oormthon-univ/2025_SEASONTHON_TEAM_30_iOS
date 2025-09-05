@@ -18,15 +18,16 @@ struct SplashView: View {
             Image("logo.splash")
             
             Text("매일 한 번, 가장 나다운 순간")
-                .font(.t1())
+                .font(.t2())
                 .foregroundColor(.white)
                 .padding(.top, 45)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(alignment: .bottom) {
             Image("mydays.splash")
+                .padding(.bottom, 10)
         }
-        .background(.mdSurf2)
+        .background(.mdNavi1)
         
         //자동 로그인 성공 시 감지해서 메인화면으로 이동
         .onChange(of: vm.isSwitchMain) { _, newValue in
