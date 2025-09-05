@@ -14,7 +14,8 @@ class APIManager {
     static let shared = APIManager()
     
     private let session: Session
-    private let baseURL: String = "https://api.your-app.com" //TODO: 추후 config파일에서 변경 예정
+    private let baseURL: String = (Bundle.main.infoDictionary?["BASE_URL"] as? String) ?? ""
+    
     
     // 세션 설정 (타임아웃 등)
     private init() {
@@ -27,9 +28,12 @@ class APIManager {
     func request<T: Decodable>(_ endpoint: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil) async throws -> T {
         let url = baseURL + endpoint
         
+        // 🔑 Keychain에서 accessToken 가져오기
+        let accessToken = KeychainHelper.load(key: "accessToken") ?? ""
+        
         let commonHeaders: HTTPHeaders = [
             "Content-Type": "application/json",
-            "Authorization": "Bearer YOUR_ACCESS_TOKEN_HERE" //TODO: 추후 KeychainManager를 통해 엑세스토큰 넣을 예정
+            "Authorization": "Bearer \(accessToken)" //TODO: 추후 KeychainManager를 통해 엑세스토큰 넣을 예정
         ]
         
         // Alamofire의 async/await 요청
@@ -40,14 +44,41 @@ class APIManager {
         
         switch response.result {
         case .success(let serverResponse):
-            
-            return serverResponse.body
+            if let body = serverResponse.body {
+                return body
+            }
+            //body가 null로 오면
+            else {
+                // 빈 JSON을 디코딩해서 반환
+                return try JSONDecoder().decode(T.self, from: Data("{}".utf8))
+            }
             
         case .failure(let error):
-            // 더 구체적인 오류 처리(공통 팝업 등)
-            throw error
+            // 디코딩 에러 처리
+            if let afError = error.asAFError, afError.isResponseSerializationError {
+                if let decodingError = afError.underlyingError as? DecodingError {
+                    // DecodingError 상세 처리
+                    throw APIError.decodingError(decodingError)
+                } else {
+                    // DecodingError 아니면 그냥 AFError 메시지
+                    throw APIError.decodingError(afError)
+                }
+            }
+            //상태코드 에러
+            else if let statusCode = response.response?.statusCode {
+                switch statusCode {
+                case 400: throw APIError.badRequest
+                case 401: throw APIError.unauthorized
+                case 403: throw APIError.forbidden
+                case 404: throw APIError.notFound
+                case 409: throw APIError.conflict
+                case 500: throw APIError.serverError
+                default: throw APIError.unknown(statusCode)
+                }
+            } else {
+                throw APIError.unknown(-1)
+            }
         }
     }
 }
-
 

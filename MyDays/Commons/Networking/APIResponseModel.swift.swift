@@ -13,7 +13,7 @@ struct EmptyData: Decodable {} //response body가 비었을 경우
 
 struct ServerResponse<T: Decodable>: Decodable {
     let meta: Meta
-    let body: T
+    let body: T?
     
     struct Meta: Decodable {
         let code: Int

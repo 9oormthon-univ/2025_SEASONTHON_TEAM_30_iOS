@@ -15,56 +15,60 @@ struct WriteView: View {
     @EnvironmentObject var nav: NavigationManager
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            if let mission = vm.mission {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(mission.text.forceCharWrapping)
-                        .font(.t2())
-                        .foregroundColor(.white)
-                        .padding(.top, 10)
-                    
-                    //텍스트 에디터
-                    TextEditor(text: $vm.text)
-                        .focused($isFocused)
-                        .textEditorStyle(text: $vm.text, placeholder: "내용을 입력하세요")
-                        .padding(.top, 30)
-                    
-                    //선택된 이미지
-                    if let selectedImage = vm.selectedImage {
-                        SelectedImageView(uiImage: selectedImage, onClose: {
-                            vm.closeImage()
-                        })
-                        .padding(.top, 30)
-                    }
-                    
-                    //사진 추가 박스
-                    else {
-                        PhotosPicker(selection: $vm.selectedItem,
-                                     matching: .images) {
-                            AddPhotoBox()
-                                .padding(.top, 30)
+        ZStack {
+            Color.mdSurf2.ignoresSafeArea() //로딩중에도 백그라운드 주기위해서
+            
+            ScrollView(showsIndicators: false) {
+                if let mission = vm.mission {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(mission.text.forceCharWrapping)
+                            .font(.t2())
+                            .foregroundColor(.white)
+                            .padding(.top, 10)
+                        
+                        //텍스트 에디터
+                        TextEditor(text: $vm.text)
+                            .focused($isFocused)
+                            .textEditorStyle(text: $vm.text, placeholder: "내용을 입력하세요")
+                            .padding(.top, 30)
+                        
+                        //선택된 이미지
+                        if let selectedImage = vm.selectedImage {
+                            SelectedImageView(uiImage: selectedImage, onClose: {
+                                vm.closeImage()
+                            })
+                            .padding(.top, 30)
                         }
-                    }
-                    
-                    //작성하기 버튼
-                    Button(vm.isLoading ? "" : "작성하기") { vm.postMission() }
-                        .buttonStyle(.primary(isDisabled: vm.disabled))
-                        .disabled(vm.disabled)
-                        .overlay {
-                            //TODO: 이거 말고 로딩 로티 .. ?
-                            if vm.isLoading {
-                                ProgressView()
+                        
+                        //사진 추가 박스
+                        else {
+                            PhotosPicker(selection: $vm.selectedItem,
+                                         matching: .images) {
+                                AddPhotoBox()
+                                    .padding(.top, 30)
                             }
                         }
-                        .padding(.top, 30)
+                        
+                        //작성하기 버튼
+                        Button(vm.isLoading ? "" : "작성하기") { vm.postMission() }
+                            .buttonStyle(.primary(isDisabled: vm.disabled))
+                            .disabled(vm.disabled)
+                            .overlay {
+                                //TODO: 이거 말고 로딩 로티 .. ?
+                                if vm.isLoading {
+                                    ProgressView()
+                                }
+                            }
+                            .padding(.top, 30)
+                    }
+                    .padding(.top, 20)
+                    .padding(.horizontal, 30)
+                    .padding(.bottom, 54 + 25) //탭뷰 height 는 54임
                 }
-                .padding(.top, 20)
-                .padding(.horizontal, 30)
-                .padding(.bottom, 54 + 25) //탭뷰 height 는 54임
             }
         }
         .padding(.top, -8) //스크롤뷰, 헤더간 간격
-        .background(.mdSurf2)
+//        .background(.mdSurf2)
         .onTapGesture {
             isFocused = false //다른데 터치하면 포커스 풀리기
         }

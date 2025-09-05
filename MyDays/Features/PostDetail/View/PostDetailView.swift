@@ -115,7 +115,7 @@ struct PostDetailView: View {
         }
         //디테일 뷰 조회 시
         .onAppear {
-            vm.getPostDetail()
+            vm.getPostDetail(postId: postId)
         }
     }
 }

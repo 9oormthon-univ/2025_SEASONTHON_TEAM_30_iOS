@@ -23,14 +23,19 @@ class WriteViewModel: ObservableObject {
         selectedImage == nil || text == ""
     }
     
-    private let writeService = MockWriteService() //의존성 주입 (mock or real)
+    private let writeService = WriteService() //의존성 주입 (mock or real)
     
     //MARK: - 작성 페이지 조회
     func getWritePage() {
         Task{
-            let mission = try await writeService.getWritePage()
-            
-            self.mission = mission
+            do {
+                let mission = try await writeService.getWritePage()
+                
+                self.mission = mission
+            }
+            catch let error as APIError {
+                print(error.localizedDescription) //TODO: 에러 팝업 추가하기
+            }
         }
     }
     
