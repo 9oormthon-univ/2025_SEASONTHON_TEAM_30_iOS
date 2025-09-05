@@ -34,7 +34,7 @@ class LoginService: LoginServiceeProtocol {
 class MockLoginService: LoginServiceeProtocol {
     // 카카오 로그인 요청
     func kakaoLogin(request: KakaLoginRequest) async throws -> UserSession {
-//        try await Task.sleep(nanoseconds: 1_000_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         return UserSession.mock
     }
 }

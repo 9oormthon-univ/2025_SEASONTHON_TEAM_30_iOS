@@ -85,6 +85,7 @@ class MockPostDetailService: PostDetailServiceProtocol {
     
     // 게시물 삭제
     func deletePost(request: DeletePostRequest) async throws -> EmptyData {
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         return EmptyData()
     }
 }

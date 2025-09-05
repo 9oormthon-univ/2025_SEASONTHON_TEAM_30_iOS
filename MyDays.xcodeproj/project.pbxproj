@@ -10,6 +10,7 @@
 		1063D5642E694DE900CD58D7 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1063D5632E694DE900CD58D7 /* KakaoSDKAuth */; };
 		1063D5662E694DE900CD58D7 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 1063D5652E694DE900CD58D7 /* KakaoSDKCommon */; };
 		1063D5682E694DE900CD58D7 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 1063D5672E694DE900CD58D7 /* KakaoSDKUser */; };
+		1063E7F02E6B2C8600CD58D7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1063E7EF2E6B2C8600CD58D7 /* Lottie */; };
 		1084543A2E61646A00BF1225 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 108454392E61646A00BF1225 /* Alamofire */; };
 		1084543F2E61647F00BF1225 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1084543E2E61647F00BF1225 /* Kingfisher */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 				1084543A2E61646A00BF1225 /* Alamofire in Frameworks */,
 				1063D5682E694DE900CD58D7 /* KakaoSDKUser in Frameworks */,
 				1063D5642E694DE900CD58D7 /* KakaoSDKAuth in Frameworks */,
+				1063E7F02E6B2C8600CD58D7 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +98,7 @@
 				1063D5632E694DE900CD58D7 /* KakaoSDKAuth */,
 				1063D5652E694DE900CD58D7 /* KakaoSDKCommon */,
 				1063D5672E694DE900CD58D7 /* KakaoSDKUser */,
+				1063E7EF2E6B2C8600CD58D7 /* Lottie */,
 			);
 			productName = MyDays;
 			productReference = 10844F262E61481F00BF1225 /* MyDays.app */;
@@ -130,6 +133,7 @@
 				108454382E61646A00BF1225 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				1084543D2E61647F00BF1225 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				1063D5622E694DE900CD58D7 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				1063E7EE2E6B2C8600CD58D7 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 10844F272E61481F00BF1225 /* Products */;
@@ -387,6 +391,14 @@
 				minimumVersion = 2.24.6;
 			};
 		};
+		1063E7EE2E6B2C8600CD58D7 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
 		108454382E61646A00BF1225 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -420,6 +432,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1063D5622E694DE900CD58D7 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		1063E7EF2E6B2C8600CD58D7 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1063E7EE2E6B2C8600CD58D7 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		108454392E61646A00BF1225 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

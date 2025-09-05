@@ -77,6 +77,14 @@ struct WriteView: View {
         .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
             WriteHeaderView(onBack: { nav.popLast() })
         }
+        //작성 완료 시 로딩 로티
+        .overlay(
+            Group {
+                   if vm.isLoading {
+                       LoadingLottieView(animationFileName: "Loading", loopMode: .loop)
+                   }
+               }
+        )
         //사진 변경 감지해서 로드
         .onChange(of: vm.selectedItem) { _, _ in
             vm.loadTransferable()
