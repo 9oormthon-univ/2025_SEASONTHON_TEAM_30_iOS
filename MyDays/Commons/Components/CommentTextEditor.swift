@@ -30,17 +30,10 @@ struct CommentTextEditorStyleModifier: ViewModifier {
             .fixedSize(horizontal: false, vertical: true)
             .scrollContentBackground(.hidden) //기본 배경 제거
             .background(
+                //댓글 배경 + 외곽선
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.black.opacity(1.0))
-
-                    .stroke(
-                        LinearGradient(
-                        colors: [.mdPrimary, Color(hex: "60CE38")],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    ),
-                        lineWidth: 2)
-
+                    .stroke(.mdBrightSurf, lineWidth: 2)
             )
         //댓글 달기 + 전송버튼
             .overlay(alignment: .bottom) {
@@ -48,13 +41,7 @@ struct CommentTextEditorStyleModifier: ViewModifier {
                     if text.isEmpty && !isFocused {
                         Text("댓글달기")
                             .font(.b2Bold())
-                            .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [.mdPrimary, Color(hex: "60CE38")],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
+                            .foregroundColor(.white)
                     }
                     Spacer()
                     Image(text == "" ? "up" : "up.circle")

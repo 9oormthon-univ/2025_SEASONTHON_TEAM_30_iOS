@@ -43,7 +43,7 @@ struct CalendarView: View {
                         }
                     }
                 }
-                .padding(.bottom, 50) //마지막 게시물 밑에서 얼마나
+                .padding(.bottom, 70) //마지막 게시물 밑에서 얼마나
             }
         }
         .background(.mdSurf2)

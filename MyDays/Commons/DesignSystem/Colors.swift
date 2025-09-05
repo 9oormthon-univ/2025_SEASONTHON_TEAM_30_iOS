@@ -27,7 +27,7 @@ extension ShapeStyle where Self == Color {
     }
     
     //피그마 Color 네임명을 그대로 따라갔는데 추후 수정 가능
-    static var mdPrimary: Color { Color(hex: "#0FF2FF") }
+    static var mdPrimary: Color { Color(hex: "#5FF1F9") }
     static var mdPrimaryCon: Color { Color(hex: "#A1FAFF") }
     static var mdPrimaryText: Color { Color(hex: "#00888F") }
     
