@@ -142,8 +142,8 @@ struct CalendarHeaderView: View {
         HStack(spacing: 0) {
             Spacer()
             //알람
-            Image("calendar.fill")
-                .padding(2)
+            Image("calendar")
+//                .padding(2)
                 .onTapGesture {
                     onCalendarTap()
                 }

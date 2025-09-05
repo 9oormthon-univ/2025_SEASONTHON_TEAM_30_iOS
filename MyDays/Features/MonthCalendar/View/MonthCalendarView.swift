@@ -48,25 +48,24 @@ struct MonthCalendarView: View {
         .padding(.top, -8) //스크롤뷰랑 safeArea 조그만 갭...바로잡기
         //상단 바 (챌린지 피드 + 뒤로가기 버튼)
         .safeAreaInset(edge: .top) {
-            VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                Spacer()
+
+                Image("close")
+                    .onTapGesture {
+                        dismiss()
+                    }
+                    .padding(.horizontal, 30)
+            }
+            .overlay(
                 Text("나의 달력")
                     .font(.b1())
                     .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 66)
-                    .background(.mdSurf3)
-                //X 버튼
-                    .overlay(alignment: .trailing) {
-                        Image("close")
-                        //TODO: 디자이너한테 아이콘 이미지 물어보기
-                //                            .resizable()
-                //                            .frame(width: 15, height: 15)
-                            .onTapGesture {
-                                dismiss()
-                            }
-                            .padding(.horizontal, 30)
-                    }
-            }
+            )
+            .padding(.top, 10)
+            .frame(maxWidth: .infinity)
+            .frame(height: 66)
+            .background(.mdSurf3)
         }
         //날짜 누르면 디테일 뷰로 진입
         .fullScreenCover(isPresented: $vm.showCompletedDetail) {
