@@ -41,7 +41,7 @@ extension Post {
 
 // 캘린더 뷰에서도 Post모델을 활용하여 서버모델 매핑용 이니셜라이저를 추가하였습니다.
 extension Post {
-    init(from data: GetWeeksResponse.DayContentsResponse) {
+    init(from data: GetWeeksResponse.DayContentsResponse.PostResponse) {
         self.id = data.postId
         self.userimgUrl = data.userimgUrl
         self.userName = data.userName

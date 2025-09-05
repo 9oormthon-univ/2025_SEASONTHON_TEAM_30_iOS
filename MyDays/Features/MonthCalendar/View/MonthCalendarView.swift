@@ -29,7 +29,7 @@ struct MonthCalendarView: View {
             }
             //캘린더 2개이상이면 스크롤뷰
             else {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     LazyVStack(spacing: 30) {
                         ForEach(vm.months.reversed(), id: \.self) { monthDays in
                             MonthCalendar(monthDays: monthDays, posts: vm.posts) {postId in 

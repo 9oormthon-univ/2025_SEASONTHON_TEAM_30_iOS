@@ -8,7 +8,7 @@
 //MARK: - 캘린더 뷰 서버모델
 import Foundation
 
-//홈 조회 Response
+//주 단위 캐린더 조회 Response
 struct GetWeeksResponse: Decodable {
     let dayContents: [DayContentsResponse]
     
@@ -19,18 +19,22 @@ struct GetWeeksResponse: Decodable {
         let missionText: String
         let isCompleted: Bool
         
-        //게시물 내용들
-        let postId: String
-        let userimgUrl: String
-        let userName: String
-        let userTitle: String
-        let userTitleColor: String
-        let createdAt: String
-        let content: String
-        let contentImgUrl: String
-        let likeCount: Int
-        let isLiked: Bool
-        let commentCount: Int
+        let post: PostResponse?
+        
+        struct PostResponse: Decodable {
+            //게시물 내용들
+            let postId: String
+            let userimgUrl: String
+            let userName: String
+            let userTitle: String
+            let userTitleColor: String
+            let createdAt: String
+            let content: String
+            let contentImgUrl: String
+            let likeCount: Int
+            let isLiked: Bool
+            let commentCount: Int
+        }
     }
 }
 
