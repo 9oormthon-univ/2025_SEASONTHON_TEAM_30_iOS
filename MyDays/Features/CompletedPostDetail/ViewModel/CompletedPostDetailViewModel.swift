@@ -17,6 +17,7 @@ class CompletedPostDetailViewModel: ObservableObject {
     @Published var isShowActionSheet: Bool = false //액션 시트 보여줄지
     @Published var isShowAlert: Bool = false //삭제 알럿 보여줄지
     @Published var isCompleteDelete: Bool = false //삭제 완료 후 네비게이션 트리거
+    @Published var isDeleteLoading: Bool = false //삭제동안 로딩
     
     private let completedPostDetailService = MockCompletedPostDetailService() //의존성 주입 (Real or Mock)
 
@@ -79,6 +80,7 @@ class CompletedPostDetailViewModel: ObservableObject {
     //MARK: - 게시물 삭제
     func deletePost() {
         guard let postId = self.post?.id else { return }
+        self.isDeleteLoading = true
         Task {
             do {
                 _ = try await completedPostDetailService.deletePost(postId: postId)
@@ -87,6 +89,7 @@ class CompletedPostDetailViewModel: ObservableObject {
             catch {
                 
             }
+            self.isDeleteLoading = false
         }
     }
 }

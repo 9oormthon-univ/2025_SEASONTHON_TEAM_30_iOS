@@ -92,6 +92,14 @@ struct SetNicknameView: View {
                 .padding(.bottom, 10)
                 .disabled(vm.isDisabled)
         }
+        //닉넴 변경 로딩 로티
+        .overlay(
+            Group {
+                   if vm.isLoading {
+                       LoadingLottieView(animationFileName: "Loading", loopMode: .loop)
+                   }
+               }
+        )
         //닉네임 설정 성공 시 감지해서 메인 화면으로 전환
         .onChange(of: vm.isSwitchMain) { _, newValue in
             if newValue {

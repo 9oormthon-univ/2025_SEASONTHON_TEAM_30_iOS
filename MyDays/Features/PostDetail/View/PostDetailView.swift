@@ -96,6 +96,14 @@ struct PostDetailView: View {
             .padding(.horizontal, 22.5)
             .padding(.bottom, 10)
         }
+        //삭제 완료까지 로딩로티
+        .overlay(
+            Group {
+                   if vm.isDeleteLoading {
+                       LoadingLottieView(animationFileName: "Loading", loopMode: .loop)
+                   }
+               }
+        )
         //더보기 아이콘 눌렀을 때 액션시트
         .confirmationDialog("", isPresented: $vm.isShowActionSheet) {
             Button("삭제하기", role: .destructive) {

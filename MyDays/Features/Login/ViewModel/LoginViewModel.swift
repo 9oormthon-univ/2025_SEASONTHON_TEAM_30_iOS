@@ -14,6 +14,7 @@ import KakaoSDKAuth
 class LoginViewModel: ObservableObject {
     @Published var isNewUser: Bool = false //닉네임 설정 페이지로 이동해야하는지
     @Published var isSwitchMain: Bool = false //홈 화면으로 전환할지 (로그인 성공시)
+    @Published var isLoading: Bool = false //로그인 로딩
     
     private let loginService = MockLoginService() //의존성 주입 (Real or Mock)
     
@@ -51,6 +52,7 @@ class LoginViewModel: ObservableObject {
     
     // MARK: - 서버로 토큰 전송 및 Keychain 저장
     private func sendTokenToServer(oauthToken: OAuthToken) {
+        self.isLoading = true
         Task {
             do {
                 //서버로 access, refresh 토큰 전송
@@ -70,6 +72,7 @@ class LoginViewModel: ObservableObject {
                 print("‼️서버와 카카오 로그인 통신 오류")
                 print(error)
             }
+            self.isLoading = false
         }
     }
     

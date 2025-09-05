@@ -47,6 +47,14 @@ struct LoginView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.mdNavi1)
+        //카카오 로그인 시 로딩 로티
+        .overlay(
+            Group {
+                   if vm.isLoading {
+                       LoadingLottieView(animationFileName: "Loading", loopMode: .loop)
+                   }
+               }
+        )
         //작성 완료 감지해서 디테일 페이지로 이동
         .onChange(of: vm.isNewUser) { _, newValue in
             if newValue {
