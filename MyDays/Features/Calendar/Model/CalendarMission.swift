@@ -14,7 +14,7 @@ struct DayContent {
     let text: String //오늘의 미션 내용 (ex. 나의 장점 3가지는 무엇입니까 ?)
     let isCompleted: Bool //미션 완료했는지
     
-    let post: Post?
+    var post: Post?
 }
 
 //서버 모델 매핑용 이니셜라이저
@@ -25,7 +25,7 @@ extension DayContent {
         self.text = data.missionText
         self.isCompleted = data.isCompleted
         
-        self.post = Post(from: data) //이거 참 좋네
+        self.post = data.post.map { Post(from: $0) } //이거 참 좋네
     }
 }
 

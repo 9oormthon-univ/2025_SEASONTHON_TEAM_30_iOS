@@ -17,7 +17,7 @@ class PostDetailViewModel: ObservableObject {
     @Published var isShowAlert: Bool = false //삭제 알럿 보여줄지
     @Published var isCompleteDelete: Bool = false //삭제 완료 후 네비게이션 트리거
     
-    private let postDetailService = PostDetailService() //의존성 주입 (Real or Mock)
+    private let postDetailService = MockPostDetailService() //의존성 주입 (Real or Mock)
 
     //MARK: - 디테일 뷰 조회
     func getPostDetail(postId: String) {

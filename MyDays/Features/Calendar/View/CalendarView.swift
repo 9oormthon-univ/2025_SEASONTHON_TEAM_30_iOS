@@ -13,35 +13,38 @@ struct CalendarView: View {
     @StateObject var vm = CalendarViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                //주 단위 달력
-                WeekCalendarView(selectedDate: $vm.selectedDate, weekDays: $vm.weekDays)
-                
-                
-                //미션 카드
-                if let dayContent = vm.selectedDayContent {
-                    CalendarMissionCard(date: dayContent.date,
-                                        mission: dayContent.text,
-                                        isCompleted: dayContent.isCompleted)
+        ZStack {
+            Color.mdSurf2.ignoresSafeArea() //로딩중에도 백그라운드 주기위해서
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 0) {
+                    //주 단위 달력
+                    WeekCalendarView(selectedDate: $vm.selectedDate, weekDays: $vm.weekDays)
+                    
+                    
+                    //미션 카드
+                    if let dayContent = vm.selectedDayContent {
+                        CalendarMissionCard(date: dayContent.date,
+                                            mission: dayContent.text,
+                                            isCompleted: dayContent.isCompleted)
                         .padding(.top, 20)
                         .padding(.horizontal, 30)
-                    
-                    //선택된 날짜의 게시물
-                    if let post = dayContent.post {
-                        HomePostView(post: post) {
-                            //좋아요 로직 처리
-                        }
-                        .contentShape(Rectangle())
-                        .padding(.horizontal, 24)
-                        .padding(.top, 46)
-                        .onTapGesture {
-                            nav.push(AppRoute.postDetail(postId: post.id))
+                        
+                        //선택된 날짜의 게시물
+                        if let post = dayContent.post {
+                            HomePostView(post: post) {
+                                vm.postLike(post: post)
+                            }
+                            .contentShape(Rectangle())
+                            .padding(.horizontal, 24)
+                            .padding(.top, 46)
+                            .onTapGesture {
+                                nav.push(AppRoute.postDetail(postId: post.id))
+                            }
                         }
                     }
                 }
+                .padding(.bottom, 50) //마지막 게시물 밑에서 얼마나
             }
-            .padding(.bottom, 50) //마지막 게시물 밑에서 얼마나
         }
         .background(.mdSurf2)
         .padding(.top, -8) // ScrollView, safeAreaInset간에 조그만 gap 크기만큼 조정

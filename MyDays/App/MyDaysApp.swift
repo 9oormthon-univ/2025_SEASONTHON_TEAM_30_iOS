@@ -47,6 +47,8 @@ struct MyDaysApp: App {
                     }
                 }
             }
+            //루트뷰들 나타날때 자연스럽게 애니메이션
+            .animation(.easeInOut(duration: 0.5), value: appState.currentView)
             //카카오 로그인 딥링크용
             .onOpenURL { url in
                 if AuthApi.isKakaoTalkLoginUrl(url) {

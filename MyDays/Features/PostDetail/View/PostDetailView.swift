@@ -16,38 +16,41 @@ struct PostDetailView: View {
     let postId: String
     
     var body: some View {
-        ScrollView {
-            if let post = vm.post {
-                VStack(spacing: 0) {
-                    //게시물
-                    DetailPostView(
-                        post: post,
-                        onLike: {
-                            vm.postLike()
-                        },
-                        onMore: {
-                            vm.isShowActionSheet.toggle()
-                        }
-                    )
-                    .padding(.horizontal, 24)
-                    
-                    //구분선
-                    Divider()
-                        .frame(height: 1)
-                        .overlay(.mdNavi2)
+        ZStack {
+            Color.mdSurf3.ignoresSafeArea() //로딩중에도 백그라운드 주기위해서
+            ScrollView(showsIndicators: false) {
+                if let post = vm.post {
+                    VStack(spacing: 0) {
+                        //게시물
+                        DetailPostView(
+                            post: post,
+                            onLike: {
+                                vm.postLike()
+                            },
+                            onMore: {
+                                vm.isShowActionSheet.toggle()
+                            }
+                        )
                         .padding(.horizontal, 24)
-                    
-                    //댓글 리스트
-                    LazyVStack(spacing: 20) {
-                        ForEach(vm.comments) { comment in
-                            DetailCommentView(comment: comment)
-                                .padding(.horizontal, 24)
+                        
+                        //구분선
+                        Divider()
+                            .frame(height: 1)
+                            .overlay(.mdNavi2)
+                            .padding(.horizontal, 24)
+                        
+                        //댓글 리스트
+                        LazyVStack(spacing: 20) {
+                            ForEach(vm.comments) { comment in
+                                DetailCommentView(comment: comment)
+                                    .padding(.horizontal, 24)
+                            }
                         }
+                        .padding(.top, 20)
                     }
-                    .padding(.top, 20)
+                    .padding(.bottom, 20) //마지막 게시물이랑 간격 차이
+                    .padding(.top, 36) //safeAreaTop 이랑 게시물사이 간격
                 }
-                .padding(.bottom, 20) //마지막 게시물이랑 간격 차이
-                .padding(.top, 36) //safeAreaTop 이랑 게시물사이 간격
             }
         }
         .background(.mdSurf3)
@@ -90,7 +93,8 @@ struct PostDetailView: View {
                             vm.sendComment()
                         })
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 22.5)
+            .padding(.bottom, 10)
         }
         //더보기 아이콘 눌렀을 때 액션시트
         .confirmationDialog("", isPresented: $vm.isShowActionSheet) {
