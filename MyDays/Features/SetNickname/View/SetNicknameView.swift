@@ -15,17 +15,25 @@ struct SetNicknameView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            //로고
+            HStack {
+                Spacer()
+                Image("logo.set.nickname")
+                Spacer()
+            }
+            .padding(.top, 10)
+            
             Text("마이데이즈에서 사용할\n닉네임을 적어주세요")
-                .font(.t2())
+                .font(.t1())
                 .foregroundColor(.white)
-                .padding(.top, 83)
+                .padding(.top, 42)
             
  
             ZStack(alignment: .leading) {
                 //placeholder
                 if vm.nickName.isEmpty {
                     Text("닉네임을 입력해주세요")
-                        .font(.b2())
+                        .font(.t2())
                         .foregroundColor(.mdDim)
                         .padding(.leading, 10)
                 }
@@ -33,7 +41,7 @@ struct SetNicknameView: View {
                 //텍스트 필드
                 TextField("", text: $vm.nickName)
                     .accentColor(.white)
-                    .font(.b2())
+                    .font(.t2())
                     .foregroundColor(.white)
                     .padding(.leading, 10)
                     .padding(.vertical, 16.5)
@@ -51,7 +59,7 @@ struct SetNicknameView: View {
                 
                 
             }
-            .padding(.top, 104)
+            .padding(.top, 102)
             
             //닉네임 형식 올바르지 않을때 문구
             if !vm.isNicknameValid {
@@ -59,19 +67,23 @@ struct SetNicknameView: View {
                     .foregroundColor(Color(hex: "FF5454"))
                     .font(.b3())
                     .padding(.top, 12)
-                    .padding(.leading, 19)
+                    .padding(.leading, 10)
+            }
+            //그냥 보여줄때
+            else {
+                Text("2자-12자 이내로 작성해주세요")
+                    .foregroundColor(.mdDim)
+                    .font(.b3())
+                    .padding(.top, 12)
+                    .padding(.leading, 10)
             }
             
             Spacer()
         }
         .toolbar(.hidden, for: .navigationBar)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay(alignment: .top) {
-            Image("logo.set.nickname")
-        }
-        
         .padding(.horizontal, 30)
-        .background(.mdSurf2)
+        .background(.mdNavi1)
         //다음 플로팅 버튼
         .safeAreaInset(edge: .bottom) {
             Button("다음") { vm.setNickname() }
@@ -83,10 +95,13 @@ struct SetNicknameView: View {
         //닉네임 설정 성공 시 감지해서 메인 화면으로 전환
         .onChange(of: vm.isSwitchMain) { _, newValue in
             if newValue {
-                nav.popToRoot()
-                appState.currentView = .main
+                nav.push(AppRoute.completedLogin(nickName: vm.nickName))
                 vm.isSwitchMain = false // 플래그 리셋 (중복 이동 방지)
             }
+        }
+        //중복된 닉네임 에러 팝업
+        .fullScreenCover(isPresented: $vm.showErrorPopUp) {
+            ErrorPopUpView(title: "오류", message: vm.errorMessage)
         }
     }
 }

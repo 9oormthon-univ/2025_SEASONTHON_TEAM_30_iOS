@@ -32,6 +32,12 @@ class MockSetNicknameService: SetNicknameServiceProtocol {
     // 닉네임 등록 요청
     func setNickname(request: PostNicknameRequest) async throws -> EmptyData {
         try await Task.sleep(nanoseconds: 1_000_000_000)
+        
+        //"중복"이라고 닉넴치면 중복오류 던지게
+        if request.nickName == "중복" {
+            throw APIError.conflict
+        }
+        
         return EmptyData()
     }
 }

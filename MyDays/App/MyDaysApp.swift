@@ -41,6 +41,9 @@ struct MyDaysApp: App {
                         
                     case .setting:
                         Color.black //TODO: 추후 세팅페이지로 변경
+                        
+                    case .completedLogin(let nickName):
+                        CompletedLoginView(nickName: nickName)
                     }
                 }
             }
