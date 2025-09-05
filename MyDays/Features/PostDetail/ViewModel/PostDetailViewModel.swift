@@ -17,15 +17,20 @@ class PostDetailViewModel: ObservableObject {
     @Published var isShowAlert: Bool = false //삭제 알럿 보여줄지
     @Published var isCompleteDelete: Bool = false //삭제 완료 후 네비게이션 트리거
     
-    private let postDetailService = MockPostDetailService() //의존성 주입 (Real or Mock)
+    private let postDetailService = PostDetailService() //의존성 주입 (Real or Mock)
 
     //MARK: - 디테일 뷰 조회
-    func getPostDetail() {
+    func getPostDetail(postId: String) {
         Task {
-            let (fetchedPost, fetchedComments) = try await postDetailService.getPostDetail()
-            
-            self.post = fetchedPost
-            self.comments = fetchedComments
+            do {
+                let (fetchedPost, fetchedComments) = try await postDetailService.getPostDetail(postId: postId)
+                
+                self.post = fetchedPost
+                self.comments = fetchedComments
+            }
+            catch let error as APIError {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -40,7 +45,7 @@ class PostDetailViewModel: ObservableObject {
             
             self.commentText = ""
             
-            self.getPostDetail() //댓글 전송 후 새로고침을 위해
+            self.getPostDetail(postId: postId) //댓글 전송 후 새로고침을 위해
         }
     }
     

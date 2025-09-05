@@ -34,7 +34,7 @@ class HomeService: HomeServiceProtocol {
     
     // 홈 미션 조회
     func getHomeMission() async throws -> HomeMission {
-        let response: GetHomeMissionResponse = try await APIManager.shared.request("/profile", method: .get)
+        let response: GetHomeMissionResponse = try await APIManager.shared.request("/challenges/today", method: .get)
         let mission = HomeMission(from: response)
         
         return mission

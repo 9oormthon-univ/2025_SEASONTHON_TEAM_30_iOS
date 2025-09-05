@@ -31,7 +31,7 @@ class HomeViewModel: ObservableObject {
         self.isFirstLoading = true
         Task {
             do {
-                getMission()
+//                getMission()
                 let fetchedPosts = try await homeService.getHomePosts(page: currentPage)
                 
                 self.posts = fetchedPosts
@@ -114,8 +114,8 @@ class HomeViewModel: ObservableObject {
                 let fetchedMission = try await homeService.getHomeMission()
                 self.mission = fetchedMission
             }
-            catch {
-                print("‼️미션받기 오류")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
         }
     }

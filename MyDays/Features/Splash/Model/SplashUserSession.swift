@@ -25,7 +25,8 @@ extension SplashUserSession {
 // MARK: - Mock 데이터
 extension SplashUserSession {
     static let mock: SplashUserSession = SplashUserSession(
-        accessToken: "hihihihihi",
+        //TODO: 일단 서버 연결용 mock 엑세스토큰
+        accessToken: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzU3MDM3MzUzLCJleHAiOjE3NTcxMjM3NTN9.vBQWXq5kj8FaGAR135GMnF2m2YXW6I4pUtQ_xCCykKY",
         refreshToken: "helloworld"
     )
 }

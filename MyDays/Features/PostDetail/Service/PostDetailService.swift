@@ -11,7 +11,7 @@ import Foundation
 
 // MARK: - PostDetailService Protocol
 protocol PostDetailServiceProtocol {
-    func getPostDetail() async throws -> (PostDetail, [PostDetailComment])
+    func getPostDetail(postId: String) async throws -> (PostDetail, [PostDetailComment])
     func sendComment(request: SendCommentRequest) async throws -> EmptyData
     func postlike(postId: String) async throws -> EmptyData
     func deletePost(request: DeletePostRequest) async throws -> EmptyData
@@ -20,8 +20,8 @@ protocol PostDetailServiceProtocol {
 // MARK: - PostDetailService (실제 API 통신)
 class PostDetailService: PostDetailServiceProtocol {
     // 디테일 페이지 조회 요청
-    func getPostDetail() async throws ->  (PostDetail, [PostDetailComment]) {
-        let response: GetPostDetailResponse = try await APIManager.shared.request("/posts/{postId}", method: .get)
+    func getPostDetail(postId: String) async throws ->  (PostDetail, [PostDetailComment]) {
+        let response: GetPostDetailResponse = try await APIManager.shared.request("/posts/\(postId)", method: .get)
         
         let post = PostDetail(from: response.post)
         let comments = response.comments.map { PostDetailComment(from: $0) }
@@ -67,7 +67,7 @@ class PostDetailService: PostDetailServiceProtocol {
 //MARK: - MockPostDetailService (테스트용)
 class MockPostDetailService: PostDetailServiceProtocol {
     // 디테일 페이지 조회 요청
-    func getPostDetail() async throws -> (PostDetail, [PostDetailComment]) {
+    func getPostDetail(postId: String) async throws -> (PostDetail, [PostDetailComment]) {
 //        try await Task.sleep(nanoseconds: 1_000_000_000)
         
         return (PostDetail.mock, PostDetailComment.mockComments)
