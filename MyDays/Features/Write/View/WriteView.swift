@@ -15,16 +15,11 @@ struct WriteView: View {
     @EnvironmentObject var nav: NavigationManager
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             if let mission = vm.mission {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(mission.day) //TODO: 미션 Day 없애는지
+                    Text(mission.text.forceCharWrapping)
                         .font(.t2())
-                        .foregroundColor(.white)
-                        .padding(.top, 10)
-                    
-                    Text(mission.text)
-                        .font(.b1())
                         .foregroundColor(.white)
                         .padding(.top, 10)
                     
@@ -96,26 +91,29 @@ struct WriteView: View {
         }
     }
 }
-//MARK: - 젤 위에 질문뷰
+//MARK: - 헤더
 struct WriteHeaderView: View {
     let onBack: () -> Void
     
     var body: some View {
-        Text("챌린지 작성")
-            .font(.b1())
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity)
-            .frame(height: 54)
-            .padding(.horizontal, 30)
-            .background(.mdSurf2)
-            .dropshadow1()
-            .overlay(alignment: .leading) {
-                Image("back")
-                    .onTapGesture {
-                        onBack()
-                    }
-                    .padding(.horizontal, 30)
-            }
+        HStack(spacing: 0) {
+            //뒤로가기
+            Image("back")
+                .onTapGesture {
+                    onBack()
+                }
+                .padding(.horizontal, 30)
+            Spacer()
+        }
+        .overlay(
+            Text("챌린지 작성")
+                .font(.b1())
+                .foregroundColor(.white)
+        )
+        .padding(.top, 10)
+        .frame(maxWidth: .infinity)
+        .frame(height: 54)
+        .background(.mdSurf2)
     }
 }
 

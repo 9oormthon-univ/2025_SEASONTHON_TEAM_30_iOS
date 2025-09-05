@@ -21,7 +21,7 @@ protocol WriteServiceProtocol {
 class WriteService: WriteServiceProtocol {
     //작성 페이지 get 요청
     func getWritePage() async throws -> WriteMission {
-        let response: GetWritePageResponse = try await APIManager.shared.request("/missions/today", method: .get)
+        let response: GetWritePageResponse = try await APIManager.shared.request("/posts/mission", method: .get)
         let mission = WriteMission(from: response)
         
         return mission
