@@ -66,23 +66,24 @@ struct CompletedPostDetailView: View {
         .toolbar(.hidden, for: .navigationBar)
         //상단 헤더
         .safeAreaInset(edge: .top) {
-            VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                Spacer()
+
+                Image("close")
+                    .onTapGesture {
+                        dismiss()
+                    }
+                    .padding(.horizontal, 30)
+            }
+            .overlay(
                 Text("내가 완료한 챌린지")
                     .font(.b1())
                     .foregroundColor(.white)
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 66)
-                    .background(.mdSurf3)
-                //X 버튼
-                    .overlay(alignment: .trailing) {
-                        Image("close")
-                            .onTapGesture {
-                                dismiss()
-                            }
-                            .padding(.horizontal, 30)
-                    }
-            }
+            )
+            .padding(.top, 10)
+            .frame(maxWidth: .infinity)
+            .frame(height: 66)
+            .background(.mdSurf3)
         }
         //댓글 텍스트 에디터
         .safeAreaInset(edge: .bottom) {
