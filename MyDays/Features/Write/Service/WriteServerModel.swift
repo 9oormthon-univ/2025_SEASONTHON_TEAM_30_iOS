@@ -10,9 +10,7 @@ import Foundation
 
 //작성화면 페이지 조회 Response
 struct GetWritePageResponse: Decodable {
-    let day: String
     let missionText: String
-    let isCompleted: Bool
 }
 
 //게시물 작성 Request
