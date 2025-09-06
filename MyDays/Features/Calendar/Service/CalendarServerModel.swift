@@ -17,7 +17,7 @@ struct GetWeeksResponse: Decodable {
         let day: Int
         let date: String
         let missionText: String
-        let isCompleted: Bool
+        let completed: Bool
         
         let post: PostResponse?
         
@@ -32,7 +32,7 @@ struct GetWeeksResponse: Decodable {
             let content: String
             let contentImgUrl: String
             let likeCount: Int
-            let isLiked: Bool
+            let liked: Bool
             let commentCount: Int
         }
     }

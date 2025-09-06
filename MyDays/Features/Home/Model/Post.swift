@@ -43,7 +43,7 @@ extension Post {
 extension Post {
     init(from data: GetWeeksResponse.DayContentsResponse.PostResponse) {
         self.id = data.postId
-        self.userimgUrl = data.userimgUrl
+        self.userimgUrl = APIManager.shared.baseURL + data.userimgUrl
         self.userName = data.userName
         self.userTitle = data.userTitle
         self.userTitleColor = data.userTitleColor
@@ -51,7 +51,7 @@ extension Post {
         self.content = data.content
         self.contentImgUrl = data.contentImgUrl
         self.likeCount = data.likeCount
-        self.isLiked = data.isLiked
+        self.isLiked = data.liked
         self.commentCount = data.commentCount
     }
 }

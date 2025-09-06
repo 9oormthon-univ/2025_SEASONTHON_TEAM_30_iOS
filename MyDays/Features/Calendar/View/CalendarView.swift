@@ -22,24 +22,57 @@ struct CalendarView: View {
                     
                     
                     //미션 카드
-                    if let dayContent = vm.selectedDayContent {
-                        CalendarMissionCard(date: dayContent.date,
-                                            mission: dayContent.text,
-                                            isCompleted: dayContent.isCompleted)
-                        .padding(.top, 20)
-                        .padding(.horizontal, 30)
-                        
-                        //선택된 날짜의 게시물
-                        if let post = dayContent.post {
-                            HomePostView(post: post) {
-                                vm.postLike(post: post)
+                    if vm.isLoading {
+                        // 아무 것도 안보여주거나, 필요하다면 로딩 뷰
+                        EmptyView()
+                    } else {
+                        if let dayContent = vm.selectedDayContent {
+                            CalendarMissionCard(date: dayContent.date,
+                                                mission: dayContent.text,
+                                                isCompleted: dayContent.isCompleted)
+                            .padding(.top, 20)
+                            .padding(.horizontal, 30)
+                            
+                            //선택된 날짜의 게시물
+                            if let post = dayContent.post {
+                                HomePostView(post: post) {
+                                    vm.postLike(post: post)
+                                }
+                                .contentShape(Rectangle())
+                                .padding(.horizontal, 24)
+                                .padding(.top, 46)
+                                .onTapGesture {
+                                    nav.push(AppRoute.postDetail(postId: post.id))
+                                }
                             }
-                            .contentShape(Rectangle())
-                            .padding(.horizontal, 24)
-                            .padding(.top, 46)
-                            .onTapGesture {
-                                nav.push(AppRoute.postDetail(postId: post.id))
+                            //도전하지 않은 챌린지라면
+                            if !dayContent.isCompleted {
+                                VStack(spacing: 0) {
+                                    Image("empty.week.calendar")
+                                        .resizable()
+                                        .frame(width: 139, height: 139)
+                                    
+                                    Text("도전하지 않은 챌린지예요")
+                                        .font(.t2())
+                                        .foregroundColor(.white)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 103)
                             }
+                        }
+                        //아직 미션날이 아니라면
+                        else {
+                            VStack(spacing: 0) {
+                                Image("empty.week.calendar")
+                                    .resizable()
+                                    .frame(width: 139, height: 139)
+                                
+                                Text("아직 도전할 수 없어요")
+                                    .font(.t2())
+                                    .foregroundColor(.white)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 105)
                         }
                     }
                 }
