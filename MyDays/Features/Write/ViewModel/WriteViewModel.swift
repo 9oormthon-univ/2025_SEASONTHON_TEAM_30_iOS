@@ -56,8 +56,8 @@ class WriteViewModel: ObservableObject {
                 self.navigateToPostId = fetchedPostId
             }
             //작성 실패 시
-            catch {
-                print("미션 작성 실패 \(error)")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
             
             isLoading = false

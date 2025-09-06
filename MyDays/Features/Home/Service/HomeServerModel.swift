@@ -25,6 +25,7 @@ struct GetHomePostsResponse: Decodable {
         let likeCount: Int
         let isLiked: Bool
         let commentCount: Int
+        let isOwner: Bool
     }
 }
 
@@ -32,5 +33,5 @@ struct GetHomePostsResponse: Decodable {
 struct GetHomeMissionResponse: Decodable {
     let userImgUrl: String
     let text: String
-    let isCompleted: Bool
+    let completed: Bool
 }

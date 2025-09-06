@@ -18,7 +18,7 @@ class PostDetailViewModel: ObservableObject {
     @Published var isCompleteDelete: Bool = false //삭제 완료 후 네비게이션 트리거
     @Published var isDeleteLoading: Bool = false //삭제 완료 로딩
     
-    private let postDetailService = MockPostDetailService() //의존성 주입 (Real or Mock)
+    private let postDetailService = PostDetailService() //의존성 주입 (Real or Mock)
 
     //MARK: - 디테일 뷰 조회
     func getPostDetail(postId: String) {
@@ -39,14 +39,19 @@ class PostDetailViewModel: ObservableObject {
     func sendComment() {
         guard let postId = self.post?.id else { return }
         Task {
-            _ = try await postDetailService.sendComment(request: SendCommentRequest(
-                postId: postId,
-                content: self.commentText
-            ))
-            
-            self.commentText = ""
-            
-            self.getPostDetail(postId: postId) //댓글 전송 후 새로고침을 위해
+            do {
+                _ = try await postDetailService.sendComment(request: SendCommentRequest(
+                    postId: postId,
+                    content: self.commentText
+                ))
+                
+                self.commentText = ""
+                
+                self.getPostDetail(postId: postId) //댓글 전송 후 새로고침을 위해
+            }
+            catch let error as APIError {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -69,8 +74,8 @@ class PostDetailViewModel: ObservableObject {
                 
                 self.post = post //다시 포스트에 반영
             }
-            catch {
-                print("좋아요 누르기/취소 에러")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
         }
     }
@@ -86,8 +91,8 @@ class PostDetailViewModel: ObservableObject {
                 ))
                 self.isCompleteDelete = true //네비게이션 트리거
             }
-            catch {
-                
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
             self.isDeleteLoading = false
         }

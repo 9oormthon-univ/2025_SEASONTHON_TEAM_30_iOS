@@ -19,7 +19,7 @@ class CompletedPostDetailViewModel: ObservableObject {
     @Published var isCompleteDelete: Bool = false //삭제 완료 후 네비게이션 트리거
     @Published var isDeleteLoading: Bool = false //삭제동안 로딩
     
-    private let completedPostDetailService = MockCompletedPostDetailService() //의존성 주입 (Real or Mock)
+    private let completedPostDetailService = CompletedPostDetailService() //의존성 주입 (Real or Mock)
 
     //MARK: - 완료한 디테일 뷰 조회
     func getCompltedPostDetail(postId: String) {
@@ -31,24 +31,29 @@ class CompletedPostDetailViewModel: ObservableObject {
                 self.post = fetchedPost
                 self.comments = fetchedComments
             }
-            catch {
-                
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
         }
     }
     
     //MARK: - 댓글 전송
     func sendComment() {
-        guard var post = self.post else { return }
+        guard let post = self.post else { return }
         Task {
-            _ = try await completedPostDetailService.sendComment(request: SendCommentRequest(
-                postId: post.id,
-                content: self.commentText
-            ))
-            
-            self.commentText = ""
-            
-            self.getCompltedPostDetail(postId: post.id) //댓글 전송 후 새로고침을 위해
+            do {
+                _ = try await completedPostDetailService.sendComment(request: SendCommentRequest(
+                    postId: post.id,
+                    content: self.commentText
+                ))
+                
+                self.commentText = ""
+                
+                self.getCompltedPostDetail(postId: post.id) //댓글 전송 후 새로고침을 위해
+            }
+            catch let error as APIError {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -71,8 +76,8 @@ class CompletedPostDetailViewModel: ObservableObject {
                 
                 self.post = post //다시 포스트에 반영
             }
-            catch {
-                print("좋아요 누르기/취소 에러")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
         }
     }
@@ -86,8 +91,8 @@ class CompletedPostDetailViewModel: ObservableObject {
                 _ = try await completedPostDetailService.deletePost(postId: postId)
                 self.isCompleteDelete = true //네비게이션 트리거
             }
-            catch {
-                
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
             self.isDeleteLoading = false
         }

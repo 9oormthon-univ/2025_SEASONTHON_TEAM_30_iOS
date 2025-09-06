@@ -18,7 +18,7 @@ protocol MonthCalendarServiceProtocol {
 class MonthCalendarService: MonthCalendarServiceProtocol {
     // 월 단위 달력 뷰 조회 요청
     func getCalendarPosts() async throws -> (Date, [MonthCalendarPost]) {
-        let response: GetCalendarPostsResponse = try await APIManager.shared.request("/", method: .get)
+        let response: GetCalendarPostsResponse = try await APIManager.shared.request("/users/calendar/all", method: .get)
         
         let posts = response.posts.map { MonthCalendarPost(from: $0) }
         let userCreatedAt = response.userCreatedAt

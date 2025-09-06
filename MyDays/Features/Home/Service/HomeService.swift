@@ -22,9 +22,7 @@ protocol HomeServiceProtocol {
 class HomeService: HomeServiceProtocol {
     // 서버로부터 홈 게시물 조회 요청
     func getHomePosts(page: Int) async throws -> [Post] {
-
-        // APIManager를 사용해 서버로부터 데이터 가져오기
-        let response: GetHomePostsResponse = try await APIManager.shared.request("/profile", method: .get)
+        let response: GetHomePostsResponse = try await APIManager.shared.request("/posts/page/\(page)", method: .get)
         
         // 서버 모델을 앱 모델로 변환
         let posts = response.posts.map { Post(from: $0) }
@@ -36,7 +34,7 @@ class HomeService: HomeServiceProtocol {
     func getHomeMission() async throws -> HomeMission {
         let response: GetHomeMissionResponse = try await APIManager.shared.request("/challenges/today", method: .get)
         let mission = HomeMission(from: response)
-        
+
         return mission
     }
     
@@ -46,7 +44,7 @@ class HomeService: HomeServiceProtocol {
             "postId": postId
         ]
         
-        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: EmptyData = try await APIManager.shared.request("/posts/like", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
         return response
     }

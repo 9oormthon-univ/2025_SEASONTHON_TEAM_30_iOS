@@ -17,10 +17,10 @@ class HomeViewModel: ObservableObject {
     @Published var isMoreLoading: Bool = false //게시물 더 받아올때 로딩
     @Published var isRefreshing: Bool = false //리프레쉬 로딩
     
-    private let homeService = MockHomeService() //의존성 주입 (Real or Mock)
+    private let homeService = HomeService() //의존성 주입 (Real or Mock)
     
     // 💡 무한 스크롤을 위한 상태 변수
-    @Published var currentPage = 1 // 현재 페이지 번호
+    @Published var currentPage = 0 // 현재 페이지 번호
     @Published var hasMorePages = true // 더 이상 페이지가 없는지 여부
     
     init() {
@@ -37,8 +37,8 @@ class HomeViewModel: ObservableObject {
                 self.posts = fetchedPosts
                 self.currentPage += 1
             }
-            catch {
-                print("‼️홈 첫 조회 오류")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
             self.isFirstLoading = false
         }
@@ -64,8 +64,8 @@ class HomeViewModel: ObservableObject {
                     self.currentPage += 1
                 }
             }
-            catch {
-                print("‼️게시물 더 받기 오류")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
             self.isMoreLoading = false
         }
@@ -74,7 +74,7 @@ class HomeViewModel: ObservableObject {
     //MARK: - 새로고침
     func refreshHome() {
         Task {
-            self.currentPage = 1
+            self.currentPage = 0
             self.hasMorePages = true
             
             do {
@@ -84,8 +84,8 @@ class HomeViewModel: ObservableObject {
                 
                 self.posts = fetchedPosts
                 self.currentPage += 1
-            } catch {
-                print("‼️새로고침 오류")
+            }  catch let error as APIError {
+                print(error.localizedDescription)
             }
         }
     }
@@ -101,8 +101,8 @@ class HomeViewModel: ObservableObject {
                     posts[index].likeCount += posts[index].isLiked ? 1 : -1 // 좋아요 카운트 변경
                 }
             }
-            catch {
-                print("‼️좋아요 오류")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
         }
     }

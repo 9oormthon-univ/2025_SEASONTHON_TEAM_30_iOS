@@ -47,7 +47,7 @@ class PostDetailService: PostDetailServiceProtocol {
             "postId": postId
         ]
         
-        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: EmptyData = try await APIManager.shared.request("/posts/like", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
         return response
     }
@@ -58,7 +58,7 @@ class PostDetailService: PostDetailServiceProtocol {
             "postId": request.postId
         ]
         
-        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: EmptyData = try await APIManager.shared.request("/posts", method: .delete, parameters: parameters, encoding: JSONEncoding.default)
         
         return response
     }

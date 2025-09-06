@@ -16,7 +16,7 @@ class MonthCalendarViewModel: ObservableObject {
     @Published var selectedPostId: String = "" //날짜 터치된 게시물 id
     
     private let calendarManager = CalendarManager()
-    private let mnthCalendarService = MockMonthCalendarService() //의존성 주입 (Real or Mock)
+    private let mnthCalendarService = MonthCalendarService() //의존성 주입 (Real or Mock)
 
     //MARK: - 월 단위 달력 뷰 조회
     func getMonthCalendar() {
@@ -29,11 +29,9 @@ class MonthCalendarViewModel: ObservableObject {
                 self.months = calendarManager.generateMonths(from: fetchedUserCreatedAt, to: Date())
                 self.posts = fetchedPosts
             }
-            catch{
-                print("‼️월 단위 달력 조회 에러\(error)")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
-            
-           
         }
     }
     
