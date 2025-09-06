@@ -19,10 +19,11 @@ class LoginService: LoginServiceeProtocol {
     // 카카오 로그인 요청
     func kakaoLogin(request: KakaLoginRequest) async throws -> UserSession {
         let parameters: Parameters = [
-            "code": request.idToken, //카카오 토큰
+//            "accessToken": request.accessToken, //카카오 토큰
 //            "refreshToken": request.refreshToken //카카오 토큰
+            "idToken" : request.idToken
         ]
-        let response: KakaLoginResponse = try await APIManager.shared.request("/auth/kakao/callback", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: KakaLoginResponse = try await APIManager.shared.request("/auth/kakao/oidc", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
         let userSession = UserSession(from: response)
         
