@@ -26,7 +26,7 @@ extension SplashUserSession {
 extension SplashUserSession {
     static let mock: SplashUserSession = SplashUserSession(
         //TODO: 일단 서버 연결용 mock 엑세스토큰
-        accessToken: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzU3MTU3ODgyLCJleHAiOjE3NTcyNDQyODJ9.CwMktwAV8BrQXujEUaRD37a02Pfctsc_sZEIpYlpLV4",
+        accessToken: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzU3MTY5NDk5LCJleHAiOjE3NTcyNTU4OTl9.cuZolMyIpN61BhsV-rM3vmT-h_WW7mMWBS1nFepWMjQ",
         refreshToken: "helloworld"
     )
 }

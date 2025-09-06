@@ -58,33 +58,35 @@ struct UpdateActiveTitleRequest: Encodable {
     }
 }
 
-struct UpdateActiveTitleResponse: Decodable {
-    struct Meta: Decodable {
-        let code: Int
-        let message: String
-    }
-    let meta: Meta
-    let body: [String: String]? // body가 비어있을 수도 있어서
-}
+struct EmptyResponse: Decodable {}
 
 // MARK: - User Titles Response
 struct GetUserTitlesResponse: Decodable {
+    
+    let titles: [Title]
+    struct Title: Decodable {
+        let titleId: String
+        let title: String
+        let titleColor: String
+    }
+
+    /*
     struct Meta: Decodable {
         let code: Int
         let message: String
     }
+    
+    struct Title: Decodable {
+        
+    }
+    
     struct Body: Decodable {
         let titles: [UserTitle]
     }
     
     let meta: Meta
     let body: Body
-}
-
-struct UserTitle: Decodable {
-    let titleId: String
-    let title: String
-    let titleColor: String
+     */
 }
 
 
