@@ -1,0 +1,77 @@
+//
+//  ChallengeStatusServerModel.swift
+//  MyDays
+//
+//  Created by Apple on 9/5/25.
+//
+
+//MARK: - 챌린지 상태 뷰 서버모델
+import Foundation
+
+// MARK: - GetChallengeStatusResponse
+struct GetChallengeStatusResponse: Decodable {
+    let meta: Meta
+    let body: ChallengeStatusBody
+    
+    struct Meta: Decodable {
+        let code: Int
+        let message: String
+    }
+    
+    struct ChallengeStatusBody: Decodable {
+        let nickName: String
+        let growthMessage: String
+        let userTitle: String
+        let userTitleColor: String
+        let progress: Int
+        let imageUrl: String
+        let totalChallengeCount: Int
+        let daysCount: Int
+        let bubbleVisible: Bool
+        let completeMission: Bool
+    }
+}
+
+// MARK: - Request / Response 모델 정의
+struct UpdateActiveTitleRequest: Encodable {
+    let titleId: String
+    
+    func toDictionary() -> [String: Any]? {
+        guard let data = try? JSONEncoder().encode(self),
+              let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return nil
+        }
+        return dict
+    }
+}
+
+struct UpdateActiveTitleResponse: Decodable {
+    struct Meta: Decodable {
+        let code: Int
+        let message: String
+    }
+    let meta: Meta
+    let body: [String: String]? // body가 비어있을 수도 있어서
+}
+
+// MARK: - User Titles Response
+struct GetUserTitlesResponse: Decodable {
+    struct Meta: Decodable {
+        let code: Int
+        let message: String
+    }
+    struct Body: Decodable {
+        let titles: [UserTitle]
+    }
+    
+    let meta: Meta
+    let body: Body
+}
+
+struct UserTitle: Decodable {
+    let titleId: String
+    let title: String
+    let titleColor: String
+}
+
+
