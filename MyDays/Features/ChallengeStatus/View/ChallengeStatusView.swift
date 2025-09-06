@@ -129,7 +129,8 @@ struct ChallengeStatusView: View {
                 ZStack {
                     // 새로 만든 ProgressRingView를 배경에 배치
                     ProgressRingView(progress: challengeStatus.progress)
-                        .frame(width: 100, height: 92.5)
+                        .padding(.horizontal,94.5)
+                        //.frame(width: 185, height: 92.5)
                     
                     // 슬라임 이미지를 ProgressRingView 위에 올림
                     KFImage(URL(string: challengeStatus.imageUrl))

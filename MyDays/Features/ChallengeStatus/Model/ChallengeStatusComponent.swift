@@ -53,6 +53,16 @@ struct ChallengeStatusComponent {
      */
 }
 
+struct TitleComponent {
+        
+        let titles: [Title]
+        struct Title {
+            let titleId: String
+            let title: String
+            let titleColor: String
+        }
+}
+
 extension ChallengeStatusComponent {
     init(from data: GetChallengeStatusResponse){
         self.nickName = data.nickName
@@ -65,6 +75,14 @@ extension ChallengeStatusComponent {
         self.daysCount = data.daysCount
         self.isBubbleVisible = data.isBubbleVisible
         self.isCompleteMission = data.isCompleteMission
+    }
+}
+
+extension TitleComponent {
+    init(from data: GetUserTitlesResponse){
+        self.titles = data.titles.map {
+            Title(titleId: $0.titleId, title: $0.title, titleColor: $0.titleColor)
+        }
     }
 }
 
@@ -81,5 +99,14 @@ extension ChallengeStatusComponent {
         totalChallengeCount: 25,
         daysCount: 7,
         isCompleteMission: false
+    )
+}
+
+extension TitleComponent {
+    static let mock: TitleComponent = .init(
+        titles: [
+            .init(titleId: "1", title: "열정러", titleColor: "#FF6B6B"),
+            .init(titleId: "2", title: "열정러2", titleColor: "#FF6B6B"),
+        ]
     )
 }
