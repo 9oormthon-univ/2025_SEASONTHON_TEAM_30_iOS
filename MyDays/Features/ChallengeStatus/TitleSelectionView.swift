@@ -46,6 +46,7 @@ struct TitleSelectionView: View {
                     }
                         .frame(maxWidth: .infinity, alignment: .leading) // 전체 왼쪽 정렬
                 }
+                .padding(.top, 5) // 위쪽 여백 5 : 그림자 효과 가려져서
                 .padding(.leading, 30)   // 왼쪽 여백 30
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
