@@ -67,6 +67,10 @@ extension UIFont {
         return customFont(for: weight, size: 14)
     }
     
+    static func b3Light(_ weight: UIFont.Weight = .light) -> UIFont {
+        return customFont(for: weight, size: 14)
+    }
+    
     static func b3BoldNickname(_ weight: UIFont.Weight = .bold) -> UIFont {
         return customFont(for: weight, size: 14)
     }
@@ -100,6 +104,7 @@ extension View {
         case UIFont.b2Bold(): multiplier = 1.5
         case UIFont.b3(): multiplier = 1.4
         case UIFont.b3Bold(): multiplier = 1.5
+        case UIFont.b3Light(): multiplier = 1.4
         case UIFont.b3BoldNickname(): multiplier = 1.1
         case UIFont.l1(): multiplier = 1.0
         case UIFont.l1Bold(): multiplier = 1.0
@@ -140,6 +145,8 @@ extension View {
             .font(.b3())
         Text("B3-Bold")
             .font(.b3Bold())
+        Text("B3-light")
+            .font(.b3Light())
         Text("B3-Bold-Nickname")
             .font(.b3BoldNickname())
         Text("L1")
