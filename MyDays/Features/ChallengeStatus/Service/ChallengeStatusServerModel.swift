@@ -10,6 +10,18 @@ import Foundation
 
 // MARK: - GetChallengeStatusResponse
 struct GetChallengeStatusResponse: Decodable {
+    let nickName: String
+    let growthMessage: String
+    let isBubbleVisible: Bool
+    let userTitle: String
+    let userTitleColor: String
+    let progress: Double
+    let imageUrl: String
+    let totalChallengeCount: Int
+    let daysCount: Int
+    let isCompleteMission: Bool
+    
+    /*
     let meta: Meta
     let body: ChallengeStatusBody
     
@@ -21,15 +33,16 @@ struct GetChallengeStatusResponse: Decodable {
     struct ChallengeStatusBody: Decodable {
         let nickName: String
         let growthMessage: String
+        let isBubbleVisible: Bool
         let userTitle: String
         let userTitleColor: String
-        let progress: Int
+        let progress: Double
         let imageUrl: String
         let totalChallengeCount: Int
         let daysCount: Int
-        let bubbleVisible: Bool
-        let completeMission: Bool
+        let isCompleteMission: Bool
     }
+     */
 }
 
 // MARK: - Request / Response 모델 정의

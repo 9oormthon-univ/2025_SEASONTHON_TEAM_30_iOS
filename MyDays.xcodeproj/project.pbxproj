@@ -20,7 +20,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		108452E12E6152F500BF1225 /* Exceptions for "MyDays" folder in "MyDays" target */ = {
+		18852A442E6C5B7F00C2BDB5 /* Exceptions for "MyDays" folder in "MyDays" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Configs/Info.plist,
@@ -33,7 +33,7 @@
 		10844F282E61481F00BF1225 /* MyDays */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				108452E12E6152F500BF1225 /* Exceptions for "MyDays" folder in "MyDays" target */,
+				18852A442E6C5B7F00C2BDB5 /* Exceptions for "MyDays" folder in "MyDays" target */,
 			);
 			path = MyDays;
 			sourceTree = "<group>";
