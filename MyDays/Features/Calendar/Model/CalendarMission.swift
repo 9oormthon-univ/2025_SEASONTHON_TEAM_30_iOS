@@ -23,7 +23,7 @@ extension DayContent {
         self.day = data.day
         self.date = data.date
         self.text = data.missionText
-        self.isCompleted = data.isCompleted
+        self.isCompleted = data.completed
         
         self.post = data.post.map { Post(from: $0) } //이거 참 좋네
     }
