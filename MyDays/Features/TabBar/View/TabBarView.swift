@@ -22,7 +22,7 @@ struct TabBarView: View {
                 CalendarView()
                     .tag(TabItem.calendar)
                 
-                Color.red
+                ChallengeStatusView()
                     .tag(TabItem.status)
             }
             .toolbar(.hidden, for: .tabBar)
