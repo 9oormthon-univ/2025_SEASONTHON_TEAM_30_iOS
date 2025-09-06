@@ -19,7 +19,7 @@ extension UserSession {
     init(from data: KakaLoginResponse) {
         self.accessToken = data.accessToken
         self.refreshToken = data.refreshToken
-        self.isNewUser = data.isNewUser
+        self.isNewUser = data.newUser
     }
 }
 
@@ -27,8 +27,8 @@ extension UserSession {
 // MARK: - Mock 데이터
 extension UserSession {
     static let mock: UserSession = UserSession(
-        accessToken: "asdfasdf1234",
+        accessToken: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNzU3MTkzNjU4LCJleHAiOjE3NTcyODAwNTh9.EZxlLVqWmaUDvtW1Zz_MtVgoijUUWh-6OG7XqexY4Vw",
         refreshToken: "qwerqwer1234",
-        isNewUser: true
+        isNewUser: false
     )
 }

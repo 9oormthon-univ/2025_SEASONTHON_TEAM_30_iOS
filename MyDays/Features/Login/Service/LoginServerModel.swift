@@ -12,11 +12,12 @@ import Foundation
 struct KakaLoginRequest: Decodable {
     let accessToken: String //카카오 토큰
     let refreshToken: String //카카오 토큰
+    let idToken: String
 }
 
 //카카오 로그인 응답 (백엔드한테서)
 struct KakaLoginResponse: Decodable {
     let accessToken: String //백엔드 토큰
     let refreshToken: String //백엔드  토큰
-    let isNewUser: Bool //닉네임 설정했는지 여부
+    let newUser: Bool //닉네임 설정했는지 여부
 }

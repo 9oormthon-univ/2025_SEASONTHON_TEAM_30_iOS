@@ -22,10 +22,9 @@ struct CalendarView: View {
                     
                     
                     //미션 카드
-                    if vm.isLoading {
-                        // 아무 것도 안보여주거나, 필요하다면 로딩 뷰
-                        EmptyView()
-                    } else {
+//                    if !vm.isLoading {
+//                        // 아무 것도 안보여주거나, 필요하다면 로딩 뷰
+
                         if let dayContent = vm.selectedDayContent {
                             CalendarMissionCard(date: dayContent.date,
                                                 mission: dayContent.text,
@@ -62,22 +61,24 @@ struct CalendarView: View {
                         }
                         //아직 미션날이 아니라면
                         else {
-                            VStack(spacing: 0) {
-                                Image("empty.week.calendar")
-                                    .resizable()
-                                    .frame(width: 139, height: 139)
-                                
-                                Text("아직 도전할 수 없어요")
-                                    .font(.t2())
-                                    .foregroundColor(.white)
+                            if !vm.isLoading {
+                                VStack(spacing: 0) {
+                                    Image("empty.week.calendar")
+                                        .resizable()
+                                        .frame(width: 139, height: 139)
+                                    
+                                    Text("아직 도전할 수 없어요")
+                                        .font(.t2())
+                                        .foregroundColor(.white)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 105)
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding(.top, 105)
                         }
                     }
                 }
                 .padding(.bottom, 70) //마지막 게시물 밑에서 얼마나
-            }
+//            }
         }
         .background(.mdSurf2)
         .padding(.top, -8) // ScrollView, safeAreaInset간에 조그만 gap 크기만큼 조정
