@@ -106,8 +106,10 @@ struct PostDetailView: View {
         )
         //더보기 아이콘 눌렀을 때 액션시트
         .confirmationDialog("", isPresented: $vm.isShowActionSheet) {
-            Button("삭제하기", role: .destructive) {
-                vm.isShowAlert.toggle()
+            if vm.post?.isOwner == true { //자기 글일 경우에만 (나중에 차단, 수정, 신고 등 더 넣기위해 이렇게)
+                Button("삭제하기", role: .destructive) {
+                    vm.isShowAlert.toggle()
+                }
             }
             Button("취소", role: .cancel) {}
         }

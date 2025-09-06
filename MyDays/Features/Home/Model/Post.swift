@@ -26,7 +26,7 @@ struct Post: Identifiable, Equatable {
 extension Post {
     init(from data: GetHomePostsResponse.PostsResponse) {
         self.id = data.postId
-        self.userimgUrl = data.userimgUrl
+        self.userimgUrl = APIManager.shared.baseURL + data.userimgUrl
         self.userName = data.userName
         self.userTitle = data.userTitle
         self.userTitleColor = data.userTitleColor

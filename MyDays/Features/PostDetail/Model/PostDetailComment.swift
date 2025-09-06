@@ -22,7 +22,7 @@ struct PostDetailComment: Identifiable, Equatable {
 extension PostDetailComment {
     init(from data: GetPostDetailResponse.CommentsResponse) {
         self.id = data.commentId
-        self.userimgUrl = data.userimgUrl
+        self.userimgUrl = APIManager.shared.baseURL + data.userImgUrl
         self.userName = data.userName
         self.userTitle = data.userTitle
         self.userTitleColor = data.userTitleColor

@@ -22,9 +22,14 @@ class CalendarViewModel: ObservableObject {
     //MARK: - 캘린더 뷰 조회
     func getCalendarWeek() {
         Task {
-            let fetchedDayContents = try await calendarService.getCalendarWeeks()
-            
-            self.dayContents = fetchedDayContents
+            do {
+                let fetchedDayContents = try await calendarService.getCalendarWeeks()
+                
+                self.dayContents = fetchedDayContents
+            }
+            catch let error as APIError {
+                print(error.localizedDescription)
+            }
             selectDate() //처음에도 선택되게 하기 위해
         }
     }
@@ -58,8 +63,8 @@ class CalendarViewModel: ObservableObject {
                     }
                 }
             }
-            catch {
-                print("‼️좋아요 오류")
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
         }
     }

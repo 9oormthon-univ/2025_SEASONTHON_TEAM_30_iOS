@@ -14,8 +14,7 @@ class APIManager {
     static let shared = APIManager()
     
     private let session: Session
-    private let baseURL: String = (Bundle.main.infoDictionary?["BASE_URL"] as? String) ?? ""
-    
+    let baseURL: String = (Bundle.main.infoDictionary?["BASE_URL"] as? String) ?? ""
     
     // 세션 설정 (타임아웃 등)
     private init() {
@@ -26,7 +25,7 @@ class APIManager {
     
     // 모든 API 요청을 처리하는 제네릭 함수
     func request<T: Decodable>(_ endpoint: String, method: HTTPMethod, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: HTTPHeaders? = nil) async throws -> T {
-        let url = baseURL + endpoint
+        let url = baseURL + "/api" + "/v1" + endpoint
         
         // 🔑 Keychain에서 accessToken 가져오기
         let accessToken = KeychainHelper.load(key: "accessToken") ?? ""
@@ -44,6 +43,7 @@ class APIManager {
         
         switch response.result {
         case .success(let serverResponse):
+            print("✅ 리스폰 값 : \(serverResponse.body)")
             if let body = serverResponse.body {
                 return body
             }

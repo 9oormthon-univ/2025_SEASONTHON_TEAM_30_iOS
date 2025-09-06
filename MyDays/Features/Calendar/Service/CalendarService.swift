@@ -17,10 +17,10 @@ protocol CalendarServiceProtocol {
 
 // MARK: - CalendarService (실제 API 통신)
 class CalendarService: CalendarServiceProtocol {
-    // 캘린더 뷰 조회 요청
+    // 주간 캘린더 뷰 조회 요청
     func getCalendarWeeks() async throws -> [DayContent] {
 
-        let response: GetWeeksResponse = try await APIManager.shared.request("/", method: .get)
+        let response: GetWeeksResponse = try await APIManager.shared.request("/users/calendar/week", method: .get)
         
         let dayContents = response.dayContents.map { DayContent(from: $0) }
         
@@ -33,7 +33,7 @@ class CalendarService: CalendarServiceProtocol {
             "postId": postId
         ]
         
-        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: EmptyData = try await APIManager.shared.request("/posts/like", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
         return response
     }
@@ -41,7 +41,7 @@ class CalendarService: CalendarServiceProtocol {
 
 //MARK: - MockHomeService (테스트용)
 class MockCalendarService: CalendarServiceProtocol {
-    // 캘린더 뷰 조회 요청
+    // 주간 캘린더 뷰 조회 요청
     func getCalendarWeeks() async throws -> [DayContent] {
         return DayContent.mockMissions
     }

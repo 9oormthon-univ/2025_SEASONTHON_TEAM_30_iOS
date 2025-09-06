@@ -25,11 +25,12 @@ struct GetPostDetailResponse: Decodable {
         let likeCount: Int
         let isLiked: Bool
         let commentCount: Int
+        let isOwner: Bool
     }
     
     struct CommentsResponse: Decodable {
         let commentId: String
-        let userimgUrl: String
+        let userImgUrl: String
         let userName: String
         let userTitle: String
         let userTitleColor: String

@@ -17,9 +17,9 @@ struct HomeMission {
 //서버 모델 매핑용 이니셜라이저
 extension HomeMission {
     init(from data: GetHomeMissionResponse) {
-        self.userImgUrl = data.userImgUrl
+        self.userImgUrl = APIManager.shared.baseURL + data.userImgUrl
         self.text = data.text
-        self.isCompleted = data.isCompleted
+        self.isCompleted = data.completed
     }
 }
 

@@ -20,13 +20,14 @@ struct PostDetail: Identifiable, Equatable {
     var likeCount: Int //좋아요 개수
     var isLiked: Bool //좋아요 눌렀는지
     let commentCount: Int //댓글 개수
+    let isOwner: Bool //게시물 주인인지
 }
 
 // 서버 응답 모델을 Post 모델로 매핑하기 위한 이니셜라이저
 extension PostDetail {
     init(from data: GetPostDetailResponse.PostsResponse) {
         self.id = data.postId
-        self.userimgUrl = data.userimgUrl
+        self.userimgUrl = APIManager.shared.baseURL + data.userimgUrl
         self.userName = data.userName
         self.userTitle = data.userTitle
         self.userTitleColor = data.userTitleColor
@@ -36,6 +37,7 @@ extension PostDetail {
         self.likeCount = data.likeCount
         self.isLiked = data.isLiked
         self.commentCount = data.commentCount
+        self.isOwner = data.isOwner
     }
 }
 
@@ -43,7 +45,7 @@ extension PostDetail {
 extension PostDetail {
     init(from data: CompletedDetailResponse.PostsResponse) {
         self.id = data.postId
-        self.userimgUrl = data.userimgUrl
+        self.userimgUrl = APIManager.shared.baseURL + data.userimgUrl
         self.userName = data.userName
         self.userTitle = data.userTitle
         self.userTitleColor = data.userTitleColor
@@ -53,6 +55,7 @@ extension PostDetail {
         self.likeCount = data.likeCount
         self.isLiked = data.isLiked
         self.commentCount = data.commentCount
+        self.isOwner = data.isOwner
     }
 }
 
@@ -70,6 +73,7 @@ extension PostDetail {
         contentImgUrl: "https://picsum.photos/200?1",
         likeCount: 12,
         isLiked: false,
-        commentCount: 3
+        commentCount: 3,
+        isOwner: true
     )
 }

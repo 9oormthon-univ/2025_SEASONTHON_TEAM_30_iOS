@@ -65,7 +65,6 @@ struct LoginView: View {
         //로그인 성공 시 감지해서 홈 화면으로 전환
         .onChange(of: vm.isSwitchMain) { _, newValue in
             if newValue {
-                print("메인 화면으로 전환")
                 appState.currentView = .main
                 vm.isSwitchMain = false // 플래그 리셋 (중복 이동 방지)
             }

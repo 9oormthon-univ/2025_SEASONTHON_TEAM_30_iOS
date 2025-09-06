@@ -21,11 +21,7 @@ protocol CompletedPostDetailServiceProtocol {
 class CompletedPostDetailService: CompletedPostDetailServiceProtocol {
     // 완료한 디테일 페이지 조회 요청
     func getCompletedPostDetail(postId: String) async throws ->  (CompletedMission, PostDetail, [PostDetailComment]) {
-        let parameters: Parameters = [
-            "postId": postId
-        ]
-        
-        let response: CompletedDetailResponse = try await APIManager.shared.request("/posts/{postId}", method: .get, parameters: parameters)
+        let response: CompletedDetailResponse = try await APIManager.shared.request("/users/posts/\(postId)", method: .get)
         
         let mission = CompletedMission(from: response.mission)
         let post = PostDetail(from: response.post)
@@ -52,7 +48,7 @@ class CompletedPostDetailService: CompletedPostDetailServiceProtocol {
             "postId": postId
         ]
         
-        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: EmptyData = try await APIManager.shared.request("/posts/like", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
         return response
     }
@@ -63,7 +59,7 @@ class CompletedPostDetailService: CompletedPostDetailServiceProtocol {
             "postId": postId
         ]
         
-        let response: EmptyData = try await APIManager.shared.request("/posts/comments", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let response: EmptyData = try await APIManager.shared.request("/posts", method: .delete, parameters: parameters, encoding: JSONEncoding.default)
         
         return response
     }

@@ -33,6 +33,7 @@ struct CompletedDetailResponse: Decodable {
         let likeCount: Int
         let isLiked: Bool
         let commentCount: Int
+        let isOwner: Bool
     }
     
     //댓글
