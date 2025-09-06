@@ -39,7 +39,7 @@ struct CompletedDetailResponse: Decodable {
     //댓글
     struct CommentsResponse: Decodable {
         let commentId: String
-        let userimgUrl: String
+        let userImgUrl: String
         let userName: String
         let userTitle: String
         let userTitleColor: String
