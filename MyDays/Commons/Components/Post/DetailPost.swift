@@ -22,7 +22,9 @@ struct DetailPostView: View {
                 //유저 이미지
                 KFImage(URL(string: post.userimgUrl))
                     .placeholder { // 로딩 중
-                        ProgressView()
+                        Circle()
+                            .fill(.mdSurf4)
+                            .frame(width: 42, height: 42)
                     }
                     .cancelOnDisappear(true)
                     .resizable()
@@ -72,7 +74,9 @@ struct DetailPostView: View {
                 
                 KFImage(URL(string: post.contentImgUrl))
                     .placeholder { // 로딩 중
-                        ProgressView()
+                       RoundedRectangle(cornerRadius: 12)
+                            .fill(.mdSurf4)
+                            .frame(width: size, height: size)
                     }
                     .cancelOnDisappear(true)
                     .resizable()
@@ -80,6 +84,7 @@ struct DetailPostView: View {
                     .frame(width: size, height: size)
                     .clipped()
                     .clipShape( RoundedRectangle(cornerRadius: 12))
+                    .contentShape(RoundedRectangle(cornerRadius: 12))
                     .padding(.top, 8)
                 
                 //좋아요, 댓글

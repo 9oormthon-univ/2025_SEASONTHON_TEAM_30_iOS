@@ -50,15 +50,9 @@ struct WriteView: View {
                         }
                         
                         //작성하기 버튼
-                        Button(vm.isLoading ? "" : "작성하기") { vm.postMission() }
+                        Button("작성하기") { vm.postMission() }
                             .buttonStyle(.primary(isDisabled: vm.disabled))
                             .disabled(vm.disabled)
-                            .overlay {
-                                //TODO: 이거 말고 로딩 로티 .. ?
-                                if vm.isLoading {
-                                    ProgressView()
-                                }
-                            }
                             .padding(.top, 30)
                     }
                     .padding(.top, 20)
@@ -202,6 +196,7 @@ struct SelectedImageView: View {
             .frame(width: size, height: size)
             .clipped()
             .clipShape( RoundedRectangle(cornerRadius: 12))
+            .contentShape(RoundedRectangle(cornerRadius: 12))
             .overlay(alignment: .topTrailing){
                 Image("close.circle")
                     .onTapGesture {

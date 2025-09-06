@@ -19,7 +19,9 @@ struct DetailCommentView: View {
                 //유저 이미지
                 KFImage(URL(string: comment.userimgUrl))
                     .placeholder { // 로딩 중
-                        ProgressView()
+                        Circle()
+                            .fill(.mdSurf4)
+                            .frame(width: 42, height: 42)
                     }
                     .cancelOnDisappear(true)
                     .resizable()
