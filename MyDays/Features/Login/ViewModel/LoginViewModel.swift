@@ -16,7 +16,7 @@ class LoginViewModel: ObservableObject {
     @Published var isSwitchMain: Bool = false //홈 화면으로 전환할지 (로그인 성공시)
     @Published var isLoading: Bool = false //로그인 로딩
     
-    private let loginService = LoginService() //의존성 주입 (Real or Mock)
+    private let loginService = MockLoginService() //의존성 주입 (Real or Mock)
     
     //MARK: - 카카오 로그인 시도
     func kakaoLogin() {
@@ -56,7 +56,7 @@ class LoginViewModel: ObservableObject {
         Task {
             do {
                 //서버로 access, refresh 토큰 전송
-                let userSession = try await loginService.kakaoLogin(request: KakaLoginRequest(accessToken: oauthToken.accessToken, refreshToken: oauthToken.refreshToken))
+                let userSession = try await loginService.kakaoLogin(request: KakaLoginRequest(accessToken: oauthToken.accessToken, refreshToken: oauthToken.refreshToken, idToken: oauthToken.idToken ?? ""))
                 
                 //keyChain에 백에서 받아온 액세스, 리프레쉬 토큰 저장
                 KeychainHelper.save(key: "accessToken", value: userSession.accessToken)
@@ -68,9 +68,8 @@ class LoginViewModel: ObservableObject {
                     self.isSwitchMain = true
                 }
             }
-            catch {
-                print("‼️서버와 카카오 로그인 통신 오류")
-                print(error)
+            catch let error as APIError {
+                print(error.localizedDescription)
             }
             self.isLoading = false
         }
