@@ -53,7 +53,7 @@ class SetNicknameViewModel: ObservableObject {
     // MARK: - 닉네임 유효성 검증
     func isNicknameValid(_ nickname: String) -> Bool {
         // 가-힣: 완성형 한글
-        let regex = "^[가-힣a-zA-Z0-9]{1,12}$"
+        let regex = "^[가-힣a-zA-Z0-9]{2,12}$"
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: nickname)
     }
     

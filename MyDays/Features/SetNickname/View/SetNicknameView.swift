@@ -63,7 +63,7 @@ struct SetNicknameView: View {
             
             //닉네임 형식 올바르지 않을때 문구
             if !vm.isNicknameValid {
-                Text("닉네임은 1~12자, 한글, 영어, 숫자만 가능합니다.")
+                Text("닉네임은 2~12자, 한글, 영어, 숫자만 가능합니다.")
                     .foregroundColor(Color(hex: "FF5454"))
                     .font(.b3())
                     .padding(.top, 12)

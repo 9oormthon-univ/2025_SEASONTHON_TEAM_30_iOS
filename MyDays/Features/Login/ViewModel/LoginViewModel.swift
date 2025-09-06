@@ -16,7 +16,7 @@ class LoginViewModel: ObservableObject {
     @Published var isSwitchMain: Bool = false //홈 화면으로 전환할지 (로그인 성공시)
     @Published var isLoading: Bool = false //로그인 로딩
     
-    private let loginService = MockLoginService() //의존성 주입 (Real or Mock)
+    private let loginService = LoginService() //의존성 주입 (Real or Mock)
     
     //MARK: - 카카오 로그인 시도
     func kakaoLogin() {

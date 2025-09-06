@@ -140,7 +140,7 @@ struct HomeHeaderView: View {
                 }
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 40)
+        .frame(height: 64)
         .padding(.horizontal, 30)
         .background(.mdSurf2)
     }
@@ -160,7 +160,7 @@ struct HomeMissionCard: View {
                 KFImage(URL(string: imgUrl))
                     .placeholder { // 로딩 중
                         Circle()
-                            .fill(.mdNavi2)
+                            .fill(.mdSurf4)
                             .frame(width: 42, height: 42)
                     }
                     .cancelOnDisappear(true)
