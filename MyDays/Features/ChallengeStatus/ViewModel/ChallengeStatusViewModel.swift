@@ -48,10 +48,11 @@ class ChallengeStatusViewModel: ObservableObject {
     @Published var isShowingTitleSelection: Bool = false
     
     // 테스트할 때
-    private let service = MockChallengeStatusService()
+    // private let service = MockChallengeStatusService()
     
     // 실제로 할 때
-    // private let service: ChallengeStatusServiceProtocol
+    private let service = ChallengeStatusService()
+    // private let service : ChallengeStatusServiceProtocol
     
     /* 필요 없음
     var isWriteButtonDisabled: Bool {
@@ -100,6 +101,7 @@ class ChallengeStatusViewModel: ObservableObject {
         }
         
         // 칭호 탭 시 동작 처리
+        // TODO: !!
         func handleTitleAreaTap() {
             /* 백에서
              if .bubbleVisible {

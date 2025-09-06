@@ -10,14 +10,14 @@ import Foundation
 struct ChallengeStatusComponent {
     let nickName: String
     let growthMessage: String
+    let isBubbleVisible: Bool
     let userTitle: String
     let userTitleColor: String
-    let progress: Int
+    let progress: Double
     let imageUrl: String
     let totalChallengeCount: Int
     let daysCount: Int
-    let bubbleVisible: Bool
-    let completeMission: Bool
+    let isCompleteMission: Bool
     
     /* 아래에 Mock Data가 있어서 필요 없음
     // Mock 데이터 생성을 위한 이니셜라이저
@@ -54,18 +54,17 @@ struct ChallengeStatusComponent {
 }
 
 extension ChallengeStatusComponent {
-    init(from response: GetChallengeStatusResponse){
-        let body = response.body
-        self.nickName = body.nickName
-        self.growthMessage = body.growthMessage
-        self.userTitle = body.userTitle
-        self.userTitleColor = body.userTitleColor
-        self.progress = body.progress
-        self.imageUrl = body.imageUrl
-        self.totalChallengeCount = body.totalChallengeCount
-        self.daysCount = body.daysCount
-        self.bubbleVisible = body.bubbleVisible
-        self.completeMission = body.completeMission
+    init(from data: GetChallengeStatusResponse){
+        self.nickName = data.nickName
+        self.growthMessage = data.growthMessage
+        self.userTitle = data.userTitle
+        self.userTitleColor = data.userTitleColor
+        self.progress = data.progress
+        self.imageUrl = APIManager.shared.baseURL + data.imageUrl
+        self.totalChallengeCount = data.totalChallengeCount
+        self.daysCount = data.daysCount
+        self.isBubbleVisible = data.isBubbleVisible
+        self.isCompleteMission = data.isCompleteMission
     }
 }
 
@@ -74,13 +73,13 @@ extension ChallengeStatusComponent {
     static let mock = ChallengeStatusComponent(
         nickName: "홍길동",
         growthMessage: "열심히 성장 중이에요!",
+        isBubbleVisible: true,
         userTitle: "열정러",
         userTitleColor: "#FF6B6B",
-        progress: 50,
+        progress: 0.5,
         imageUrl: "https://picsum.photos/200", // 임시 이미지 URL
         totalChallengeCount: 25,
         daysCount: 7,
-        bubbleVisible: true,
-        completeMission: false
+        isCompleteMission: false
     )
 }

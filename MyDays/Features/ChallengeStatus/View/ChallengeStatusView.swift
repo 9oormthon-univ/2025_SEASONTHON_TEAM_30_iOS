@@ -42,10 +42,10 @@ struct ChallengeStatusView: View {
                     // 오늘의 챌린지 작성하기 버튼
                     Button(action: { nav.push(AppRoute.write)})
                     {
-                        Text(challengeStatus.completeMission ? "오늘의 챌린지를 완료했어요" : "오늘의 챌린지 작성하기")
+                        Text(challengeStatus.isCompleteMission ? "오늘의 챌린지를 완료했어요" : "오늘의 챌린지 작성하기")
                     }
                     .buttonStyle(TodaysChallengeWriteButtonStyle())
-                    .disabled(challengeStatus.completeMission)
+                    .disabled(challengeStatus.isCompleteMission)
                     .padding(.top,8)
                     
                 }
@@ -125,11 +125,11 @@ struct ChallengeStatusView: View {
                     }
                 
                 // 진행률바
-                // TODO: 후순위
+                // TODO: !!
                 ZStack {
                     // 새로 만든 ProgressRingView를 배경에 배치
-                    //ProgressRingView(progress: vm.monthlyChallengeProgress)
-                        //.frame(width: 100, height: 92.5)
+                    ProgressRingView(progress: challengeStatus.progress)
+                        .frame(width: 100, height: 92.5)
                     
                     // 슬라임 이미지를 ProgressRingView 위에 올림
                     KFImage(URL(string: challengeStatus.imageUrl))
@@ -186,7 +186,7 @@ struct ChallengeStatusView: View {
             .background(.mdSurf3)
             .cornerRadius(12)
             .overlay(alignment: .top) {
-                if challengeStatus.bubbleVisible {
+                if challengeStatus.isBubbleVisible {
                     Text("별명을 변경해보세요!")
                         .font(.l1())
                         .foregroundColor(.white)
@@ -219,37 +219,7 @@ struct ChallengeStatusView: View {
         }
     }
     
-    // MARK: - 진행률 바
-    struct ProgressRingView: View {
-        // 0.0 ~ 1.0 사이의 진행률 값
-        let progress: Double
-        
-        var body: some View {
-            ZStack {
-                // 배경 트랙 (항상 보이는 회색 라인)
-                Circle()
-                    .trim(from: 0, to: 0.5) // 1/2 원 모양으로 자르기
-                    .stroke(style: StrokeStyle(lineWidth: 5.32, lineCap: .round))
-                    .foregroundColor(.mdNavi1) // 배경 트랙 색상
-                    .rotationEffect(.degrees(180)) // 시작점을 왼쪽 아래로 회전
-                
-                // 진행률 바 (챌린지 횟수에 따라 채워짐)
-                Circle()
-                    .trim(from: 0, to: 0.5 * progress) // 전체의 1/2 중에서 progress 만큼만 그림
-                    .stroke(style: StrokeStyle(lineWidth: 5.32, lineCap: .round))
-                    .fill(
-                        // 그라데이션 적용
-                        AngularGradient(
-                            gradient: Gradient(colors: [.white, .white.opacity(0.3)]),
-                            center: .center,
-                            startAngle: .degrees(180),
-                            endAngle: .degrees(180 + (360 * 0.5))
-                        )
-                    )
-                    .rotationEffect(.degrees(180))
-            }
-        }
-    }
+    
     
     // MARK: - 오늘의 챌린지 작성하기 버튼
     struct TodaysChallengeWriteButtonStyle: ButtonStyle {
@@ -271,4 +241,42 @@ struct ChallengeStatusView: View {
                             }
         }
     }
+}
+
+// MARK: - 진행률 바
+// TODO: !!
+struct ProgressRingView: View {
+    // 0.0 ~ 1.0 사이의 진행률 값
+//    let challengeStatus: ChallengeStatusComponent
+    let progress: Double
+    
+    var body: some View {
+        ZStack {
+            // 배경 트랙 (항상 보이는 회색 라인)
+            Circle()
+                .trim(from: 0, to: 0.5) // 1/2 원 모양으로 자르기
+                .stroke(style: StrokeStyle(lineWidth: 5.32, lineCap: .round))
+                .foregroundColor(.mdSurf3) // 배경 트랙 색상
+                .rotationEffect(.degrees(180)) // 시작점을 왼쪽 아래로 회전
+            
+            // 진행률 바 (챌린지 횟수에 따라 채워짐)
+            Circle()
+                .trim(from: 0, to: 0.5 * progress) // 전체의 1/2 중에서 progress 만큼만 그림
+                .stroke(style: StrokeStyle(lineWidth: 5.32, lineCap: .round))
+                .fill(
+                    // 그라데이션 적용
+                    AngularGradient(
+                        gradient: Gradient(colors: [.white, .white.opacity(0.3)]),
+                        center: .center,
+                        startAngle: .degrees(180),
+                        endAngle: .degrees(180 + (360 * 0.5))
+                    )
+                )
+                .rotationEffect(.degrees(180))
+        }
+    }
+}
+
+#Preview {
+    ProgressRingView(progress: 0.4)
 }
