@@ -40,7 +40,7 @@ struct MyDaysApp: App {
                         WriteView()
                         
                     case .settings:
-                        SettingsView() //TODO: 추후 세팅페이지로 변경
+                        SettingsView()
                         
                     case .completedLogin(let nickName):
                         CompletedLoginView(nickName: nickName)

@@ -31,13 +31,13 @@ struct TitleSelectionView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     ForEach(vm.availableTitles) { title in
                         UserTitleBadge(title: title.name, color: title.colorHex)
-                            //.padding(4)
+                            //.padding(.horizontal, 10)
                             .cornerRadius(12)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        //.fill(Color.mdSurf3)
-                                        .shadow(color: selectedTitle == title ? .white.opacity(0.8) : .clear,
+                                        .fill(Color.mdSurf3)
+                                        .shadow(color: selectedTitle == title ? .white.opacity(0.9) : .clear,
                                                 radius: 5)
                             )
                             .onTapGesture {
@@ -85,6 +85,14 @@ struct TitleSelectionView: View {
             // 시트가 나타날 때 현재 설정된 칭호를 기본 선택값으로 설정
             Task {
                 await vm.fetchAvailableTitles()
+                
+                if let currentTitle = vm.component?.userTitle {
+                    self.currentTitle = currentTitle
+                    
+                    if let matched = vm.availableTitles.first(where: {$0.name == currentTitle}) {
+                        self.selectedTitle = matched
+                    }
+                }
                   
                 /*
                 // 칭호 목록 로드가 완료된 후 현재 칭호 설정

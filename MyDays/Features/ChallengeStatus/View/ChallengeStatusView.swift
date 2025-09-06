@@ -35,7 +35,6 @@ struct ChallengeStatusView: View {
                     .frame(maxWidth: .infinity, alignment: .leading) // 내부 VStack은 꽉 채우고 왼쪽 정렬
                     .padding(.bottom, 8)
                     
-                    //TODO: 가이드라인 STEP 5 참고해서 변경
                     // ProfileCard(vm: vm)
                     ProfileCard(challengeStatus: challengeStatus, onTitleTap: { vm.handleTitleAreaTap() })
                     
@@ -47,11 +46,12 @@ struct ChallengeStatusView: View {
                     .buttonStyle(TodaysChallengeWriteButtonStyle())
                     .disabled(challengeStatus.isCompleteMission)
                     .padding(.top,8)
+                    //.padding(.horizontal,8)
                     
                 }
                 .padding(.top, 59)
-                .frame(maxWidth: 318) // 전체 column의 기준 폭을 카드와 동일하게 설정
                 .frame(maxWidth: .infinity)
+                .padding(.horizontal,28.5)
                 
             }
             ChallengeStatusHeaderView(onSettingsTap: {
@@ -116,9 +116,10 @@ struct ChallengeStatusView: View {
         
         var body: some View {
             
-            VStack(spacing: 29) {
+            VStack(spacing: 0) {
                 // 칭호
                 UserTitleBadge(title: challengeStatus.userTitle, color: challengeStatus.userTitleColor)
+                    .padding(.top, 40)
                     .onTapGesture {
                         // vm.handleTitleAreaTap()
                         onTitleTap()
@@ -129,8 +130,7 @@ struct ChallengeStatusView: View {
                 ZStack {
                     // 새로 만든 ProgressRingView를 배경에 배치
                     ProgressRingView(progress: challengeStatus.progress)
-                        .padding(.horizontal,94.5)
-                        //.frame(width: 185, height: 92.5)
+                        .padding(.top, 14)
                     
                     // 슬라임 이미지를 ProgressRingView 위에 올림
                     KFImage(URL(string: challengeStatus.imageUrl))
@@ -145,6 +145,10 @@ struct ChallengeStatusView: View {
                          .frame(width: 162, height: 162)
                          .clipped()
                          .clipShape(Circle())
+                         .onTapGesture {
+                             // vm.handleTitleAreaTap()
+                             onTitleTap()
+                         }
                 }
                 
                 // "성장까지"와 "연속" 정보를 담을 HStack
@@ -173,17 +177,18 @@ struct ChallengeStatusView: View {
                             .padding(.horizontal, 4)
                             .padding(.bottom, 8)
                         Text("연속\n\(challengeStatus.daysCount) 일")
-                            .font(.b3Light())
+                            .font(.b3())
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                         // TODO: ViewModel에서 실제 데이터를 받아와야 합니다.
 
                     }
                 }
+                .padding(.bottom, 40)
                 
             }
-            .frame(maxWidth: 318)
-            .frame(maxHeight: 392)
+            .frame(maxWidth: .infinity)
+            .frame(maxHeight: 393)
             .background(.mdSurf3)
             .cornerRadius(12)
             .overlay(alignment: .top) {
@@ -230,7 +235,7 @@ struct ChallengeStatusView: View {
             configuration.label
                 .font(isEnabled ? .b2Bold() : .b2())
                 .foregroundColor(isEnabled ? .mdBrightSurf : .mdDim)
-                .frame(maxWidth: 315)
+                .frame(maxWidth: .infinity)
                 .frame(height: 56)
                 .background(isEnabled ? .mdSurf4 : .mdNavi2)
                 .cornerRadius(12)
@@ -255,29 +260,22 @@ struct ProgressRingView: View {
         ZStack {
             // 배경 트랙 (항상 보이는 회색 라인)
             Circle()
-                .trim(from: 0, to: 0.5) // 1/2 원 모양으로 자르기
+                .trim(from: 0, to: 0.5) // 반원 모양
                 .stroke(style: StrokeStyle(lineWidth: 5.32, lineCap: .round))
-                .foregroundColor(.mdSurf3) // 배경 트랙 색상
+                .foregroundColor(.white.opacity(0.2)) // 배경 트랙 색상
                 .rotationEffect(.degrees(180)) // 시작점을 왼쪽 아래로 회전
             
-            // 진행률 바 (챌린지 횟수에 따라 채워짐)
             Circle()
-                .trim(from: 0, to: 0.5 * progress) // 전체의 1/2 중에서 progress 만큼만 그림
+                .trim(from: 0, to: /*0.5 * */ progress)
                 .stroke(style: StrokeStyle(lineWidth: 5.32, lineCap: .round))
-                .fill(
-                    // 그라데이션 적용
-                    AngularGradient(
-                        gradient: Gradient(colors: [.white, .white.opacity(0.3)]),
-                        center: .center,
-                        startAngle: .degrees(180),
-                        endAngle: .degrees(180 + (360 * 0.5))
-                    )
-                )
-                .rotationEffect(.degrees(180))
+                .foregroundColor(.white) // 배경 트랙 색상
+                .rotationEffect(.degrees(180)) // 시작점을 왼쪽 아래로 회전
         }
+        .padding(.horizontal, 66.5)
+        .padding(.bottom, 10)
     }
 }
 
 #Preview {
-    ProgressRingView(progress: 0.4)
+    ProgressRingView(progress: 0.0)
 }

@@ -10,7 +10,7 @@ import Foundation
 struct ChallengeStatusComponent {
     let nickName: String
     let growthMessage: String
-    let isBubbleVisible: Bool
+    var isBubbleVisible: Bool
     let userTitle: String
     let userTitleColor: String
     let progress: Double
@@ -94,7 +94,7 @@ extension ChallengeStatusComponent {
         isBubbleVisible: true,
         userTitle: "열정러",
         userTitleColor: "#FF6B6B",
-        progress: 0.5,
+        progress: 0.9,
         imageUrl: "https://picsum.photos/200", // 임시 이미지 URL
         totalChallengeCount: 25,
         daysCount: 7,
