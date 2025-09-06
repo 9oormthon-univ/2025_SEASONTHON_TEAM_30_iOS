@@ -14,7 +14,7 @@ struct TitleSelectionView: View {
     @ObservedObject var vm: ChallengeStatusViewModel
     @Environment(\.dismiss) var dismiss
     
-    // 사용자가 선택한 칭호를 임시 저장
+    // 사용자가 선택한 별명을 임시 저장
     @State private var selectedTitle: SelectableTitle?
     
     // 현재 설정된 별명 기억하는 용도
@@ -26,7 +26,6 @@ struct TitleSelectionView: View {
             TitleSelectionHeaderView(dismiss: { dismiss() })
             
             // 별명 목록
-            // TODO: - 그림자 효과 오버레이로??
             ScrollView{
                 VStack(alignment: .leading, spacing: 15) {
                     ForEach(vm.availableTitles) { title in
@@ -46,8 +45,8 @@ struct TitleSelectionView: View {
                     }
                         .frame(maxWidth: .infinity, alignment: .leading) // 전체 왼쪽 정렬
                 }
-                .padding(.top, 5) // 위쪽 여백 5 : 그림자 효과 가려져서
-                .padding(.leading, 30)   // 왼쪽 여백 30
+                .padding(.top, 10)
+                .padding(.leading, 30)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             
@@ -61,7 +60,7 @@ struct TitleSelectionView: View {
             
             // 저장하기 버튼
             Button(action: {
-                // 선택된 칭호가 있을 경우에만 저장하고 창 닫기
+                // 선택된 별명이 있을 경우에만 저장하고 창 닫기
                 if let finalTitle = selectedTitle {
                 // 비동기 함수 호출을 위해 Task 블록 추가
                     Task {
@@ -82,7 +81,7 @@ struct TitleSelectionView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.mdSurf3)
         .onAppear {
-            // 시트가 나타날 때 현재 설정된 칭호를 기본 선택값으로 설정
+            // 시트가 나타날 때 현재 설정된 별명을 기본 선택값으로 설정
             Task {
                 await vm.fetchAvailableTitles()
                 
@@ -93,14 +92,6 @@ struct TitleSelectionView: View {
                         self.selectedTitle = matched
                     }
                 }
-                  
-                /*
-                // 칭호 목록 로드가 완료된 후 현재 칭호 설정
-                self.currentTitle = vm.component.userTitle
-                if let current = vm.availableTitles.first(where: { $0.name == self.currentTitle }) {
-                    self.selectedTitle = current
-                }
-                 */
             }
         }
     }

@@ -19,42 +19,9 @@ struct ChallengeStatusComponent {
     let daysCount: Int
     let isCompleteMission: Bool
     
-    /* 아래에 Mock Data가 있어서 필요 없음
-    // Mock 데이터 생성을 위한 이니셜라이저
-    init(nickName: String, growthMessage: String, userTitle: String, userTitleColor: String, progress: Int, imageUrl: String, totalChallengeCount: Int, daysCount: Int, bubbleVisible: Bool, completeMission: Bool) {
-        self.nickName = nickName
-        self.growthMessage = growthMessage
-        self.userTitle = userTitle
-        self.userTitleColor = userTitleColor
-        self.progress = progress
-        self.imageUrl = imageUrl
-        self.totalChallengeCount = totalChallengeCount
-        self.daysCount = daysCount
-        self.bubbleVisible = bubbleVisible
-        self.completeMission = completeMission
-    }
-     */
-    
-    /*
-    // 서버 모델 매핑용 이니셜라이저
-    init(from response: GetChallengeStatusResponse) {
-        let body = response.body
-        self.nickName = body.nickName
-        self.growthMessage = body.growthMessage
-        self.userTitle = body.userTitle
-        self.userTitleColor = body.userTitleColor
-        self.progress = body.progress
-        self.imageUrl = body.imageUrl
-        self.totalChallengeCount = body.totalChallengeCount
-        self.daysCount = body.daysCount
-        self.bubbleVisible = body.bubbleVisible
-        self.completeMission = body.completeMission
-    }
-     */
 }
 
 struct TitleComponent {
-        
         let titles: [Title]
         struct Title {
             let titleId: String

@@ -35,7 +35,6 @@ struct ChallengeStatusView: View {
                     .frame(maxWidth: .infinity, alignment: .leading) // 내부 VStack은 꽉 채우고 왼쪽 정렬
                     .padding(.bottom, 8)
                     
-                    // ProfileCard(vm: vm)
                     ProfileCard(challengeStatus: challengeStatus, onTitleTap: { vm.handleTitleAreaTap() })
                     
                     // 오늘의 챌린지 작성하기 버튼
@@ -82,7 +81,7 @@ struct ChallengeStatusView: View {
     
     // MARK: - 헤더
     struct ChallengeStatusHeaderView: View {
-        // 버튼 탭 시 실행될 클로저
+        // 버튼 탭 시 실행
         let onSettingsTap: () -> Void
         
         var body: some View {
@@ -108,16 +107,16 @@ struct ChallengeStatusView: View {
         }
     }
     
-    //MARK: - 칭호 + 진행률바 + 슬라임 이미지 + 달력 + 스트리크
+    //MARK: - 별명 + 진행률바 + 슬라임 이미지 + 달력 + 스트리크
     struct ProfileCard: View {
-        // @ObservedObject var vm: ChallengeStatusViewModel
+
         let challengeStatus: ChallengeStatusComponent
         let onTitleTap: () -> Void
         
         var body: some View {
             
             VStack(spacing: 0) {
-                // 칭호
+                // 별명
                 UserTitleBadge(title: challengeStatus.userTitle, color: challengeStatus.userTitleColor)
                     .padding(.top, 40)
                     .onTapGesture {
@@ -126,13 +125,12 @@ struct ChallengeStatusView: View {
                     }
                 
                 // 진행률바
-                // TODO: !!
                 ZStack {
                     // 새로 만든 ProgressRingView를 배경에 배치
                     ProgressRingView(progress: challengeStatus.progress)
                         .padding(.top, 14)
                     
-                    // 슬라임 이미지를 ProgressRingView 위에 올림
+                    // 슬라임 이미지
                     KFImage(URL(string: challengeStatus.imageUrl))
                         .placeholder { // 로딩 중 보여줄 뷰
                             Circle()
@@ -165,7 +163,6 @@ struct ChallengeStatusView: View {
                             .font(.b3())
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
-                        // TODO: ViewModel에서 실제 데이터를 받아와야 합니다.
                     }
                     
                     // "연속" 그룹
@@ -180,7 +177,6 @@ struct ChallengeStatusView: View {
                             .font(.b3())
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
-                        // TODO: ViewModel에서 실제 데이터를 받아와야 합니다.
 
                     }
                 }
@@ -242,7 +238,7 @@ struct ChallengeStatusView: View {
                 .overlay {
                     if isEnabled {
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.mdDim, lineWidth: 1) // 색상: .mdDim, 굵기: 1
+                            .stroke(Color.mdDim, lineWidth: 1)
                                 }
                             }
         }
@@ -253,7 +249,6 @@ struct ChallengeStatusView: View {
 // TODO: !!
 struct ProgressRingView: View {
     // 0.0 ~ 1.0 사이의 진행률 값
-//    let challengeStatus: ChallengeStatusComponent
     let progress: Double
     
     var body: some View {
@@ -266,7 +261,7 @@ struct ProgressRingView: View {
                 .rotationEffect(.degrees(180)) // 시작점을 왼쪽 아래로 회전
             
             Circle()
-                .trim(from: 0, to: /*0.5 * */ progress)
+                .trim(from: 0, to: 0.5 * progress)
                 .stroke(style: StrokeStyle(lineWidth: 5.32, lineCap: .round))
                 .foregroundColor(.white) // 배경 트랙 색상
                 .rotationEffect(.degrees(180)) // 시작점을 왼쪽 아래로 회전
@@ -277,5 +272,5 @@ struct ProgressRingView: View {
 }
 
 #Preview {
-    ProgressRingView(progress: 0.0)
+    ProgressRingView(progress: 0.2)
 }
