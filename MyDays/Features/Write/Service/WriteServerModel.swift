@@ -18,3 +18,8 @@ struct PostMissionRequest: Decodable {
     let content: String
     let base64Img: String
 }
+
+//게시물 작성 Response
+struct PostMissionResponse: Decodable, Equatable {
+    let postId: String
+}

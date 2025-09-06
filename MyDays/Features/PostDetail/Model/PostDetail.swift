@@ -33,7 +33,7 @@ extension PostDetail {
         self.userTitleColor = data.userTitleColor
         self.createdAt = data.createdAt
         self.content = data.content
-        self.contentImgUrl = data.contentImgUrl
+        self.contentImgUrl = APIManager.shared.baseURL + data.contentImgUrl
         self.likeCount = data.likeCount
         self.isLiked = data.isLiked
         self.commentCount = data.commentCount
@@ -51,7 +51,7 @@ extension PostDetail {
         self.userTitleColor = data.userTitleColor
         self.createdAt = data.createdAt
         self.content = data.content
-        self.contentImgUrl = data.contentImgUrl
+        self.contentImgUrl = APIManager.shared.baseURL + data.contentImgUrl
         self.likeCount = data.likeCount
         self.isLiked = data.isLiked
         self.commentCount = data.commentCount
