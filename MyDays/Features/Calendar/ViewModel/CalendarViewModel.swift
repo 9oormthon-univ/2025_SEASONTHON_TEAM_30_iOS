@@ -17,7 +17,7 @@ class CalendarViewModel: ObservableObject {
     @Published var selectedDayContent: DayContent? //선택된 날짜의 콘텐츠 (미션 + 게시물)
     @Published var showMonthCalendar: Bool = false //월 단위 캘린더 뷰 풀 스크린 여부
     
-    private let calendarService = MockCalendarService() //의존성 주입 (Real or Mock)
+    private let calendarService = CalendarService() //의존성 주입 (Real or Mock)
     
     //MARK: - 캘린더 뷰 조회
     func getCalendarWeek() {

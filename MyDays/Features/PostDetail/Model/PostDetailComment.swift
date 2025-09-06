@@ -35,7 +35,7 @@ extension PostDetailComment {
 extension PostDetailComment {
     init(from data: CompletedDetailResponse.CommentsResponse) {
         self.id = data.commentId
-        self.userimgUrl = data.userimgUrl
+        self.userimgUrl = data.userImgUrl
         self.userName = data.userName
         self.userTitle = data.userTitle
         self.userTitleColor = data.userTitleColor

@@ -117,8 +117,6 @@ struct WeekCalendarView: View {
                 )
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    //TODO: - 애니메이션 밑에 뷰들이 렌더링되서 버퍼링 ?
-                    //                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.7)) {
                     withAnimation {
                         selectedDate = day.date
                     }

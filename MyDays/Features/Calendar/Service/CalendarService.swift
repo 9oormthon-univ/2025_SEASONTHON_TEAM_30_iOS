@@ -20,7 +20,7 @@ class CalendarService: CalendarServiceProtocol {
     // 주간 캘린더 뷰 조회 요청
     func getCalendarWeeks() async throws -> [DayContent] {
 
-        let response: GetWeeksResponse = try await APIManager.shared.request("/users/calendar/week", method: .get)
+        let response: GetWeeksResponse = try await APIManager.shared.request("/users/calendar/weekly", method: .get)
         
         let dayContents = response.dayContents.map { DayContent(from: $0) }
         
