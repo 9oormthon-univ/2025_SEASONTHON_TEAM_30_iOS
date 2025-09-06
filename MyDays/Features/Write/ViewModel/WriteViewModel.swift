@@ -17,7 +17,7 @@ class WriteViewModel: ObservableObject {
     @Published var text: String = "" //콘텐츠 텍스트
     @Published var mission: WriteMission? //미션(Day, 주제)
     @Published var isLoading: Bool = false //작성하기 로딩
-    @Published var navigateToPostId: String? = nil //작성하기 성공 후 디테일 페이지 보낼건지
+    @Published var navigateToPostId: PostMissionResponse? = nil //작성하기 성공 후 디테일 페이지 보낼건지
     
     var disabled: Bool { //작성하기 버튼 disabled여부 (선택된 이미지, 작성된 텍스트 있는지 여부에 따라)
         selectedImage == nil || text == ""
